@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Front-End Toàn Cảnh Cho Fresher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* Tokyo Night, dark room first. Each part of the talk takes one hue as its accent.
+   Red is held for "bad / attack", green for "good". Layout: fixed 1280x720 stage, scaled to fit. */
+:root {
+  --paper: #0f1017; --ink: #f2f4ff; --body: #cfd5ee; --muted: #98a2cf; --hair: #343b5a; --hair2: #262b40;
+  --surface: #161822; --surface2: #1f2334; --bad: #ff5c7c; --bad-wash: #40222f; --good: #8ee36f; --good-wash: #22351f;
+  --cyan: #5fdcff; --blue: #6d9cff; --teal: #3fe4c5; --purple: #c58bff; --yellow: #ffc75a; --orange: #ff9848; --comment: #7f8abd;
+  --accent: var(--cyan);
+  --sans: 'Source Sans 3', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --mono: 'Source Code Pro', ui-monospace, Menlo, monospace;
+  --head: 'Space Grotesk', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  color-scheme: dark;
+}
+:root[data-deck-theme="light"] {
+  --paper: #d0d5e3; --ink: #242a45; --body: #3e4566; --muted: #546089; --hair: #b4b9d0; --hair2: #c4c8da;
+  --surface: #e1e2e7; --surface2: #d6d9e4; --bad: #d01f55; --bad-wash: #f3d7df; --good: #47651f; --good-wash: #d9e6c8;
+  --cyan: #007197; --blue: #2e7de9; --teal: #118c74; --purple: #9854f1; --yellow: #8c6c3e; --orange: #b15c00; --comment: #6a7299;
+  color-scheme: light;
+}
+[data-part="00"] { --accent: var(--cyan); }
+[data-part="01"] { --accent: var(--blue); }
+[data-part="02"] { --accent: var(--teal); }
+[data-part="03"] { --accent: var(--purple); }
+[data-part="04"] { --accent: var(--yellow); }
+[data-part="05"] { --accent: var(--orange); }
+[data-part] { --wash: color-mix(in srgb, var(--accent) 20%, var(--surface)); --edge: color-mix(in srgb, var(--accent) 50%, transparent); }
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: var(--paper); color: var(--body); font-family: var(--sans); overflow: hidden; }
+#deck { position: fixed; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: 0 0; }
+.slide { position: absolute; inset: 0; padding: 36px 56px 50px; display: none; flex-direction: column; gap: 16px; background: var(--paper); overflow: hidden; }
+.slide.active { display: flex; }
+.body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; }
+
+.eyebrow { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--accent); letter-spacing: .04em; }
+h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--head); text-wrap: balance; }
+h1 { font-size: 68px; line-height: 1.06; letter-spacing: -2px; }
+h2 { font-size: 38px; line-height: 1.14; letter-spacing: -.8px; }
+h3 { font-size: 26px; line-height: 1.2; letter-spacing: -.3px; }
+p { margin: 0; font-size: 22px; line-height: 1.42; }
+.lead { font-size: 25px; max-width: 62ch; }
+.muted { color: var(--muted); }
+.small { font-size: 19px; }
+b { color: var(--ink); }
+code { font-family: var(--mono); font-size: .9em; color: var(--accent); }
+a { color: var(--accent); }
+
+.two { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-content: center; }
+.three.grow, .four.grow, .five { align-content: center; }
+.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.grow { flex: 1; min-height: 0; }
+.center { justify-content: center; }
+.card { background: var(--surface); border: 1px solid var(--hair2); border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card p { font-size: 21px; line-height: 1.36; }
+.card .k { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--accent); letter-spacing: .03em; }
+.card.hot { background: var(--wash); border-color: var(--accent); }
+.card.bad { background: var(--bad-wash); border-color: var(--bad); }
+.card.good { background: var(--good-wash); border-color: var(--good); }
+.callout { border-left: 4px solid var(--accent); background: var(--wash); padding: 12px 18px; border-radius: 0 10px 10px 0; font-size: 22px; line-height: 1.38; color: var(--ink); }
+.callout.bad { border-color: var(--bad); background: var(--bad-wash); }
+.chip { display: inline-block; font-family: var(--mono); font-size: 14px; font-weight: 600; border: 1px solid var(--hair); border-radius: 100px; padding: 3px 11px; color: var(--muted); white-space: nowrap; }
+.chip.hot { border-color: var(--accent); color: var(--accent); background: var(--wash); }
+.chip.bad { border-color: var(--bad); color: var(--bad); background: var(--bad-wash); }
+.chip.good { border-color: var(--good); color: var(--good); background: var(--good-wash); }
+
+ul.points { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+ul.points li { padding: 10px 0; border-top: 1px solid var(--hair2); font-size: 22px; line-height: 1.36; }
+ul.points li:first-child { border-top: 0; padding-top: 0; }
+
+pre.code { margin: 0; background: var(--surface); border: 1px solid var(--hair2); border-radius: 10px; padding: 13px 16px; font-family: var(--mono); font-size: 18.5px; line-height: 1.45; color: var(--body); overflow: hidden; white-space: pre; }
+pre.code .c { color: var(--comment); font-style: italic; }
+pre.code .hl { background: var(--wash); border-radius: 4px; color: var(--ink); }
+pre.code .x { background: var(--bad-wash); color: var(--ink); border-radius: 4px; }
+pre.code .g { background: var(--good-wash); color: var(--ink); border-radius: 4px; }
+pre.code.bad { border-color: var(--bad); }
+pre.code.good { border-color: var(--good); }
+.label { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; font-size: 21px; }
+th { text-align: left; font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--muted); padding: 0 12px 8px; border-bottom: 1px solid var(--hair); }
+td { padding: 12px 12px; border-bottom: 1px solid var(--hair2); line-height: 1.32; vertical-align: top; }
+td:first-child, th:first-child { padding-left: 0; }
+td.n { color: var(--ink); font-weight: 600; }
+td.y { color: var(--good); font-weight: 600; }
+td.w { color: var(--bad); font-weight: 600; }
+
+/* Build pipeline and prop chain */
+.chain { display: flex; align-items: stretch; gap: 0; }
+.chain .box { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--hair2); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.chain .box.hot { background: var(--wash); border-color: var(--accent); }
+.chain .box.dim { opacity: .62; border-style: dashed; }
+.chain .box b { font-family: var(--head); font-size: 22px; }
+.chain .box span { font-size: 19px; line-height: 1.3; }
+.chain .ar { align-self: center; flex: 0 0 34px; text-align: center; color: var(--accent); font-size: 24px; font-family: var(--mono); }
+
+/* Rendering timeline */
+.rt { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: center; }
+.rt .name { font-family: var(--head); font-weight: 700; font-size: 25px; color: var(--ink); }
+.bars { display: flex; gap: 3px; height: 62px; }
+.bar { display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 8px; font-size: 18px; line-height: 1.1; border-radius: 6px; background: var(--surface2); color: var(--body); }
+.bar.see { background: var(--wash); color: var(--ink); box-shadow: inset 0 0 0 1px var(--accent); }
+.bar.use { background: var(--good-wash); color: var(--ink); box-shadow: inset 0 0 0 1px var(--good); font-weight: 600; }
+
+/* Component tree mock */
+.mock { background: var(--surface); border: 1px solid var(--hair); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.cmp { border: 1.5px dashed var(--edge); border-radius: 8px; padding: 9px 11px; font-family: var(--mono); font-size: 16px; color: var(--accent); background: var(--wash); }
+
+/* Live demo controls */
+button.btn { font-family: var(--sans); font-size: 17px; font-weight: 600; color: var(--ink); background: var(--wash); border: 1px solid var(--accent); border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+button.btn:hover { filter: brightness(1.25); }
+button.btn:focus-visible, .rn button:focus-visible, .pager button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+input.field, textarea.field { width: 100%; font-family: var(--mono); font-size: 16px; color: var(--ink); background: var(--surface2); border: 1px solid var(--hair); border-radius: 8px; padding: 9px 12px; resize: none; }
+.live { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--paper); background: var(--accent); border-radius: 4px; padding: 2px 8px; }
+
+/* Re-render demo */
+.rn { border: 1.5px solid var(--hair); border-radius: 10px; padding: 7px 10px; display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; background: var(--surface); transition: background .5s, border-color .5s; }
+.rn.flash { background: var(--wash); border-color: var(--accent); transition: none; }
+.rn > .rh { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.rn button { font-family: var(--mono); font-size: 15.5px; font-weight: 600; color: var(--ink); background: var(--surface2); border: 1px solid var(--hair); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+.rn .cnt { font-family: var(--mono); font-size: 15px; color: var(--muted); white-space: nowrap; }
+.rk { display: flex; gap: 8px; }
+
+/* Main thread demo */
+.track { position: relative; height: 54px; background: var(--surface2); border-radius: 10px; }
+.track i { position: absolute; top: 9px; left: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); }
+
+/* Event loop */
+.el { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.el .card { min-height: 112px; padding: 12px 14px; }
+.el .v { font-family: var(--mono); font-size: 18px; color: var(--ink); line-height: 1.35; white-space: pre-wrap; }
+pre.code span.line { display: block; border-radius: 4px; }
+pre.code span.line.now { background: var(--wash); color: var(--ink); }
+
+/* Debounce lanes */
+.lane { display: grid; grid-template-columns: 112px 1fr 44px; align-items: center; gap: 12px; }
+.lane .ln { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--ink); }
+.lane .tk { position: relative; height: 38px; background: var(--surface2); border-radius: 7px; overflow: hidden; }
+.lane .tk i { position: absolute; top: 5px; bottom: 5px; width: 3px; border-radius: 2px; background: var(--muted); }
+.lane.d .tk i { background: var(--accent); width: 5px; }
+.lane.t .tk i { background: var(--cyan); width: 5px; }
+.lane .ct { font-family: var(--head); font-size: 24px; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* XSS demo */
+.out { min-height: 66px; background: var(--surface2); border-radius: 8px; padding: 9px 12px; font-size: 16px; color: var(--ink); overflow-wrap: anywhere; font-family: var(--mono); }
+.out img { display: none; }
+
+.seq { display: block; width: 100%; height: auto; }
+.seq text { font-family: var(--sans); }
+.seq .actor { font-family: var(--head); font-weight: 700; font-size: 19px; fill: var(--ink); text-anchor: middle; }
+.seq .life { stroke: var(--hair); stroke-width: 1.5; stroke-dasharray: 3 6; }
+.seq .msg { stroke: var(--accent); stroke-width: 2.5; }
+.seq .lab { font-size: 20px; fill: var(--ink); text-anchor: middle; }
+.seq .bad .msg { stroke: var(--bad); }
+.seq .bad .lab { fill: var(--bad); font-weight: 600; }
+.seq .good .msg { stroke: var(--good); }
+.seq .good .lab { fill: var(--good); font-weight: 600; }
+
+/* Step reveals: the hidden state keeps its layout so nothing jumps */
+[data-step], [data-only] { transition: opacity .25s; }
+.hide { opacity: 0 !important; pointer-events: none; }
+.gone { display: none !important; }
+
+/* Cover, dividers, outline */
+.cover { justify-content: center; gap: 22px; padding: 56px 72px 60px; }
+.div-grid { flex: 1; display: grid; grid-template-columns: 1fr 390px; gap: 40px; align-items: center; }
+.big { font-family: var(--head); font-size: 112px; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -3px; }
+.rail { display: flex; flex-direction: column; gap: 9px; list-style: none; margin: 0; padding: 0 0 0 20px; border-left: 2px solid var(--hair); }
+.rail li { font-size: 20px; color: var(--muted); display: flex; gap: 10px; }
+.rail li span { font-family: var(--mono); font-size: 15px; }
+.rail li.now { color: var(--ink); font-weight: 700; }
+.rail li.now span { color: var(--accent); }
+.outl { display: flex; flex-direction: column; flex: 1; justify-content: center; }
+.outl > div { display: grid; grid-template-columns: 56px 340px 1fr 62px; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--hair2); }
+.outl > div:first-child { border-top: 0; }
+.outl .n { font-family: var(--mono); font-weight: 600; font-size: 18px; }
+.outl .t { font-family: var(--head); font-weight: 700; font-size: 23px; color: var(--ink); }
+.outl .d { font-size: 21px; }
+.outl .m { font-family: var(--mono); font-size: 16px; text-align: right; color: var(--muted); }
+
+.foot { position: absolute; left: 56px; right: 56px; bottom: 16px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+.progress { position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 5; }
+.progress i { display: block; height: 100%; width: 0; background: var(--blue); transition: width .2s; }
+.pager { position: fixed; right: 10px; bottom: 9px; z-index: 6; display: flex; gap: 4px; opacity: .25; transition: opacity .2s; }
+.pager:hover { opacity: 1; }
+.pager button { width: 32px; height: 28px; font-size: 15px; color: var(--ink); background: var(--surface2); border: 1px solid var(--hair); border-radius: 6px; cursor: pointer; }
+#notes { position: fixed; left: 0; right: 0; bottom: 0; z-index: 7; max-height: 34vh; overflow: auto; padding: 14px 22px 20px; font-size: 19px; line-height: 1.42; color: var(--ink); background: color-mix(in srgb, var(--surface2) 96%, transparent); border-top: 2px solid var(--blue); display: none; }
+#notes.show { display: block; }
+#notes b { font-family: var(--mono); font-size: 14px; color: var(--muted); display: block; margin-bottom: 4px; }
+aside.notes { display: none; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  @page { size: 1280px 720px; margin: 0; }
+  html, body { overflow: visible; height: auto; }
+  #deck { position: static; transform: none !important; width: auto; height: auto; }
+  .slide { display: flex !important; position: relative; width: 1280px; height: 720px; break-after: page; }
+  .hide { opacity: 1 !important; }
+  .progress, .pager, #notes { display: none !important; }
+}
+</style>
+</head>
+<body>
+<main id="deck">
+
+<!-- ================= MỞ ĐẦU ================= -->
+<section class="slide cover" data-p="00" data-plain>
+  <div class="eyebrow">SEMINAR · DÀNH CHO FRESHER SOFTWARE ENGINEER</div>
+  <h1>Front-End<br>Toàn Cảnh</h1>
+  <p class="lead">Bản đồ tư duy về kiến trúc, luồng dữ liệu, hiệu suất và bảo mật cơ bản.</p>
+  <p class="small muted">[Tên diễn giả] · [Ngày thuyết trình] · 75 phút</p>
+  <aside class="notes">Giới thiệu bản thân ngắn gọn. Phím tắt: mũi tên hoặc Space để chuyển, N để xem ghi chú, T đổi giao diện sáng/tối, F toàn màn hình.</aside>
+</section>
+
+<section class="slide" data-section="Nội dung">
+  <h2>Sáu phần, đi từ bức tranh lớn đến những lỗi bạn sẽ gặp tuần đầu đi làm</h2>
+  <div class="outl" id="outline"></div>
+  <aside class="notes">Mục tiêu không phải nhớ hết công cụ, mà là biết mỗi vấn đề thuộc về đâu khi gặp nó. Có nhiều demo trực tiếp; cứ hỏi ngay nếu chưa rõ, phần cuối còn 10 phút Q&amp;A.</aside>
+</section>
+
+<!-- ================= 01 HỆ SINH THÁI ================= -->
+<section class="slide divider" data-p="01" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">01</div><h1 style="font-size:54px">Hệ sinh thái &amp; Kiến trúc</h1><p class="lead">Hiểu bản chất kiến trúc thay vì học vẹt framework.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">13 phút. Ba câu hỏi: vì sao có framework, HTML được tạo ở đâu, code đi từ máy mình lên trình duyệt thế nào.</aside>
+</section>
+
+<section class="slide">
+  <h2>Từ thao tác DOM bằng tay đến mô tả giao diện theo state</h2>
+  <div class="two">
+    <div class="stack"><span class="label">NGÀY XƯA: VANILLA JS / JQUERY</span>
+<pre class="code grow">let count = 0;
+
+$('#plus').on('click', () =&gt; {
+  count++;
+  <span class="c">// Tự nhớ mọi chỗ cần cập nhật</span>
+  $('#count').text(count);
+  $('#badge').text(count);
+  $('#total').text(count * price);
+});</pre>
+      <div class="callout bad">Dự án càng lớn, càng dễ quên cập nhật một chỗ nào đó.</div>
+    </div>
+    <div class="stack" data-step="1"><span class="label">NGÀY NAY: COMPONENT-BASED</span>
+<pre class="code grow">function Cart({ price }) {
+  const [count, setCount] = useState(0);
+
+  <span class="c">// Mô tả UI theo state, React lo phần DOM</span>
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      {count} món, tổng {count * price}
+    &lt;/button&gt;
+  );
+}</pre>
+      <div class="callout">Đổi state, giao diện tự cập nhật theo.</div>
+    </div>
+  </div>
+  <aside class="notes">Đây là chuyển dịch từ imperative sang declarative. React, Vue, Angular khác cú pháp nhưng cùng chia sẻ ý tưởng này.</aside>
+</section>
+
+<section class="slide">
+  <h2>Component chia UI thành các mảnh ghép độc lập, dễ tái sử dụng</h2>
+  <div class="two" style="grid-template-columns:7fr 5fr;align-items:center">
+    <div class="mock">
+      <div class="cmp">&lt;Header /&gt;</div>
+      <div class="row" style="align-items:stretch;flex-wrap:nowrap">
+        <div class="cmp" style="flex:0 0 150px">&lt;Filters /&gt;</div>
+        <div class="stack" style="flex:1;gap:10px">
+          <div class="cmp">&lt;SearchBox /&gt;</div>
+          <div class="three" style="gap:10px"><div class="cmp">&lt;ProductCard /&gt;</div><div class="cmp">&lt;ProductCard /&gt;</div><div class="cmp">&lt;ProductCard /&gt;</div></div>
+          <div class="cmp">&lt;Pagination /&gt;</div>
+        </div>
+      </div>
+    </div>
+    <ul class="points">
+      <li><b>Độc lập:</b> mỗi mảnh tự lo giao diện và logic của nó.</li>
+      <li><b>Tái sử dụng:</b> một <code>ProductCard</code>, dùng ở nhiều nơi.</li>
+      <li><b>Dữ liệu đi một chiều:</b> cha truyền props xuống con.</li>
+      <li><b>Thách thức mới:</b> state nên đặt ở đâu? Chủ đề 3 sẽ trả lời.</li>
+    </ul>
+  </div>
+  <aside class="notes">Có thể mở một trang thương mại điện tử rồi hỏi cả phòng: trang này chia được thành những component nào?</aside>
+</section>
+
+<section class="slide">
+  <h2>HTML được tạo ở đâu quyết định lúc người dùng thấy nội dung</h2>
+  <div class="body center" style="gap:22px">
+    <div class="rt"><div class="name">CSR</div><div class="bars"><div class="bar" style="flex:12">HTML gần rỗng</div><div class="bar" style="flex:18">Tải JS</div><div class="bar" style="flex:26">Chạy JS, gọi API</div><div class="bar use" style="flex:44">Thấy nội dung + tương tác được</div></div></div>
+    <div class="rt" data-step="1"><div class="name">SSR</div><div class="bars"><div class="bar" style="flex:16">Server render</div><div class="bar see" style="flex:36">Thấy nội dung</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:30">Tương tác được</div></div></div>
+    <div class="rt" data-step="2"><div class="name">SSG</div><div class="bars"><div class="bar" style="flex:7">CDN</div><div class="bar see" style="flex:39">Thấy nội dung (HTML tạo sẵn lúc build)</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:36">Tương tác được</div></div></div>
+    <p class="small muted">Sơ đồ minh họa thứ tự các giai đoạn, không theo tỉ lệ thời gian thực.</p>
+    <div class="callout" data-step="3"><b>Hydration:</b> JS gắn event handler vào HTML server trả về. Trước bước này, trang đã hiện nhưng nút bấm chưa phản hồi.</div>
+  </div>
+  <aside class="notes">Nhấn vào khoảng cách giữa "thấy" và "dùng được" của SSR. Có thể demo nhanh bằng tắt JavaScript trong DevTools: trang CSR trắng xóa, trang SSR vẫn có nội dung.</aside>
+</section>
+
+<section class="slide">
+  <h2>Không có mô hình tốt nhất, chỉ có mô hình hợp với loại trang</h2>
+  <table>
+    <tr><th></th><th>Ưu điểm</th><th>Nhược điểm</th><th>Hợp với</th></tr>
+    <tr><td class="n">CSR</td><td>Chuyển trang mượt, server đơn giản</td><td>Load lần đầu chậm, SEO kém hơn</td><td>Dashboard, trang nội bộ sau đăng nhập</td></tr>
+    <tr><td class="n">SSR</td><td>Thấy nội dung sớm, tốt cho SEO, dữ liệu mới theo từng request</td><td>Tốn tài nguyên server, vận hành phức tạp hơn</td><td>Trang sản phẩm, nội dung cá nhân hóa</td></tr>
+    <tr><td class="n">SSG</td><td>Rất nhanh, rẻ, dễ cache trên CDN</td><td>Dữ liệu đổi thì phải build lại</td><td>Blog, tài liệu, landing page</td></tr>
+  </table>
+  <div class="callout">Framework như Next.js, Nuxt cho phép chọn mô hình theo từng trang, không cần chọn một cho cả ứng dụng.</div>
+  <aside class="notes">Hỏi cả phòng: trang chủ báo điện tử, trang quản trị đơn hàng, tài liệu API thì chọn gì? Có nhiều đáp án hợp lý, quan trọng là giải thích được lý do.</aside>
+</section>
+
+<section class="slide">
+  <h2>Trình duyệt không hiểu <code style="font-size:.9em">.jsx</code> hay <code style="font-size:.9em">.vue</code>, nên cần build tool</h2>
+  <div class="body center" style="gap:24px">
+    <div class="chain">
+      <div class="box"><b>Source</b><span><code>.jsx .tsx .vue .scss</code> và hàng trăm module</span></div><div class="ar">→</div>
+      <div class="box hot" data-step="1"><b>Transpile</b><span>Dịch JSX, TypeScript thành JavaScript trình duyệt chạy được</span></div><div class="ar" data-step="1">→</div>
+      <div class="box hot" data-step="2"><b>Bundle</b><span>Gom module, bỏ code thừa, tách chunk, nén</span></div><div class="ar" data-step="2">→</div>
+      <div class="box" data-step="2"><b>Output</b><span><code>index.html</code>, <code>app.a1b2.js</code>, <code>app.c3d4.css</code></span></div>
+    </div>
+    <div class="two" style="flex:none" data-step="3">
+<pre class="code"><span class="c">// Bạn viết</span>
+&lt;Button size="lg"&gt;Mua&lt;/Button&gt;
+
+<span class="c">// Sau khi transpile (minh họa)</span>
+jsx(Button, { size: "lg", children: "Mua" })</pre>
+      <div class="card"><div class="k">VITE / WEBPACK</div><p>Webpack bundle trước rồi mới phục vụ khi dev. Vite tận dụng ES modules của trình duyệt khi dev nên khởi động nhanh, và vẫn bundle khi build production.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Tách rõ hai việc mà fresher hay gộp làm một. Tên file có hash giúp cache lâu dài: nội dung đổi thì tên file đổi.</aside>
+</section>
+
+<!-- ================= 02 RENDER & MAIN THREAD ================= -->
+<section class="slide divider" data-p="02" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">02</div><h1 style="font-size:54px">Render &amp; Main Thread</h1><p class="lead">Nền tảng để hiểu vì sao cần phân loại state và vì sao UI bị chậm.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">7 phút. Hai mô hình tư duy này sẽ được dùng lại ở cả Chủ đề 3 và Chủ đề 4.</aside>
+</section>
+
+<section class="slide">
+  <h2>State đổi thì component render lại, và kéo theo các component con</h2>
+  <div class="two" style="grid-template-columns:1fr">
+    <div class="stack">
+      <div class="row"><span class="live">LIVE</span><span class="small">Bấm tên component để gọi <code>setState</code> tại đó</span></div>
+      <div id="rr" class="stack"></div>
+    </div>
+    <div class="three">
+      <div class="card"><div class="k">RENDER</div><p>React gọi lại function component để tính UI mới.</p></div>
+      <div class="card"><div class="k">COMMIT</div><p>Chỉ cập nhật phần DOM thực sự thay đổi. Render lại không đồng nghĩa DOM đổi.</p></div>
+      <div class="card hot"><div class="k">HỆ QUẢ</div><p>State đặt càng cao, phần phải render lại càng lớn.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Bấm App: tất cả sáng lên và số đếm tăng. Bấm List: chỉ List và Item. Kết luận: vị trí đặt state ảnh hưởng trực tiếp đến phạm vi render. React.memo có thể bỏ qua một số lần render, nhưng hãy đặt state đúng chỗ trước.</aside>
+</section>
+
+<section class="slide">
+  <h2>JavaScript chạy trên main thread, chung với việc vẽ UI và nhận input</h2>
+  <div class="body">
+    <div class="row"><span class="live">LIVE</span><span class="small">Quả bóng được JS di chuyển mỗi frame. Thử gõ vào ô bên dưới trong lúc chạy.</span></div>
+    <div class="track" id="mt-track"><i></i></div>
+    <div class="row">
+      <button class="btn" id="mt-block">Chặn main thread 2 giây</button>
+      <button class="btn" id="mt-split">Làm cùng lượng việc, chia nhỏ</button>
+      <input class="field" id="mt-input" style="flex:1;width:auto" placeholder="Gõ thử vào đây" aria-label="Ô gõ thử" />
+    </div>
+    <div class="callout" id="mt-out">Bấm một nút để đo frame dài nhất.</div>
+    <p>Task dài chặn main thread nên trình duyệt không vẽ được frame mới và không xử lý được click. Đây chính là thứ làm chỉ số <b>INP</b> xấu đi ở Chủ đề 4.</p>
+  </div>
+  <aside class="notes">Bấm nút đầu: bóng đứng im, gõ không ra chữ. Bấm nút hai: tổng lượng việc như nhau nhưng bóng vẫn chạy vì giữa các phần việc, trình duyệt có cơ hội vẽ. 60 fps tương ứng khoảng 16.7 ms mỗi frame.</aside>
+</section>
+
+<section class="slide" id="el-slide" data-steps="7">
+  <h2>Event loop: đoạn code này in ra thứ tự nào?</h2>
+  <div class="two" style="grid-template-columns:5fr 7fr;flex:none">
+<pre class="code" id="el-code"><span class="line">console.log('A');</span><span class="line">setTimeout(() =&gt; console.log('B'), 0);</span><span class="line">Promise.resolve()</span><span class="line">  .then(() =&gt; console.log('C'));</span><span class="line">console.log('D');</span></pre>
+    <div class="callout" id="el-say" style="display:flex;align-items:center"></div>
+  </div>
+  <div class="el">
+    <div class="card"><div class="k">CALL STACK</div><div class="v" id="el-stack"></div></div>
+    <div class="card"><div class="k">MICROTASK QUEUE</div><div class="v" id="el-micro"></div></div>
+    <div class="card"><div class="k">TASK QUEUE</div><div class="v" id="el-task"></div></div>
+    <div class="card hot"><div class="k">OUTPUT</div><div class="v" id="el-out"></div></div>
+  </div>
+  <p>Quy tắc: chạy hết code đồng bộ, rồi <b>toàn bộ microtask</b> (Promise), sau đó mới đến <b>một task</b> (setTimeout).</p>
+  <aside class="notes">Cho cả phòng đoán trước khi bấm. Đáp án: A D C B. setTimeout 0 không có nghĩa là chạy ngay, chỉ là sớm nhất có thể sau khi call stack trống và microtask đã xong.</aside>
+</section>
+
+<!-- ================= 03 STATE ================= -->
+<section class="slide divider" data-p="03" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">Quản lý State</h1><p class="lead">Bài toán đau đầu nhất, và lý do không nên dùng Redux cho mọi thứ.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">15 phút. Nếu chỉ nhớ một điều từ phần này: hãy phân loại state trước khi chọn công cụ.</aside>
+</section>
+
+<section class="slide">
+  <h2>Prop drilling: truyền dữ liệu qua những component không cần đến nó</h2>
+  <div class="body center" style="gap:24px">
+    <div class="chain">
+      <div class="box hot"><b>App</b><span>Giữ <code>user</code></span></div><div class="ar">→</div>
+      <div class="box dim" data-step="1"><b>Layout</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="1">→</div>
+      <div class="box dim" data-step="1"><b>Sidebar</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="1">→</div>
+      <div class="box dim" data-step="1"><b>UserMenu</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="2">→</div>
+      <div class="box hot" data-step="2"><b>Avatar</b><span>Dùng <code>user</code></span></div>
+    </div>
+    <div class="three" data-step="3">
+      <div class="card"><div class="k">KHÓ ĐỔI</div><p>Thêm một prop là sửa cả chuỗi component.</p></div>
+      <div class="card"><div class="k">KHÓ TÁI SỬ DỤNG</div><p>Component trung gian phụ thuộc vào dữ liệu nó không dùng.</p></div>
+      <div class="card"><div class="k">KHÓ ĐỌC</div><p>Phải lần ngược nhiều file để biết dữ liệu từ đâu đến.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Truyền qua một hai cấp là bình thường. Prop drilling chỉ thành vấn đề khi chuỗi dài và các tầng giữa không liên quan.</aside>
+</section>
+
+<section class="slide">
+  <h2>Giải quyết theo thứ tự, đừng nhảy ngay đến global store</h2>
+  <div class="three grow">
+    <div class="card"><div class="k">BƯỚC 1</div><h3>Đặt state đúng chỗ</h3><p>Chuyển state xuống gần nơi dùng nhất, hoặc lên cha chung gần nhất.</p>
+<pre class="code" style="font-size:17px;margin-top:auto">&lt;SearchBox /&gt;
+<span class="c">// tự giữ text của nó</span></pre></div>
+    <div class="card" data-step="1"><div class="k">BƯỚC 2</div><h3>Component composition</h3><p>Truyền luôn component con đã có dữ liệu qua <code>children</code>.</p>
+<pre class="code" style="font-size:17px;margin-top:auto">&lt;Layout&gt;
+  &lt;Avatar user={user} /&gt;
+&lt;/Layout&gt;</pre></div>
+    <div class="card" data-step="2"><div class="k">BƯỚC 3</div><h3>Context hoặc store</h3><p>Khi dữ liệu thật sự được nhiều nơi xa nhau dùng, như theme, user.</p>
+<pre class="code" style="font-size:17px;margin-top:auto">const user = useContext(
+  UserContext
+);</pre></div>
+  </div>
+  <div class="callout">Composition là cách đơn giản nhưng hay bị bỏ qua: <code>Layout</code> không cần biết <code>user</code> là gì.</div>
+  <aside class="notes">Cho xem so sánh: với composition, các tầng giữa không còn nhận prop user, và không cần thêm thư viện nào.</aside>
+</section>
+
+<section class="slide">
+  <h2>Phân loại state trước khi chọn công cụ</h2>
+  <div class="four grow">
+    <div class="card"><div class="k">UI / LOCAL</div><h3>Chỉ một component cần</h3><p>Modal đang mở, chữ trong input.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">useState</span></div>
+    <div class="card" data-step="1"><div class="k">SHARED</div><h3>Chia sẻ xuống cây component</h3><p>Theme, ngôn ngữ. Mọi consumer re-render khi value đổi.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Context API</span></div>
+    <div class="card hot" data-step="2"><div class="k">SERVER</div><h3>Dữ liệu lấy từ API</h3><p>Thực chất là bản sao có thể đã cũ. Điểm fresher hay sai nhất.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">React Query, SWR</span></div>
+    <div class="card" data-step="3"><div class="k">DERIVED</div><h3>Tính được từ state có sẵn</h3><p>Tổng tiền, danh sách đã lọc. Không tạo state mới.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Tính khi render</span></div>
+  </div>
+  <div class="callout" data-step="4">Khi đã tách các loại trên, phần cần global store thường còn lại rất ít.</div>
+  <aside class="notes">Đây là slide quan trọng nhất phần này. Cho một ví dụ: danh sách sản phẩm từ API là server state, ô tìm kiếm là local, theme là shared, số sản phẩm đã lọc là derived.</aside>
+</section>
+
+<section class="slide">
+  <h2>Server state: đừng tự viết lại cache bằng <code style="font-size:.9em">useEffect</code></h2>
+  <div class="two">
+    <div class="stack"><span class="label">TỰ VIẾT, VÀ MỚI CHỈ LÀ BẮT ĐẦU</span>
+<pre class="code bad grow" style="font-size:18px">const [users, setUsers] = useState([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+
+useEffect(() =&gt; {
+  fetch('/api/users')
+    .then((r) =&gt; r.json())
+    .then(setUsers)
+    .catch(setError)
+    .finally(() =&gt; setLoading(false));
+}, []);
+<span class="c">// Chưa có: cache, retry, refetch, chống trùng</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">REACT QUERY</span>
+<pre class="code good" style="font-size:18px">const { data, isPending, error } = useQuery({
+  queryKey: ['users'],
+  queryFn: fetchUsers,
+});</pre>
+      <ul class="points">
+        <li><b>Cache:</b> nhiều component dùng chung một dữ liệu.</li>
+        <li><b>Chống trùng:</b> các request giống nhau được gộp lại.</li>
+        <li><b>Tự làm mới:</b> theo cấu hình, khi dữ liệu đã cũ.</li>
+        <li>Lựa chọn khác: SWR, RTK Query.</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Lưu ý code bên trái chưa kiểm tra r.ok. Đừng nói thư viện là bắt buộc, nhưng hãy biết những việc nó đang gánh giúp mình trước khi tự viết.</aside>
+</section>
+
+<section class="slide">
+  <h2>Derived state: tính được thì không lưu</h2>
+  <div class="two" style="flex:none">
+    <div class="stack"><span class="label">SAI: HAI NGUỒN SỰ THẬT</span>
+<pre class="code bad">const [items, setItems] = useState([]);
+const [total, setTotal] = useState(0);
+
+useEffect(() =&gt; {
+  setTotal(items.reduce(sum, 0));
+}, [items]);</pre></div>
+    <div class="stack" data-step="1"><span class="label">ĐÚNG: TÍNH KHI RENDER</span>
+<pre class="code good">const [items, setItems] = useState([]);
+
+const total = items.reduce(sum, 0);
+
+<span class="c">// Chỉ khi tính thực sự nặng:</span>
+<span class="c">// useMemo(() =&gt; ..., [items])</span></pre></div>
+  </div>
+  <ul class="points" data-step="2">
+    <li><b>Bên trái:</b> render thêm một lần, và có một khoảnh khắc <code>total</code> lệch với <code>items</code>.</li>
+    <li><b>Bên phải:</b> không thể lệch nhau, ít code hơn.</li>
+    <li><b>Dấu hiệu cần xem lại:</b> <code>useEffect</code> chỉ để <code>setState</code> từ state khác.</li>
+  </ul>
+  <aside class="notes">Đây là lỗi review code gặp rất thường xuyên. Tài liệu React có hẳn một bài "You Might Not Need an Effect", có trong link cuối buổi.</aside>
+</section>
+
+<section class="slide">
+  <h2>Global state: chọn theo dự án, không chọn theo trend</h2>
+  <table>
+    <tr><th></th><th>Mô hình</th><th>Điểm mạnh</th><th>Cân nhắc</th></tr>
+    <tr><td class="n">Redux Toolkit</td><td>Một store, action, reducer</td><td>Luồng rõ ràng, DevTools mạnh, hệ sinh thái lớn</td><td>Nhiều khái niệm phải học; RTK đã giảm boilerplate nhiều</td></tr>
+    <tr><td class="n">Zustand</td><td>Store nhỏ gọn qua hook</td><td>API tối giản, không cần Provider</td><td>Ít quy ước, team tự thống nhất cấu trúc</td></tr>
+    <tr><td class="n">Jotai</td><td>Các atom nhỏ ghép lại</td><td>Re-render chi tiết theo từng atom</td><td>Nhiều atom rời rạc có thể khó theo dõi</td></tr>
+  </table>
+  <div class="callout">Redux chưa lỗi thời: nhiều dự án bạn sắp vào vẫn đang dùng. Hãy hiểu luồng dữ liệu của nó, rồi học công cụ nào cũng nhanh.</div>
+  <aside class="notes">Không cần đi sâu. Mục đích là để fresher biết các lựa chọn tồn tại và không phán xét codebase đang dùng Redux.</aside>
+</section>
+
+<!-- ================= 04 PERFORMANCE ================= -->
+<section class="slide divider" data-p="04" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Đo trước, tối ưu sau, và tránh vài lỗi phổ biến.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">15 phút, có hai demo: debounce/throttle và DevTools.</aside>
+</section>
+
+<section class="slide">
+  <h2>Core Web Vitals: ba câu hỏi từ góc nhìn người dùng</h2>
+  <div class="three grow">
+    <div class="card"><div class="k">LOADING</div><h1 style="font-size:58px">LCP</h1><h3>Largest Contentful Paint</h3><p>Bao lâu thì thấy phần nội dung chính, như ảnh banner, chữ lớn?</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 2.5 giây</span></div>
+    <div class="card" data-step="1"><div class="k">TƯƠNG TÁC</div><h1 style="font-size:58px">INP</h1><h3>Interaction to Next Paint</h3><p>Click xong, bao lâu giao diện mới phản hồi? Nhớ lại demo main thread.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 200 ms</span></div>
+    <div class="card" data-step="2"><div class="k">ỔN ĐỊNH</div><h1 style="font-size:58px">CLS</h1><h3>Cumulative Layout Shift</h3><p>Đang đọc thì ảnh load xong đẩy chữ tụt xuống? Điểm càng thấp càng tốt.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 0.1</span></div>
+  </div>
+  <p class="small muted">Ngưỡng do Google công bố, đánh giá ở phân vị 75 của lượt truy cập thực tế (web.dev/vitals).</p>
+  <aside class="notes">Phân vị 75 nghĩa là 75% lượt truy cập phải đạt ngưỡng. Mở rộng: CLS thường do ảnh không khai báo kích thước, hoặc nội dung chèn thêm vào phía trên.</aside>
+</section>
+
+<section class="slide">
+  <h2>Những Quick Wins bạn làm được ngay</h2>
+  <div class="two" style="flex:none">
+    <div class="card"><div class="k">LAZY LOADING</div><h3>Chỉ tải khi cần</h3>
+<pre class="code" style="font-size:18px">&lt;img src="a.webp" loading="lazy"
+     width="400" height="300" /&gt;
+
+const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
+    <div class="card bad" data-step="1"><div class="k" style="color:var(--bad)">CÁI BẪY</div><h3>Đừng lazy load ảnh đầu trang</h3><p>Ảnh banner thường chính là phần tử LCP. Lazy load khiến trình duyệt tải nó muộn hơn và LCP xấu đi.</p>
+<pre class="code" style="font-size:18px">&lt;img src="hero.webp" fetchpriority="high" /&gt;</pre></div>
+  </div>
+  <div class="two" style="flex:none">
+    <div class="card" data-step="2"><div class="k">HÌNH ẢNH</div><p>Dùng WebP, nén và chọn đúng kích thước. Khai báo <code>width</code>, <code>height</code> để tránh CLS.</p></div>
+    <div class="card" data-step="3"><div class="k">API</div><p>Tránh gọi lặp: cache với React Query, và giới hạn tần suất bằng debounce, throttle.</p></div>
+  </div>
+  <aside class="notes">Cái bẫy này là lý do không nên thêm loading="lazy" cho mọi ảnh một cách máy móc. Slide tiếp theo nối sang debounce và throttle.</aside>
+</section>
+
+<section class="slide">
+  <h2>Debounce và Throttle: cùng giảm số lần gọi, khác cách</h2>
+  <div class="body">
+    <div class="row" style="flex-wrap:nowrap"><span class="live">LIVE</span>
+      <input class="field" id="db-input" style="flex:1;width:auto" placeholder="Gõ vào đây, hoặc bấm giả lập" aria-label="Ô gõ thử debounce" />
+      <button class="btn" id="db-type">Giả lập gõ</button><button class="btn" id="db-scroll">Giả lập scroll</button><button class="btn" id="db-clear">Xóa</button>
+    </div>
+    <div class="stack" style="gap:9px">
+      <div class="lane"><div class="ln">Sự kiện</div><div class="tk" id="tk-raw"></div><div class="ct" id="ct-raw">0</div></div>
+      <div class="lane d"><div class="ln">Debounce</div><div class="tk" id="tk-d"></div><div class="ct" id="ct-d">0</div></div>
+      <div class="lane t"><div class="ln">Throttle</div><div class="tk" id="tk-t"></div><div class="ct" id="ct-t">0</div></div>
+    </div>
+    <p class="small muted">Cả hai dùng mốc 300 ms. Mỗi vạch là một lần hàm được gọi.</p>
+    <div class="two" style="flex:none">
+      <div class="card"><div class="k">DEBOUNCE</div><p><b>Chờ ngừng thao tác rồi mới chạy.</b> Như thang máy chờ đến khi không còn người bước vào. Dùng cho ô tìm kiếm, validate form, autosave.</p></div>
+      <div class="card"><div class="k">THROTTLE</div><p><b>Chạy tối đa một lần mỗi khoảng thời gian.</b> Như súng bắn theo nhịp, dù giữ cò liên tục. Dùng cho scroll, resize, kéo thả.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Bấm Giả lập gõ: debounce chỉ chạy sau mỗi quãng dừng. Bấm Giả lập scroll: debounce chỉ chạy một lần ở cuối, còn throttle chạy đều, nên throttle hợp với việc cần cập nhật liên tục trong lúc thao tác. Demo chạy ngay trên slide.</aside>
+</section>
+
+<section class="slide">
+  <h2>Lỗi 1: tạo debounce trong thân component</h2>
+  <div class="two">
+    <div class="stack"><span class="label">SAI: MỖI LẦN RENDER MỘT TIMER MỚI</span>
+<pre class="code bad grow" style="font-size:18px">function Search() {
+  const [q, setQ] = useState('');
+  <span class="x">const search = debounce(callApi, 300);</span>
+
+  return (
+    &lt;input value={q} onChange={(e) =&gt; {
+      setQ(e.target.value); <span class="c">// gây re-render</span>
+      search(e.target.value);
+    }} /&gt;
+  );
+}
+<span class="c">// Gõ 5 ký tự: vẫn gọi API 5 lần, chỉ là trễ hơn</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">ĐÚNG: GIỮ INSTANCE ỔN ĐỊNH, HỦY KHI UNMOUNT</span>
+<pre class="code good grow" style="font-size:18px">function useDebounced(fn, delay) {
+  const timer = useRef();
+  const latest = useRef(fn);
+  useEffect(() =&gt; { latest.current = fn; });
+  <span class="g">useEffect(() =&gt; () =&gt; {
+    clearTimeout(timer.current);
+  }, []);</span>
+
+  return useCallback((...args) =&gt; {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(
+      () =&gt; latest.current(...args), delay
+    );
+  }, [delay]);
+}</pre></div>
+  </div>
+  <aside class="notes">Liên hệ Chủ đề 2: state đổi thì function component chạy lại, nên biến khai báo trong thân component được tạo mới. Thực tế có thể dùng hook có sẵn như useDebouncedCallback của thư viện use-debounce.</aside>
+</section>
+
+<section class="slide">
+  <h2>Lỗi 2 và 3: debounce không giải quyết mọi thứ</h2>
+  <div class="two">
+    <div class="stack">
+      <div class="card bad"><div class="k" style="color:var(--bad)">LỖI 2: RACE CONDITION</div><p>Response cũ có thể về sau response mới. Gõ <code>re</code> rồi <code>react</code>, kết quả của <code>re</code> về sau và ghi đè.</p></div>
+<pre class="code good grow" style="font-size:18px">useEffect(() =&gt; {
+  <span class="g">const c = new AbortController();</span>
+  fetch(url(q), { signal: c.signal })
+    .then((r) =&gt; r.json())
+    .then(setData)
+    .catch((e) =&gt; {
+      if (e.name !== 'AbortError') setError(e);
+    });
+  <span class="g">return () =&gt; c.abort();</span>
+}, [q]);</pre>
+    </div>
+    <div class="stack" data-step="1">
+      <div class="card bad"><div class="k" style="color:var(--bad)">LỖI 3: DÙNG ĐỂ CHỮA UI CHẬM</div><p>Debounce chỉ giảm số lần gọi. Một lần render nặng vẫn nặng như cũ.</p></div>
+      <div class="card"><div class="k">THAY VÀO ĐÓ</div><ul class="points">
+        <li>Đo bằng React Profiler để tìm chỗ chậm.</li>
+        <li>Giảm phạm vi re-render, đặt state đúng chỗ.</li>
+        <li>Danh sách dài: dùng virtualization.</li>
+        <li>Việc tính toán nặng: chia nhỏ hoặc dùng Web Worker.</li>
+      </ul></div>
+    </div>
+  </div>
+  <aside class="notes">React Query tự xử lý race condition vì kết quả gắn với queryKey. Nhắc lại demo main thread: chia nhỏ task giúp UI còn phản hồi.</aside>
+</section>
+
+<section class="slide" data-demo>
+  <h2>Demo: đo trước khi tối ưu, ngay trong DevTools</h2>
+  <div class="three grow">
+    <div class="card"><div class="k">TAB NETWORK</div><h3>Có bao nhiêu request?</h3><ul class="points">
+      <li>Có request trùng không?</li><li>File nào lớn nhất?</li><li>Bật throttling Fast 4G để thử mạng chậm.</li></ul></div>
+    <div class="card"><div class="k">LIGHTHOUSE</div><h3>Đo khi tải trang</h3><ul class="points">
+      <li>Cho biết LCP, CLS.</li><li>Dùng TBT để ước lượng độ phản hồi, không đo INP.</li><li>Đọc phần gợi ý cải thiện.</li></ul></div>
+    <div class="card"><div class="k">TAB PERFORMANCE</div><h3>Đo khi tương tác</h3><ul class="points">
+      <li>Xem LCP, CLS, INP trực tiếp.</li><li>Click thử rồi xem INP đổi thế nào.</li><li>Quay profile để thấy task dài.</li></ul></div>
+  </div>
+  <div class="callout">Lighthouse là số đo trong môi trường thử nghiệm. Số liệu người dùng thật có thể khác.</div>
+  <aside class="notes">Chuyển sang app demo. Chuẩn bị sẵn một trang có ảnh lớn và vài request trùng. Có video dự phòng nếu mạng hoặc máy gặp sự cố.</aside>
+</section>
+
+<!-- ================= 05 SECURITY ================= -->
+<section class="slide divider" data-p="05" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">05</div><h1 style="font-size:54px">Bảo mật cơ bản</h1><p class="lead">XSS, CSRF và lưu trữ token, thay vì mặc định dùng <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">12 phút. Hiểu hai kiểu tấn công trước, bảng so sánh nơi lưu token sẽ tự có ý nghĩa.</aside>
+</section>
+
+<section class="slide">
+  <h2>Vì sao cần hai loại token?</h2>
+  <table style="flex:none">
+    <tr><th></th><th>Access token</th><th>Refresh token</th></tr>
+    <tr><td class="n">Dùng để</td><td>Gọi API</td><td>Xin access token mới</td></tr>
+    <tr><td class="n">Thời hạn</td><td>Ngắn, thường 5–15 phút</td><td>Dài hơn, thường vài ngày đến vài tuần</td></tr>
+    <tr><td class="n">Gửi đến</td><td>Mọi API cần xác thực</td><td>Chỉ endpoint refresh</td></tr>
+    <tr><td class="n">Nếu bị lộ</td><td>Thiệt hại giới hạn trong thời gian ngắn</td><td>Nghiêm trọng hơn, nên phải bảo vệ kỹ và có thể thu hồi</td></tr>
+  </table>
+  <div class="callout">Câu hỏi còn lại: lưu hai token này ở đâu? Để trả lời, cần hiểu trước hai kiểu tấn công.</div>
+  <aside class="notes">Thời hạn cụ thể phụ thuộc yêu cầu bảo mật của từng hệ thống, các con số trên chỉ là mức thường gặp. Chỉ dành 1 phút cho slide này.</aside>
+</section>
+
+<section class="slide">
+  <h2>XSS: JS của kẻ tấn công chạy ngay trong trang của bạn</h2>
+  <div class="body">
+    <div class="row"><span class="live">LIVE</span><span class="small">Một bình luận chứa payload. Token dưới đây là dữ liệu giả, chỉ dùng cho demo.</span></div>
+    <textarea class="field" id="xss-input" rows="2" aria-label="Nội dung bình luận"></textarea>
+    <div class="row"><button class="btn" id="xss-run">Hiển thị bình luận</button><span class="small muted" id="xss-note"></span></div>
+    <div class="two" style="flex:none">
+      <div class="stack" style="gap:8px"><pre class="code bad" style="padding:8px 12px;font-size:16px">&lt;div dangerouslySetInnerHTML={{ __html: comment }} /&gt;</pre><div class="out" id="xss-bad"></div></div>
+      <div class="stack" style="gap:8px"><pre class="code good" style="padding:8px 12px;font-size:16px">&lt;div&gt;{comment}&lt;/div&gt;</pre><div class="out" id="xss-good"></div></div>
+    </div>
+    <div class="callout bad" id="xss-result">Chưa chạy payload.</div>
+    <p>React tự escape nội dung trong <code>{value}</code>. Rủi ro nằm ở những chỗ đi vòng qua cơ chế này.</p>
+  </div>
+  <aside class="notes">Bên trái payload chạy thật và đọc được token giả. Bên phải payload chỉ hiện dưới dạng chữ. Payload của demo không gửi gì ra ngoài. Nhấn mạnh: XSS làm được gần như mọi thứ code của bạn làm được.</aside>
+</section>
+
+<section class="slide">
+  <h2>Chống XSS từ gốc, vì không có lớp bảo vệ nào tuyệt đối</h2>
+  <table>
+    <tr><th>Điểm dễ bị tấn công</th><th>Cách phòng</th></tr>
+    <tr><td class="n"><code>dangerouslySetInnerHTML</code>, <code>innerHTML</code></td><td>Tránh dùng; nếu bắt buộc thì sanitize bằng DOMPurify</td></tr>
+    <tr><td class="n">URL người dùng nhập: <code>href="javascript:..."</code></td><td>Chỉ cho phép <code>http:</code> và <code>https:</code></td></tr>
+    <tr><td class="n">Script và package bên thứ ba</td><td>Hạn chế dùng, kiểm tra dependency bằng <code>npm audit</code></td></tr>
+    <tr><td class="n">Lỗi còn lọt qua</td><td>Dùng CSP để giới hạn script được phép chạy</td></tr>
+  </table>
+<pre class="code" style="flex:none"><span class="c">// HTML từ người dùng, bắt buộc phải render: sanitize trước</span>
+&lt;div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment) }} /&gt;</pre>
+  <aside class="notes">Khi review code, thấy dangerouslySetInnerHTML là phải hỏi: dữ liệu này đến từ đâu? CSP cũng chính là thứ có thể chặn được demo vừa rồi trong môi trường cấu hình chặt.</aside>
+</section>
+
+<section class="slide">
+  <h2>CSRF: mượn trình duyệt của nạn nhân để gửi request</h2>
+  <div class="two" style="grid-template-columns:8fr 5fr;align-items:center">
+    <div id="csrf-seq"></div>
+<pre class="code" style="font-size:16px" data-step="3"><span class="c">&lt;!-- Trên evil.example --&gt;</span>
+&lt;form
+  action="https://bank.example/transfer"
+  method="POST"&gt;
+  &lt;input type="hidden"
+    name="to" value="attacker" /&gt;
+  &lt;input type="hidden"
+    name="amount" value="1000000" /&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  document.forms[0].submit();
+&lt;/script&gt;</pre>
+  </div>
+  <aside class="notes">Kẻ tấn công không đọc được cookie, cũng thường không đọc được response. Họ chỉ cần request được gửi đi với cookie hợp lệ. bank.example chỉ là ví dụ.</aside>
+</section>
+
+<section class="slide">
+  <h2>Chống CSRF, và một hiểu lầm cần đính chính</h2>
+  <div class="two" style="flex:none">
+    <ul class="points">
+      <li><b>Cookie <code>SameSite</code>:</b> set rõ <code>Lax</code> hoặc <code>Strict</code>, đừng dựa vào mặc định của trình duyệt.</li>
+      <li><b>CSRF token:</b> server kiểm tra giá trị mà trang độc hại không biết.</li>
+      <li><b>Header <code>Origin</code>:</b> từ chối request đến từ nguồn lạ.</li>
+      <li><b>Không đổi dữ liệu bằng GET:</b> <code>Lax</code> vẫn gửi cookie khi người dùng bấm link sang site của bạn.</li>
+    </ul>
+    <div class="stack" data-step="1">
+      <div class="card bad"><div class="k" style="color:var(--bad)">HIỂU LẦM</div><h3>"Đã cấu hình CORS rồi nên an toàn"</h3><p>CORS không chống được CSRF. Nó chủ yếu kiểm soát việc JS có được đọc response hay không, còn form ở trên vẫn được gửi đi.</p></div>
+      <div class="card good" data-step="2"><div class="k" style="color:var(--good)">MIỄN NHIỄM TỰ NHIÊN</div><p>Token gửi qua header <code>Authorization</code> không bị CSRF, vì trình duyệt không tự đính kèm header này.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Hỏi trước: ai nghĩ CORS chống được CSRF? Điểm Authorization header sẽ là cầu nối sang slide so sánh nơi lưu token.</aside>
+</section>
+
+<section class="slide">
+  <h2>XSS và CSRF khác nhau ở đâu?</h2>
+  <table>
+    <tr><th></th><th>XSS</th><th>CSRF</th></tr>
+    <tr><td class="n">Code độc chạy ở đâu</td><td>Trong trang của bạn</td><td>Trên trang của kẻ tấn công</td></tr>
+    <tr><td class="n">Khai thác điều gì</td><td>Sự tin tưởng của người dùng vào trang</td><td>Sự tin tưởng của server vào cookie trong trình duyệt</td></tr>
+    <tr><td class="n">Đọc được dữ liệu không</td><td>Có</td><td>Thường không, chủ yếu ép thực hiện hành động</td></tr>
+    <tr><td class="n">Liên quan đến token</td><td>Đọc được token mà script tiếp cận được</td><td>Lợi dụng cookie tự động gửi kèm</td></tr>
+  </table>
+  <div class="callout" data-step="1">Vậy <code>localStorage</code> tránh được CSRF nhưng sợ XSS, còn cookie <code>HttpOnly</code> chống XSS đọc token nhưng phải phòng CSRF.</div>
+  <aside class="notes">Câu cuối là cầu nối thẳng sang slide tiếp theo.</aside>
+</section>
+
+<section class="slide">
+  <h2>Lưu token ở đâu? Mỗi nơi đánh đổi một kiểu</h2>
+  <table style="flex:none">
+    <tr><th>Nơi lưu</th><th>XSS đọc được token?</th><th>Rủi ro CSRF</th><th>Sau khi tải lại trang</th></tr>
+    <tr><td class="n"><code>localStorage</code></td><td class="w">Có</td><td class="y">Không</td><td>Còn</td></tr>
+    <tr><td class="n"><code>sessionStorage</code></td><td class="w">Có</td><td class="y">Không</td><td>Còn, nhưng mất khi đóng tab</td></tr>
+    <tr><td class="n">Biến trong memory</td><td>Khó hơn, không tuyệt đối</td><td class="y">Không</td><td>Mất</td></tr>
+    <tr><td class="n">Cookie <code>HttpOnly</code></td><td class="y">Không</td><td class="w">Có, cần phòng chống</td><td>Còn</td></tr>
+  </table>
+  <div class="two" style="flex:none" data-step="1">
+    <div class="card"><div class="k">THỬ TRONG CONSOLE</div>
+<pre class="code" style="font-size:18px;border:0;padding:0;background:none">localStorage.getItem('token') <span class="c">// lộ ngay</span>
+document.cookie <span class="c">// không thấy cookie HttpOnly</span></pre></div>
+    <div class="callout bad" style="display:flex;align-items:center"><span>Không có nơi lưu nào an toàn tuyệt đối. Bị XSS thì kẻ tấn công vẫn có thể gửi request ngay trong phiên của người dùng.</span></div>
+  </div>
+  <aside class="notes">Demo trên app local có cookie HttpOnly do server set: mở Console và tab Application. Cookie vẫn thấy trong tab Application nhưng không xuất hiện trong document.cookie.</aside>
+</section>
+
+<section class="slide">
+  <h2>Cách nên dùng cho SPA: tách riêng hai token</h2>
+  <div class="two" style="flex:none">
+    <div class="card hot"><div class="k">ACCESS TOKEN</div><h3>Lưu trong memory</h3>
+<pre class="code" style="font-size:18px">Authorization: Bearer eyJhbGci...</pre><p>Không tự gửi kèm nên không bị CSRF. Tải lại trang thì gọi <code>/refresh</code> để lấy token mới.</p></div>
+    <div class="card hot"><div class="k">REFRESH TOKEN</div><h3>Lưu trong cookie <code>HttpOnly</code></h3>
+<pre class="code" style="font-size:18px">Set-Cookie: rt=...; HttpOnly; Secure;
+  SameSite=Strict; Path=/auth/refresh</pre><p>JS không đọc được. Bật rotation: mỗi lần refresh cấp token mới và vô hiệu token cũ.</p></div>
+  </div>
+  <div class="two" style="flex:none" data-step="1">
+    <div class="card"><div class="k">BACKEND PHẢI PHỐI HỢP</div><p>Cookie do server set. Nếu FE và API khác site, cần <code>SameSite=None</code> và phải chống CSRF kỹ hơn.</p></div>
+    <div class="card"><div class="k">BFF: BACKEND FOR FRONTEND</div><p>Token nằm hẳn ở server, trình duyệt chỉ giữ session cookie. An toàn hơn nhưng phức tạp hơn.</p></div>
+  </div>
+  <aside class="notes">Đây là một cách phổ biến, không phải đáp án duy nhất. Khi đi làm, hãy hỏi team đang dùng cách nào và vì sao. Với BFF chỉ cần nhớ tên.</aside>
+</section>
+
+<section class="slide">
+  <h2>Luồng khi access token hết hạn</h2>
+  <div class="grow" id="refresh-seq"></div>
+  <aside class="notes">Đi từng bước. Bước cuối là nhánh thất bại: nếu refresh token cũng hết hạn thì chuyển về trang login.</aside>
+</section>
+
+<section class="slide">
+  <h2>Bốn lỗi hay gặp với luồng refresh</h2>
+  <div class="two">
+    <div class="stack">
+      <div class="card"><div class="k">NHIỀU REQUEST CÙNG NHẬN 401</div><p>Chỉ refresh một lần, các request còn lại chờ kết quả. Nếu không, rotation có thể làm người dùng bị đăng xuất.</p></div>
+<pre class="code good grow" style="font-size:18px">let refreshing = null;
+
+function refreshOnce() {
+  refreshing ??= callRefreshApi()
+    .finally(() =&gt; { refreshing = null; });
+  return refreshing;
+}</pre>
+    </div>
+    <div class="stack">
+      <div class="card"><div class="k">VÒNG LẶP VÔ HẠN</div><p>Nếu chính <code>/refresh</code> trả về 401 thì không được refresh tiếp.</p></div>
+      <div class="card"><div class="k">LOGOUT CHỈ Ở PHÍA CLIENT</div><p>Cần gọi server để thu hồi refresh token, không chỉ xóa state.</p></div>
+      <div class="card"><div class="k">LỘ TOKEN</div><p>Không ghi token vào log hoặc đưa lên URL.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Lỗi đầu tiên hay chỉ lộ ra khi trang gọi nhiều API cùng lúc ngay lúc token hết hạn, nên rất khó tái hiện. Nếu thiếu giờ, chuyển slide này vào tài liệu tự học.</aside>
+</section>
+
+<!-- ================= TỔNG KẾT ================= -->
+<section class="slide" data-p="00" data-section="Tổng kết">
+  <h2>Tư duy kiến trúc và chọn đúng công cụ quan trọng hơn thuộc lòng cú pháp</h2>
+  <div class="grow five" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+    <div class="card" style="--accent:var(--blue)"><div class="k">01</div><h3>Kiến trúc</h3><p>Chọn nơi render theo từng loại trang.</p></div>
+    <div class="card" style="--accent:var(--teal)"><div class="k">02</div><h3>Render</h3><p>State đặt ở đâu, phạm vi render ở đó. Đừng chặn main thread.</p></div>
+    <div class="card" style="--accent:var(--purple)"><div class="k">03</div><h3>State</h3><p>Phân loại trước, chọn công cụ sau. Tính được thì không lưu.</p></div>
+    <div class="card" style="--accent:var(--yellow)"><div class="k">04</div><h3>Hiệu suất</h3><p>Đo trước khi tối ưu. Hiểu rõ debounce và throttle.</p></div>
+    <div class="card" style="--accent:var(--orange)"><div class="k">05</div><h3>Bảo mật</h3><p>Chống XSS từ gốc. Không có nơi lưu token tuyệt đối an toàn.</p></div>
+  </div>
+  <div class="callout">Tuần này, thử mở tab Network trên dự án của bạn và đếm xem có bao nhiêu request trùng lặp.</div>
+  <aside class="notes">1 phút. Kết thúc bằng một hành động nhỏ làm được ngay.</aside>
+</section>
+
+<section class="slide" data-section="Tài liệu">
+  <h2>Tài liệu tự học sâu hơn</h2>
+  <div class="two" style="flex:none">
+    <ul class="points">
+      <li><b>React:</b> <a href="https://react.dev/learn/you-might-not-need-an-effect">You Might Not Need an Effect</a></li>
+      <li><b>React:</b> <a href="https://react.dev/learn/render-and-commit">Render and Commit</a></li>
+      <li><b>State:</b> <a href="https://tanstack.com/query/latest/docs/framework/react/overview">TanStack Query</a></li>
+      <li><b>Sách:</b> Morten Barklund, <i>React in Depth</i> (Manning, 2024)</li>
+    </ul>
+    <ul class="points">
+      <li><b>Hiệu suất:</b> <a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
+      <li><b>Event loop:</b> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop">MDN: Event loop</a></li>
+      <li><b>XSS:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP: XSS Prevention</a></li>
+      <li><b>CSRF:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP: CSRF Prevention</a></li>
+    </ul>
+  </div>
+  <div class="card" style="flex:none"><div class="k">SLIDE VÀ TÀI LIỆU</div><p>[Chèn QR code hoặc link Notion/Slide tại đây]</p></div>
+  <aside class="notes">Để slide này lại trong lúc Q&amp;A cũng được, mọi người có thời gian chụp ảnh.</aside>
+</section>
+
+<section class="slide cover" data-section="Q&amp;A" data-plain>
+  <div class="eyebrow">10 PHÚT CUỐI</div>
+  <h1>Hỏi đáp</h1>
+  <p class="lead">Câu hỏi nào cũng được, nhất là vấn đề bạn đang gặp trong dự án thực tế.</p>
+  <p class="small muted">[Tên diễn giả] · [Email hoặc Slack]</p>
+  <aside class="notes">Nếu chưa ai hỏi, gợi ý: Nên học Next.js ngay hay chắc React trước? Dự án đang lưu token trong localStorage thì nên làm gì?</aside>
+</section>
+
+</main>
+
+<div class="progress"><i id="bar"></i></div>
+<div class="pager"><button id="prev" aria-label="Slide trước">←</button><button id="next" aria-label="Slide sau">→</button></div>
+<div id="notes" role="note"></div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const PARTS = [
+  ['01', 'Hệ sinh thái & Kiến trúc', 'Tiến hóa, CSR/SSR/SSG, build tool', 13],
+  ['02', 'Render & Main Thread', 'Re-render, event loop', 7],
+  ['03', 'Quản lý State', 'Prop drilling, phân loại state, global store', 15],
+  ['04', 'Web Performance 101', 'Core Web Vitals, debounce, throttle', 15],
+  ['05', 'Bảo mật cơ bản', 'XSS, CSRF, lưu trữ token', 12],
+  ['06', 'Q&A và Tổng kết', 'Ý chính, tài liệu, hỏi đáp', 10],
+];
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+$('#outline').innerHTML = PARTS.map(([n, t, d, m]) =>
+  `<div><span class="n" style="color:var(--${['blue', 'teal', 'purple', 'yellow', 'orange', 'cyan'][+n - 1]})">${n}</span>` +
+  `<span class="t">${esc(t)}</span><span class="d">${esc(d)}</span><span class="m">${m}'</span></div>`).join('');
+
+/* Sequence diagrams: generated before the engine counts steps */
+function seq(el, actors, msgs, opts = {}) {
+  const W = opts.w || 760, rowH = opts.rowH || 56, top = 40;
+  const H = top + msgs.length * rowH + 16;
+  const xs = actors.map((_, i) => (W / actors.length) * (i + .5));
+  let s = `<svg class="seq" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.label || '')}">`;
+  actors.forEach((a, i) => {
+    s += `<text class="actor" x="${xs[i]}" y="22">${esc(a)}</text><line class="life" x1="${xs[i]}" x2="${xs[i]}" y1="34" y2="${H - 6}"/>`;
+  });
+  msgs.forEach((m, i) => {
+    const y = top + (i + 1) * rowH - 8;
+    const x1 = xs[m.from], x2 = xs[m.to];
+    const lx = (x1 + x2) / 2;
+    s += `<g class="${m.kind || ''}" data-step="${m.step}">`;
+    if (x1 === x2) {
+      s += `<text class="lab" x="${Math.min(Math.max(x1, 300), W - 190)}" y="${y - 6}">${esc(m.label)}</text>`;
+    } else {
+      const d = x2 > x1 ? -1 : 1;
+      s += `<text class="lab" x="${lx}" y="${y - 10}">${esc(m.label)}</text>` +
+        `<line class="msg" x1="${x1}" x2="${x2}" y1="${y}" y2="${y}"/>` +
+        `<path class="msg" fill="none" d="M${x2 + d * 10} ${y - 6}L${x2} ${y}L${x2 + d * 10} ${y + 6}"/>`;
+    }
+    s += '</g>';
+  });
+  el.innerHTML = s + '</svg>';
+}
+seq($('#csrf-seq'), ['evil.example', 'Trình duyệt', 'bank.example'], [
+  { from: 1, to: 2, label: 'Đăng nhập, nhận cookie', step: 1 },
+  { from: 1, to: 0, label: 'Mở trang độc hại', step: 2 },
+  { from: 0, to: 1, label: 'Form tự submit', step: 3 },
+  { from: 1, to: 2, label: 'POST /transfer + cookie', step: 4, kind: 'bad' },
+  { from: 2, to: 2, label: 'Cookie hợp lệ: chuyển tiền', step: 5, kind: 'bad' },
+], { label: 'Luồng tấn công CSRF', w: 660, rowH: 62 });
+seq($('#refresh-seq'), ['SPA', 'API', 'Endpoint refresh'], [
+  { from: 0, to: 1, label: 'GET /orders + access token đã hết hạn', step: 1 },
+  { from: 1, to: 0, label: '401 Unauthorized', step: 2, kind: 'bad' },
+  { from: 0, to: 2, label: 'POST /auth/refresh, cookie HttpOnly tự gửi kèm', step: 3 },
+  { from: 2, to: 0, label: 'Access token mới + cookie refresh mới (rotation)', step: 4, kind: 'good' },
+  { from: 0, to: 1, label: 'Gọi lại GET /orders với token mới', step: 5 },
+  { from: 1, to: 0, label: '200 OK', step: 6, kind: 'good' },
+  { from: 0, to: 0, label: 'Nếu refresh thất bại: về trang login, không refresh tiếp', step: 7, kind: 'bad' },
+], { w: 1168, rowH: 70, label: 'Luồng làm mới access token' });
+
+/* Deck engine */
+const slides = $$('.slide');
+const fit = () => {
+  const k = Math.min(innerWidth / 1280, innerHeight / 720);
+  $('#deck').style.transform = `scale(${k}) translate(-50%, -50%)`;
+};
+let part = '00', sectionName = '';
+const partName = { '00': '', '01': PARTS[0][1], '02': PARTS[1][1], '03': PARTS[2][1], '04': PARTS[3][1], '05': PARTS[4][1] };
+slides.forEach((s, i) => {
+  if (s.dataset.p) part = s.dataset.p;
+  s.dataset.part = part;
+  const label = s.dataset.section || partName[part] || '';
+  if (!s.hasAttribute('data-plain')) {
+    const eb = document.createElement('div');
+    eb.className = 'eyebrow';
+    eb.textContent = part === '00' ? label.toUpperCase() : `${part} · ${label.toUpperCase()}`;
+    s.prepend(eb);
+  }
+  const f = document.createElement('div');
+  f.className = 'foot';
+  f.innerHTML = `<span>${esc(label)}</span><span>${i + 1} / ${slides.length}</span>`;
+  s.append(f);
+  const rail = $('.rail', s);
+  if (rail) rail.innerHTML = PARTS.map(([n, t]) =>
+    `<li class="${n === part ? 'now' : ''}"><span>${n}</span>${esc(t)}</li>`).join('');
+});
+
+const maxStep = (s) => Math.max(+s.dataset.steps || 0, ...$$('[data-step]', s).map((e) => +e.dataset.step));
+const hooks = {};
+let cur = 0, step = 0;
+function show() {
+  slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+  const s = slides[cur];
+  $$('[data-step]', s).forEach((e) => e.classList.toggle('hide', +e.dataset.step > step));
+  if (hooks[s.id]) hooks[s.id](step);
+  $('#bar').style.width = `${(cur + 1) / slides.length * 100}%`;
+  $('#bar').style.background = getComputedStyle(s).getPropertyValue('--accent');
+  const n = $('aside.notes', s);
+  $('#notes').innerHTML = `<b>GHI CHÚ · SLIDE ${cur + 1}, BƯỚC ${step} / ${maxStep(s)}</b>` + (n ? n.innerHTML : '');
+  const h = `#s${cur + 1}-${step}`;
+  if (location.hash !== h) { try { history.replaceState(null, '', h); } catch (e) { /* sandboxed viewer */ } }
+}
+function go(d) {
+  if (d > 0) {
+    if (step < maxStep(slides[cur])) step++;
+    else if (cur < slides.length - 1) { cur++; step = 0; }
+  } else if (step > 0) step--;
+  else if (cur > 0) { cur--; step = maxStep(slides[cur]); }
+  show();
+}
+function fromHash() {
+  const m = location.hash.match(/^#s(\d+)(?:-(\d+))?$/);
+  if (!m) return;
+  cur = Math.min(Math.max(+m[1] - 1, 0), slides.length - 1);
+  step = Math.min(+m[2] || 0, maxStep(slides[cur]));
+}
+addEventListener('keydown', (e) => {
+  if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) {
+    if (e.key === 'Escape') e.target.blur();
+    return;
+  }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key;
+  if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown') { e.preventDefault(); go(1); }
+  else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); go(-1); }
+  else if (k === 'Home') { cur = 0; step = 0; show(); }
+  else if (k === 'End') { cur = slides.length - 1; step = maxStep(slides[cur]); show(); }
+  else if (k === 't' || k === 'T') {
+    const r = document.documentElement;
+    if (r.dataset.deckTheme === 'light') delete r.dataset.deckTheme; else r.dataset.deckTheme = 'light';
+    show();
+  } else if (k === 'n' || k === 'N') $('#notes').classList.toggle('show');
+  else if (k === 'f' || k === 'F') {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  }
+});
+// A clicked button keeps focus, and Space would then press it again instead of advancing.
+addEventListener('click', (e) => { if (e.target.closest('button')) e.target.closest('button').blur(); });
+$('#prev').onclick = () => go(-1);
+$('#next').onclick = () => go(1);
+addEventListener('resize', fit);
+addEventListener('hashchange', () => { fromHash(); show(); });
+
+/* Demo: re-render tree */
+(() => {
+  const tree = ['App', [['Header', []], ['Page', [['Sidebar', []], ['List', [['Item', []], ['Item', []]]]]]]];
+  const build = ([name, kids]) => {
+    const el = document.createElement('div');
+    el.className = 'rn';
+    el.innerHTML = `<div class="rh"><button>${name}</button><span class="cnt">×0</span></div>`;
+    const node = { el, count: 0, kids: [] };
+    if (kids.length) {
+      const wrap = document.createElement('div');
+      wrap.className = 'rk';
+      kids.forEach((k) => { const c = build(k); node.kids.push(c); wrap.append(c.el); });
+      el.append(wrap);
+    }
+    const render = (n) => {
+      n.count++;
+      $('.cnt', n.el).textContent = `×${n.count}`;
+      n.el.classList.add('flash');
+      requestAnimationFrame(() => requestAnimationFrame(() => n.el.classList.remove('flash')));
+      n.kids.forEach(render);
+    };
+    $('button', el).onclick = () => render(node);
+    return node;
+  };
+  $('#rr').append(build(tree).el);
+})();
+
+/* Demo: main thread */
+(() => {
+  const dot = $('#mt-track i'), track = $('#mt-track'), out = $('#mt-out');
+  let last = performance.now(), x = 0, dir = 1, worst = 0, busy = false;
+  const frame = (t) => {
+    const dt = t - last;
+    last = t;
+    if (dt > worst) worst = dt;
+    if (track.offsetParent) {
+      x += dir * dt * .35;
+      const max = track.clientWidth - 36;
+      if (x > max) { x = max; dir = -1; }
+      if (x < 0) { x = 0; dir = 1; }
+      dot.style.transform = `translateX(${x}px)`;
+    }
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  const spin = (ms) => { const end = performance.now() + ms; while (performance.now() < end); };
+  const finish = (label) => setTimeout(() => {
+    out.innerHTML = `<b>${label}:</b> frame dài nhất ${Math.round(worst)} ms (ở 60 fps, mỗi frame khoảng 16.7 ms).`;
+    busy = false;
+  }, 120);
+  $('#mt-block').onclick = () => {
+    if (busy) return;
+    busy = true;
+    out.textContent = 'Đang chạy...';
+    setTimeout(() => { worst = 0; spin(2000); finish('Một task 2 giây'); }, 50);
+  };
+  $('#mt-split').onclick = () => {
+    if (busy) return;
+    busy = true;
+    out.textContent = 'Đang chạy...';
+    worst = 0;
+    let left = 80;
+    const tick = () => {
+      spin(25);
+      if (--left > 0) setTimeout(tick); else finish('80 phần việc, mỗi phần 25 ms');
+    };
+    setTimeout(tick);
+  };
+})();
+
+/* Demo: event loop stepper */
+hooks['el-slide'] = (() => {
+  const S = [
+    { line: -1, stack: '', micro: '', task: '', out: '', say: 'Đoán thứ tự in ra trước khi bấm tiếp.' },
+    { line: 0, stack: "log('A')", micro: '', task: '', out: 'A', say: 'Code đồng bộ chạy ngay.' },
+    { line: 1, stack: 'setTimeout', micro: '', task: "log('B')", out: 'A', say: 'Callback vào task queue, dù delay bằng 0.' },
+    { line: 3, stack: 'Promise.then', micro: "log('C')", task: "log('B')", out: 'A', say: 'Callback vào microtask queue.' },
+    { line: 4, stack: "log('D')", micro: "log('C')", task: "log('B')", out: 'A D', say: 'Vẫn là code đồng bộ, nên chạy trước hai callback.' },
+    { line: -1, stack: '(trống)', micro: "log('C')", task: "log('B')", out: 'A D', say: 'Call stack trống. Event loop xử lý microtask trước.' },
+    { line: -1, stack: "log('C')", micro: '', task: "log('B')", out: 'A D C', say: 'Microtask queue đã hết.' },
+    { line: -1, stack: "log('B')", micro: '', task: '', out: 'A D C B', say: 'Cuối cùng mới đến task. Đáp án: A D C B.' },
+  ];
+  return (i) => {
+    const c = S[i];
+    $$('#el-code .line').forEach((l, j) => l.classList.toggle('now', j === c.line || (c.line === 3 && j === 2)));
+    $('#el-stack').textContent = c.stack;
+    $('#el-micro').textContent = c.micro;
+    $('#el-task').textContent = c.task;
+    $('#el-out').textContent = c.out;
+    $('#el-say').textContent = c.say;
+  };
+})();
+
+/* Demo: debounce and throttle lanes */
+(() => {
+  const DELAY = 300, WINDOW = 9000;
+  let t0 = 0, timer, lastT = -1e9, plan = [];
+  const n = { raw: 0, d: 0, t: 0 };
+  const clear = () => {
+    plan.forEach(clearTimeout); plan = [];
+    clearTimeout(timer);
+    t0 = 0; lastT = -1e9;
+    ['raw', 'd', 't'].forEach((k) => { n[k] = 0; $(`#tk-${k}`).innerHTML = ''; $(`#ct-${k}`).textContent = '0'; });
+  };
+  const mark = (k) => {
+    const left = (performance.now() - t0) / WINDOW * 100;
+    const i = document.createElement('i');
+    i.style.left = `${Math.min(left, 99.4)}%`;
+    $(`#tk-${k}`).append(i);
+    $(`#ct-${k}`).textContent = ++n[k];
+  };
+  const fire = () => {
+    const now = performance.now();
+    if (!t0 || now - t0 > WINDOW) { const keep = plan; plan = []; clear(); plan = keep; t0 = performance.now(); }
+    mark('raw');
+    clearTimeout(timer);
+    timer = setTimeout(() => mark('d'), DELAY);
+    if (now - lastT >= DELAY) { lastT = now; mark('t'); }
+  };
+  $('#db-input').addEventListener('input', fire);
+  $('#db-clear').onclick = () => { clear(); $('#db-input').value = ''; };
+  $('#db-type').onclick = () => {
+    clear();
+    const input = $('#db-input');
+    input.value = '';
+    let at = 0;
+    [...'react hooks debounce'].forEach((ch) => {
+      at += ch === ' ' ? 650 : 110 + (ch.charCodeAt(0) % 5) * 22;
+      plan.push(setTimeout(() => { input.value += ch; fire(); }, at));
+    });
+  };
+  $('#db-scroll').onclick = () => {
+    clear();
+    for (let i = 0; i < 80; i++) plan.push(setTimeout(fire, i * 50));
+  };
+})();
+
+/* Demo: XSS. The token is fake and the payload only reports back to this page. */
+(() => {
+  const FAKE = 'demo-token-123';
+  let store;
+  try { localStorage.setItem('demo_token', FAKE); store = "localStorage.getItem('demo_token')"; }
+  catch (e) { window.demoStore = FAKE; store = 'window.demoStore'; }
+  $('#xss-input').value = `Sản phẩm rất tốt! <img src="x" onerror="xssReport(${store})">`;
+  const res = $('#xss-result');
+  let fired = false;
+  window.xssReport = (t) => {
+    fired = true;
+    res.innerHTML = `<b>Payload đã chạy và đọc được token:</b> <code>${esc(String(t))}</code>. Kẻ tấn công thật sẽ gửi nó ra ngoài.`;
+  };
+  $('#xss-run').onclick = () => {
+    fired = false;
+    const v = $('#xss-input').value;
+    res.textContent = 'Đang hiển thị...';
+    $('#xss-bad').innerHTML = v;
+    $('#xss-good').textContent = v;
+    setTimeout(() => {
+      if (!fired) res.innerHTML = '<b>Payload không chạy.</b> Có thể CSP của trang đã chặn inline handler, đúng vai trò của lớp phòng thủ này.';
+    }, 900);
+  };
+})();
+
+fromHash();
+fit();
+show();
+</script>
+</body>
+</html>
