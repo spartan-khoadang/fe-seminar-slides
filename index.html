@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Front-End Toàn Cảnh Cho Fresher</title>
+<title>Front-End: The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -215,61 +215,61 @@ aside.notes { display: none; }
 <body>
 <main id="deck">
 
-<!-- ================= MỞ ĐẦU ================= -->
+<!-- ================= INTRO ================= -->
 <section class="slide cover" data-p="00" data-plain>
-  <div class="eyebrow">SEMINAR · DÀNH CHO FRESHER SOFTWARE ENGINEER</div>
-  <h1>Front-End<br>Toàn Cảnh</h1>
-  <p class="lead">Bản đồ tư duy về kiến trúc, luồng dữ liệu, hiệu suất và bảo mật cơ bản.</p>
-  <p class="small muted">[Tên diễn giả] · [Ngày thuyết trình] · 75 phút</p>
-  <aside class="notes">Giới thiệu bản thân ngắn gọn. Phím tắt: mũi tên hoặc Space để chuyển, N để xem ghi chú, T đổi giao diện sáng/tối, F toàn màn hình.</aside>
+  <div class="eyebrow">SEMINAR · FOR FRESHER SOFTWARE ENGINEERS</div>
+  <h1>Front-End:<br>The Big Picture</h1>
+  <p class="lead">A mental map of architecture, data flow, performance and security basics.</p>
+  <p class="small muted">75 minutes</p>
+  <aside class="notes">Introduce yourself briefly. Shortcuts: arrow keys or Space to advance, N for notes, T for light/dark theme, F for fullscreen.</aside>
 </section>
 
-<section class="slide" data-section="Nội dung">
-  <h2>Sáu phần, đi từ bức tranh lớn đến những lỗi bạn sẽ gặp tuần đầu đi làm</h2>
+<section class="slide" data-section="Agenda">
+  <h2>Six parts, from the big picture to the mistakes you will meet in week one</h2>
   <div class="outl" id="outline"></div>
-  <aside class="notes">Mục tiêu không phải nhớ hết công cụ, mà là biết mỗi vấn đề thuộc về đâu khi gặp nó. Có nhiều demo trực tiếp; cứ hỏi ngay nếu chưa rõ, phần cuối còn 10 phút Q&amp;A.</aside>
+  <aside class="notes">The goal is not to memorize every tool, but to know where each problem belongs when you meet it. There are many live demos. Ask right away if something is unclear, and we keep 10 minutes for Q&amp;A at the end.</aside>
 </section>
 
-<!-- ================= 01 HỆ SINH THÁI ================= -->
+<!-- ================= 01 ECOSYSTEM ================= -->
 <section class="slide divider" data-p="01" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">01</div><h1 style="font-size:54px">Hệ sinh thái &amp; Kiến trúc</h1><p class="lead">Hiểu bản chất kiến trúc thay vì học vẹt framework.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">13 phút. Ba câu hỏi: vì sao có framework, HTML được tạo ở đâu, code đi từ máy mình lên trình duyệt thế nào.</aside>
+  <div class="div-grid"><div class="stack"><div class="big">01</div><h1 style="font-size:54px">Ecosystem &amp; Architecture</h1><p class="lead">Understand the architecture instead of memorizing a framework.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">13 minutes. Three questions: why frameworks exist, where HTML gets created, and how code travels from your machine to the browser.</aside>
 </section>
 
 <section class="slide">
-  <h2>Từ thao tác DOM bằng tay đến mô tả giao diện theo state</h2>
+  <h2>From updating the DOM by hand to describing the UI from state</h2>
   <div class="two">
-    <div class="stack"><span class="label">NGÀY XƯA: VANILLA JS / JQUERY</span>
+    <div class="stack"><span class="label">THEN: VANILLA JS / JQUERY</span>
 <pre class="code grow">let count = 0;
 
 $('#plus').on('click', () =&gt; {
   count++;
-  <span class="c">// Tự nhớ mọi chỗ cần cập nhật</span>
+  <span class="c">// You track every place to update</span>
   $('#count').text(count);
   $('#badge').text(count);
   $('#total').text(count * price);
 });</pre>
-      <div class="callout bad">Dự án càng lớn, càng dễ quên cập nhật một chỗ nào đó.</div>
+      <div class="callout bad">The bigger the project, the easier it is to miss a spot.</div>
     </div>
-    <div class="stack" data-step="1"><span class="label">NGÀY NAY: COMPONENT-BASED</span>
+    <div class="stack" data-step="1"><span class="label">NOW: COMPONENT-BASED</span>
 <pre class="code grow">function Cart({ price }) {
   const [count, setCount] = useState(0);
 
-  <span class="c">// Mô tả UI theo state, React lo phần DOM</span>
+  <span class="c">// Describe the UI, React handles the DOM</span>
   return (
     &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-      {count} món, tổng {count * price}
+      {count} items, total {count * price}
     &lt;/button&gt;
   );
 }</pre>
-      <div class="callout">Đổi state, giao diện tự cập nhật theo.</div>
+      <div class="callout">Change the state and the UI follows.</div>
     </div>
   </div>
-  <aside class="notes">Đây là chuyển dịch từ imperative sang declarative. React, Vue, Angular khác cú pháp nhưng cùng chia sẻ ý tưởng này.</aside>
+  <aside class="notes">This is the shift from imperative to declarative. React, Vue and Angular differ in syntax but share this idea.</aside>
 </section>
 
 <section class="slide">
-  <h2>Component chia UI thành các mảnh ghép độc lập, dễ tái sử dụng</h2>
+  <h2>Components split the UI into independent, reusable pieces</h2>
   <div class="two" style="grid-template-columns:7fr 5fr;align-items:center">
     <div class="mock">
       <div class="cmp">&lt;Header /&gt;</div>
@@ -283,100 +283,100 @@ $('#plus').on('click', () =&gt; {
       </div>
     </div>
     <ul class="points">
-      <li><b>Độc lập:</b> mỗi mảnh tự lo giao diện và logic của nó.</li>
-      <li><b>Tái sử dụng:</b> một <code>ProductCard</code>, dùng ở nhiều nơi.</li>
-      <li><b>Dữ liệu đi một chiều:</b> cha truyền props xuống con.</li>
-      <li><b>Thách thức mới:</b> state nên đặt ở đâu? Chủ đề 3 sẽ trả lời.</li>
+      <li><b>Independent:</b> each piece owns its UI and logic.</li>
+      <li><b>Reusable:</b> one <code>ProductCard</code>, used in many places.</li>
+      <li><b>One-way data:</b> parents pass props down to children.</li>
+      <li><b>New challenge:</b> where should state live? Part 3 answers that.</li>
     </ul>
   </div>
-  <aside class="notes">Có thể mở một trang thương mại điện tử rồi hỏi cả phòng: trang này chia được thành những component nào?</aside>
+  <aside class="notes">You can open an e-commerce page and ask the room: which components would you split this page into?</aside>
 </section>
 
 <section class="slide">
-  <h2>HTML được tạo ở đâu quyết định lúc người dùng thấy nội dung</h2>
+  <h2>Where HTML is created decides when users see content</h2>
   <div class="body center" style="gap:22px">
-    <div class="rt"><div class="name">CSR</div><div class="bars"><div class="bar" style="flex:12">HTML gần rỗng</div><div class="bar" style="flex:18">Tải JS</div><div class="bar" style="flex:26">Chạy JS, gọi API</div><div class="bar use" style="flex:44">Thấy nội dung + tương tác được</div></div></div>
-    <div class="rt" data-step="1"><div class="name">SSR</div><div class="bars"><div class="bar" style="flex:16">Server render</div><div class="bar see" style="flex:36">Thấy nội dung</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:30">Tương tác được</div></div></div>
-    <div class="rt" data-step="2"><div class="name">SSG</div><div class="bars"><div class="bar" style="flex:7">CDN</div><div class="bar see" style="flex:39">Thấy nội dung (HTML tạo sẵn lúc build)</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:36">Tương tác được</div></div></div>
-    <p class="small muted">Sơ đồ minh họa thứ tự các giai đoạn, không theo tỉ lệ thời gian thực.</p>
-    <div class="callout" data-step="3"><b>Hydration:</b> JS gắn event handler vào HTML server trả về. Trước bước này, trang đã hiện nhưng nút bấm chưa phản hồi.</div>
+    <div class="rt"><div class="name">CSR</div><div class="bars"><div class="bar" style="flex:12">Nearly empty HTML</div><div class="bar" style="flex:18">Download JS</div><div class="bar" style="flex:26">Run JS, call API</div><div class="bar use" style="flex:44">Content visible + interactive</div></div></div>
+    <div class="rt" data-step="1"><div class="name">SSR</div><div class="bars"><div class="bar" style="flex:16">Server render</div><div class="bar see" style="flex:36">Content visible</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:30">Interactive</div></div></div>
+    <div class="rt" data-step="2"><div class="name">SSG</div><div class="bars"><div class="bar" style="flex:7">CDN</div><div class="bar see" style="flex:39">Content visible (HTML built ahead of time)</div><div class="bar" style="flex:18">Hydrate</div><div class="bar use" style="flex:36">Interactive</div></div></div>
+    <p class="small muted">The diagram shows the order of the phases, not real time proportions.</p>
+    <div class="callout" data-step="3"><b>Hydration:</b> JS attaches event handlers to the HTML from the server. Until then, the page is visible but buttons do not respond.</div>
   </div>
-  <aside class="notes">Nhấn vào khoảng cách giữa "thấy" và "dùng được" của SSR. Có thể demo nhanh bằng tắt JavaScript trong DevTools: trang CSR trắng xóa, trang SSR vẫn có nội dung.</aside>
+  <aside class="notes">Point out the gap between "visible" and "usable" in SSR. Quick demo: disable JavaScript in DevTools. A CSR page goes blank, while an SSR page still shows content.</aside>
 </section>
 
 <section class="slide">
-  <h2>Không có mô hình tốt nhất, chỉ có mô hình hợp với loại trang</h2>
+  <h2>No model is the best, only the best fit for a type of page</h2>
   <table>
-    <tr><th></th><th>Ưu điểm</th><th>Nhược điểm</th><th>Hợp với</th></tr>
-    <tr><td class="n">CSR</td><td>Chuyển trang mượt, server đơn giản</td><td>Load lần đầu chậm, SEO kém hơn</td><td>Dashboard, trang nội bộ sau đăng nhập</td></tr>
-    <tr><td class="n">SSR</td><td>Thấy nội dung sớm, tốt cho SEO, dữ liệu mới theo từng request</td><td>Tốn tài nguyên server, vận hành phức tạp hơn</td><td>Trang sản phẩm, nội dung cá nhân hóa</td></tr>
-    <tr><td class="n">SSG</td><td>Rất nhanh, rẻ, dễ cache trên CDN</td><td>Dữ liệu đổi thì phải build lại</td><td>Blog, tài liệu, landing page</td></tr>
+    <tr><th></th><th>Pros</th><th>Cons</th><th>Good for</th></tr>
+    <tr><td class="n">CSR</td><td>Smooth navigation, simple server</td><td>Slower first load, weaker SEO</td><td>Dashboards, internal pages behind login</td></tr>
+    <tr><td class="n">SSR</td><td>Early content, good SEO, fresh data per request</td><td>Costs server resources, harder to operate</td><td>Product pages, personalized content</td></tr>
+    <tr><td class="n">SSG</td><td>Very fast, cheap, easy to cache on a CDN</td><td>Data changes require a rebuild</td><td>Blogs, docs, landing pages</td></tr>
   </table>
-  <div class="callout">Framework như Next.js, Nuxt cho phép chọn mô hình theo từng trang, không cần chọn một cho cả ứng dụng.</div>
-  <aside class="notes">Hỏi cả phòng: trang chủ báo điện tử, trang quản trị đơn hàng, tài liệu API thì chọn gì? Có nhiều đáp án hợp lý, quan trọng là giải thích được lý do.</aside>
+  <div class="callout">Frameworks like Next.js and Nuxt let you choose per page, so one app can mix these models.</div>
+  <aside class="notes">Ask the room: what would you pick for a news homepage, an order admin page, and API docs? Several answers are reasonable. What matters is explaining why.</aside>
 </section>
 
 <section class="slide">
-  <h2>Trình duyệt không hiểu <code style="font-size:.9em">.jsx</code> hay <code style="font-size:.9em">.vue</code>, nên cần build tool</h2>
+  <h2>Browsers do not understand <code style="font-size:.9em">.jsx</code> or <code style="font-size:.9em">.vue</code>, so we need build tools</h2>
   <div class="body center" style="gap:24px">
     <div class="chain">
-      <div class="box"><b>Source</b><span><code>.jsx .tsx .vue .scss</code> và hàng trăm module</span></div><div class="ar">→</div>
-      <div class="box hot" data-step="1"><b>Transpile</b><span>Dịch JSX, TypeScript thành JavaScript trình duyệt chạy được</span></div><div class="ar" data-step="1">→</div>
-      <div class="box hot" data-step="2"><b>Bundle</b><span>Gom module, bỏ code thừa, tách chunk, nén</span></div><div class="ar" data-step="2">→</div>
+      <div class="box"><b>Source</b><span><code>.jsx .tsx .vue .scss</code> and hundreds of modules</span></div><div class="ar">→</div>
+      <div class="box hot" data-step="1"><b>Transpile</b><span>Turn JSX and TypeScript into JavaScript browsers can run</span></div><div class="ar" data-step="1">→</div>
+      <div class="box hot" data-step="2"><b>Bundle</b><span>Combine modules, drop unused code, split chunks, minify</span></div><div class="ar" data-step="2">→</div>
       <div class="box" data-step="2"><b>Output</b><span><code>index.html</code>, <code>app.a1b2.js</code>, <code>app.c3d4.css</code></span></div>
     </div>
     <div class="two" style="flex:none" data-step="3">
-<pre class="code"><span class="c">// Bạn viết</span>
-&lt;Button size="lg"&gt;Mua&lt;/Button&gt;
+<pre class="code"><span class="c">// You write</span>
+&lt;Button size="lg"&gt;Buy&lt;/Button&gt;
 
-<span class="c">// Sau khi transpile (minh họa)</span>
-jsx(Button, { size: "lg", children: "Mua" })</pre>
-      <div class="card"><div class="k">VITE / WEBPACK</div><p>Webpack bundle trước rồi mới phục vụ khi dev. Vite tận dụng ES modules của trình duyệt khi dev nên khởi động nhanh, và vẫn bundle khi build production.</p></div>
+<span class="c">// After transpiling (illustrative)</span>
+jsx(Button, { size: "lg", children: "Buy" })</pre>
+      <div class="card"><div class="k">VITE / WEBPACK</div><p>Webpack bundles first, then serves during dev. Vite uses the browser's ES modules in dev so it starts fast, and still bundles for production.</p></div>
     </div>
   </div>
-  <aside class="notes">Tách rõ hai việc mà fresher hay gộp làm một. Tên file có hash giúp cache lâu dài: nội dung đổi thì tên file đổi.</aside>
+  <aside class="notes">Separate the two jobs freshers tend to merge into one. Hashed file names enable long-term caching: when the content changes, the name changes.</aside>
 </section>
 
 <!-- ================= 02 RENDER & MAIN THREAD ================= -->
 <section class="slide divider" data-p="02" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">02</div><h1 style="font-size:54px">Render &amp; Main Thread</h1><p class="lead">Nền tảng để hiểu vì sao cần phân loại state và vì sao UI bị chậm.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">7 phút. Hai mô hình tư duy này sẽ được dùng lại ở cả Chủ đề 3 và Chủ đề 4.</aside>
+  <div class="div-grid"><div class="stack"><div class="big">02</div><h1 style="font-size:54px">Render &amp; Main Thread</h1><p class="lead">The foundation for why state needs sorting and why UIs get slow.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">7 minutes. These two mental models come back in both Part 3 and Part 4.</aside>
 </section>
 
 <section class="slide">
-  <h2>State đổi thì component render lại, và kéo theo các component con</h2>
+  <h2>When state changes, the component re-renders, and so do its children</h2>
   <div class="two" style="grid-template-columns:1fr">
     <div class="stack">
-      <div class="row"><span class="live">LIVE</span><span class="small">Bấm tên component để gọi <code>setState</code> tại đó</span></div>
+      <div class="row"><span class="live">LIVE</span><span class="small">Click a component name to call <code>setState</code> there</span></div>
       <div id="rr" class="stack"></div>
     </div>
     <div class="three">
-      <div class="card"><div class="k">RENDER</div><p>React gọi lại function component để tính UI mới.</p></div>
-      <div class="card"><div class="k">COMMIT</div><p>Chỉ cập nhật phần DOM thực sự thay đổi. Render lại không đồng nghĩa DOM đổi.</p></div>
-      <div class="card hot"><div class="k">HỆ QUẢ</div><p>State đặt càng cao, phần phải render lại càng lớn.</p></div>
+      <div class="card"><div class="k">RENDER</div><p>React calls the function component again to compute the new UI.</p></div>
+      <div class="card"><div class="k">COMMIT</div><p>Only the DOM that actually changed is updated. A re-render does not mean the DOM changes.</p></div>
+      <div class="card hot"><div class="k">CONSEQUENCE</div><p>The higher state lives, the more has to re-render.</p></div>
     </div>
   </div>
-  <aside class="notes">Bấm App: tất cả sáng lên và số đếm tăng. Bấm List: chỉ List và Item. Kết luận: vị trí đặt state ảnh hưởng trực tiếp đến phạm vi render. React.memo có thể bỏ qua một số lần render, nhưng hãy đặt state đúng chỗ trước.</aside>
+  <aside class="notes">Click App: everything lights up and the counts go up. Click List: only List and its Items. Conclusion: where state lives directly affects the render scope. React.memo can skip some renders, but place state correctly first.</aside>
 </section>
 
 <section class="slide">
-  <h2>JavaScript chạy trên main thread, chung với việc vẽ UI và nhận input</h2>
+  <h2>JavaScript runs on the main thread, alongside painting and input</h2>
   <div class="body">
-    <div class="row"><span class="live">LIVE</span><span class="small">Quả bóng được JS di chuyển mỗi frame. Thử gõ vào ô bên dưới trong lúc chạy.</span></div>
+    <div class="row"><span class="live">LIVE</span><span class="small">JS moves the ball every frame. Try typing in the box below while it runs.</span></div>
     <div class="track" id="mt-track"><i></i></div>
     <div class="row">
-      <button class="btn" id="mt-block">Chặn main thread 2 giây</button>
-      <button class="btn" id="mt-split">Làm cùng lượng việc, chia nhỏ</button>
-      <input class="field" id="mt-input" style="flex:1;width:auto" placeholder="Gõ thử vào đây" aria-label="Ô gõ thử" />
+      <button class="btn" id="mt-block">Block main thread for 2 seconds</button>
+      <button class="btn" id="mt-split">Same work, split up</button>
+      <input class="field" id="mt-input" style="flex:1;width:auto" placeholder="Type here" aria-label="Typing test box" />
     </div>
-    <div class="callout" id="mt-out">Bấm một nút để đo frame dài nhất.</div>
-    <p>Task dài chặn main thread nên trình duyệt không vẽ được frame mới và không xử lý được click. Đây chính là thứ làm chỉ số <b>INP</b> xấu đi ở Chủ đề 4.</p>
+    <div class="callout" id="mt-out">Click a button to measure the longest frame.</div>
+    <p>A long task blocks the main thread, so the browser cannot paint new frames or handle clicks. This is exactly what hurts <b>INP</b> in Part 4.</p>
   </div>
-  <aside class="notes">Bấm nút đầu: bóng đứng im, gõ không ra chữ. Bấm nút hai: tổng lượng việc như nhau nhưng bóng vẫn chạy vì giữa các phần việc, trình duyệt có cơ hội vẽ. 60 fps tương ứng khoảng 16.7 ms mỗi frame.</aside>
+  <aside class="notes">First button: the ball freezes and typing shows nothing. Second button: the total work is the same but the ball keeps moving, because the browser can paint between chunks. 60 fps means about 16.7 ms per frame.</aside>
 </section>
 
 <section class="slide" id="el-slide" data-steps="7">
-  <h2>Event loop: đoạn code này in ra thứ tự nào?</h2>
+  <h2>Event loop: what order does this code print?</h2>
   <div class="two" style="grid-template-columns:5fr 7fr;flex:none">
 <pre class="code" id="el-code"><span class="line">console.log('A');</span><span class="line">setTimeout(() =&gt; console.log('B'), 0);</span><span class="line">Promise.resolve()</span><span class="line">  .then(() =&gt; console.log('C'));</span><span class="line">console.log('D');</span></pre>
     <div class="callout" id="el-say" style="display:flex;align-items:center"></div>
@@ -387,70 +387,70 @@ jsx(Button, { size: "lg", children: "Mua" })</pre>
     <div class="card"><div class="k">TASK QUEUE</div><div class="v" id="el-task"></div></div>
     <div class="card hot"><div class="k">OUTPUT</div><div class="v" id="el-out"></div></div>
   </div>
-  <p>Quy tắc: chạy hết code đồng bộ, rồi <b>toàn bộ microtask</b> (Promise), sau đó mới đến <b>một task</b> (setTimeout).</p>
-  <aside class="notes">Cho cả phòng đoán trước khi bấm. Đáp án: A D C B. setTimeout 0 không có nghĩa là chạy ngay, chỉ là sớm nhất có thể sau khi call stack trống và microtask đã xong.</aside>
+  <p>The rule: run all synchronous code, then <b>every microtask</b> (Promise), and only then <b>one task</b> (setTimeout).</p>
+  <aside class="notes">Let the room guess before you advance. Answer: A D C B. setTimeout 0 does not mean run now, only as soon as possible after the call stack is empty and microtasks are done.</aside>
 </section>
 
 <!-- ================= 03 STATE ================= -->
 <section class="slide divider" data-p="03" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">Quản lý State</h1><p class="lead">Bài toán đau đầu nhất, và lý do không nên dùng Redux cho mọi thứ.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">15 phút. Nếu chỉ nhớ một điều từ phần này: hãy phân loại state trước khi chọn công cụ.</aside>
+  <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">State Management</h1><p class="lead">The biggest headache, and why Redux is not the answer to everything.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">15 minutes. If you remember one thing from this part: classify state before choosing a tool.</aside>
 </section>
 
 <section class="slide">
-  <h2>Prop drilling: truyền dữ liệu qua những component không cần đến nó</h2>
+  <h2>Prop drilling: passing data through components that do not need it</h2>
   <div class="body center" style="gap:24px">
     <div class="chain">
-      <div class="box hot"><b>App</b><span>Giữ <code>user</code></span></div><div class="ar">→</div>
-      <div class="box dim" data-step="1"><b>Layout</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="1">→</div>
-      <div class="box dim" data-step="1"><b>Sidebar</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="1">→</div>
-      <div class="box dim" data-step="1"><b>UserMenu</b><span>Không dùng, chỉ chuyển tiếp</span></div><div class="ar" data-step="2">→</div>
-      <div class="box hot" data-step="2"><b>Avatar</b><span>Dùng <code>user</code></span></div>
+      <div class="box hot"><b>App</b><span>Holds <code>user</code></span></div><div class="ar">→</div>
+      <div class="box dim" data-step="1"><b>Layout</b><span>Unused, only passes it on</span></div><div class="ar" data-step="1">→</div>
+      <div class="box dim" data-step="1"><b>Sidebar</b><span>Unused, only passes it on</span></div><div class="ar" data-step="1">→</div>
+      <div class="box dim" data-step="1"><b>UserMenu</b><span>Unused, only passes it on</span></div><div class="ar" data-step="2">→</div>
+      <div class="box hot" data-step="2"><b>Avatar</b><span>Uses <code>user</code></span></div>
     </div>
     <div class="three" data-step="3">
-      <div class="card"><div class="k">KHÓ ĐỔI</div><p>Thêm một prop là sửa cả chuỗi component.</p></div>
-      <div class="card"><div class="k">KHÓ TÁI SỬ DỤNG</div><p>Component trung gian phụ thuộc vào dữ liệu nó không dùng.</p></div>
-      <div class="card"><div class="k">KHÓ ĐỌC</div><p>Phải lần ngược nhiều file để biết dữ liệu từ đâu đến.</p></div>
+      <div class="card"><div class="k">HARD TO CHANGE</div><p>Adding one prop means editing the whole chain.</p></div>
+      <div class="card"><div class="k">HARD TO REUSE</div><p>Middle components depend on data they never use.</p></div>
+      <div class="card"><div class="k">HARD TO READ</div><p>You trace through many files to find where data comes from.</p></div>
     </div>
   </div>
-  <aside class="notes">Truyền qua một hai cấp là bình thường. Prop drilling chỉ thành vấn đề khi chuỗi dài và các tầng giữa không liên quan.</aside>
+  <aside class="notes">Passing through one or two levels is normal. Prop drilling only becomes a problem when the chain is long and the middle layers are unrelated.</aside>
 </section>
 
 <section class="slide">
-  <h2>Giải quyết theo thứ tự, đừng nhảy ngay đến global store</h2>
+  <h2>Solve it in order, and do not jump straight to a global store</h2>
   <div class="three grow">
-    <div class="card"><div class="k">BƯỚC 1</div><h3>Đặt state đúng chỗ</h3><p>Chuyển state xuống gần nơi dùng nhất, hoặc lên cha chung gần nhất.</p>
+    <div class="card"><div class="k">STEP 1</div><h3>Put state in the right place</h3><p>Move state down near where it is used, or up to the closest common parent.</p>
 <pre class="code" style="font-size:17px;margin-top:auto">&lt;SearchBox /&gt;
-<span class="c">// tự giữ text của nó</span></pre></div>
-    <div class="card" data-step="1"><div class="k">BƯỚC 2</div><h3>Component composition</h3><p>Truyền luôn component con đã có dữ liệu qua <code>children</code>.</p>
+<span class="c">// keeps its own text</span></pre></div>
+    <div class="card" data-step="1"><div class="k">STEP 2</div><h3>Component composition</h3><p>Pass the child that already has its data through <code>children</code>.</p>
 <pre class="code" style="font-size:17px;margin-top:auto">&lt;Layout&gt;
   &lt;Avatar user={user} /&gt;
 &lt;/Layout&gt;</pre></div>
-    <div class="card" data-step="2"><div class="k">BƯỚC 3</div><h3>Context hoặc store</h3><p>Khi dữ liệu thật sự được nhiều nơi xa nhau dùng, như theme, user.</p>
+    <div class="card" data-step="2"><div class="k">STEP 3</div><h3>Context or a store</h3><p>When data is truly used in many distant places, like theme or user.</p>
 <pre class="code" style="font-size:17px;margin-top:auto">const user = useContext(
   UserContext
 );</pre></div>
   </div>
-  <div class="callout">Composition là cách đơn giản nhưng hay bị bỏ qua: <code>Layout</code> không cần biết <code>user</code> là gì.</div>
-  <aside class="notes">Cho xem so sánh: với composition, các tầng giữa không còn nhận prop user, và không cần thêm thư viện nào.</aside>
+  <div class="callout">Composition is simple but often overlooked: <code>Layout</code> does not need to know what <code>user</code> is.</div>
+  <aside class="notes">Show the comparison: with composition, the middle layers no longer receive the user prop, and no extra library is needed.</aside>
 </section>
 
 <section class="slide">
-  <h2>Phân loại state trước khi chọn công cụ</h2>
+  <h2>Classify state before choosing a tool</h2>
   <div class="four grow">
-    <div class="card"><div class="k">UI / LOCAL</div><h3>Chỉ một component cần</h3><p>Modal đang mở, chữ trong input.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">useState</span></div>
-    <div class="card" data-step="1"><div class="k">SHARED</div><h3>Chia sẻ xuống cây component</h3><p>Theme, ngôn ngữ. Mọi consumer re-render khi value đổi.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Context API</span></div>
-    <div class="card hot" data-step="2"><div class="k">SERVER</div><h3>Dữ liệu lấy từ API</h3><p>Thực chất là bản sao có thể đã cũ. Điểm fresher hay sai nhất.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">React Query, SWR</span></div>
-    <div class="card" data-step="3"><div class="k">DERIVED</div><h3>Tính được từ state có sẵn</h3><p>Tổng tiền, danh sách đã lọc. Không tạo state mới.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Tính khi render</span></div>
+    <div class="card"><div class="k">UI / LOCAL</div><h3>Needed by one component</h3><p>Which modal is open, text in an input.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">useState</span></div>
+    <div class="card" data-step="1"><div class="k">SHARED</div><h3>Shared down the tree</h3><p>Theme, language. Every consumer re-renders when the value changes.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Context API</span></div>
+    <div class="card hot" data-step="2"><div class="k">SERVER</div><h3>Data from an API</h3><p>Really a copy that may be stale. The most common fresher mistake.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">React Query, SWR</span></div>
+    <div class="card" data-step="3"><div class="k">DERIVED</div><h3>Computable from existing state</h3><p>Totals, filtered lists. Do not create new state.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">Compute in render</span></div>
   </div>
-  <div class="callout" data-step="4">Khi đã tách các loại trên, phần cần global store thường còn lại rất ít.</div>
-  <aside class="notes">Đây là slide quan trọng nhất phần này. Cho một ví dụ: danh sách sản phẩm từ API là server state, ô tìm kiếm là local, theme là shared, số sản phẩm đã lọc là derived.</aside>
+  <div class="callout" data-step="4">Once these are separated, very little usually remains for a global store.</div>
+  <aside class="notes">This is the most important slide of this part. Example: a product list from an API is server state, the search box is local, the theme is shared, the filtered count is derived.</aside>
 </section>
 
 <section class="slide">
-  <h2>Server state: đừng tự viết lại cache bằng <code style="font-size:.9em">useEffect</code></h2>
+  <h2>Server state: do not rebuild a cache with <code style="font-size:.9em">useEffect</code></h2>
   <div class="two">
-    <div class="stack"><span class="label">TỰ VIẾT, VÀ MỚI CHỈ LÀ BẮT ĐẦU</span>
+    <div class="stack"><span class="label">BY HAND, AND THIS IS ONLY THE START</span>
 <pre class="code bad grow" style="font-size:18px">const [users, setUsers] = useState([]);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
@@ -462,134 +462,134 @@ useEffect(() =&gt; {
     .catch(setError)
     .finally(() =&gt; setLoading(false));
 }, []);
-<span class="c">// Chưa có: cache, retry, refetch, chống trùng</span></pre></div>
+<span class="c">// Missing: cache, retry, refetch, dedupe</span></pre></div>
     <div class="stack" data-step="1"><span class="label">REACT QUERY</span>
 <pre class="code good" style="font-size:18px">const { data, isPending, error } = useQuery({
   queryKey: ['users'],
   queryFn: fetchUsers,
 });</pre>
       <ul class="points">
-        <li><b>Cache:</b> nhiều component dùng chung một dữ liệu.</li>
-        <li><b>Chống trùng:</b> các request giống nhau được gộp lại.</li>
-        <li><b>Tự làm mới:</b> theo cấu hình, khi dữ liệu đã cũ.</li>
-        <li>Lựa chọn khác: SWR, RTK Query.</li>
+        <li><b>Cache:</b> many components share the same data.</li>
+        <li><b>Dedupe:</b> identical requests are merged.</li>
+        <li><b>Auto refresh:</b> configurable, when data is stale.</li>
+        <li>Alternatives: SWR, RTK Query.</li>
       </ul>
     </div>
   </div>
-  <aside class="notes">Lưu ý code bên trái chưa kiểm tra r.ok. Đừng nói thư viện là bắt buộc, nhưng hãy biết những việc nó đang gánh giúp mình trước khi tự viết.</aside>
+  <aside class="notes">Note the code on the left does not check r.ok either. A library is not mandatory, but know what it is doing for you before writing your own.</aside>
 </section>
 
 <section class="slide">
-  <h2>Derived state: tính được thì không lưu</h2>
+  <h2>Derived state: if you can compute it, do not store it</h2>
   <div class="two" style="flex:none">
-    <div class="stack"><span class="label">SAI: HAI NGUỒN SỰ THẬT</span>
+    <div class="stack"><span class="label">WRONG: TWO SOURCES OF TRUTH</span>
 <pre class="code bad">const [items, setItems] = useState([]);
 const [total, setTotal] = useState(0);
 
 useEffect(() =&gt; {
   setTotal(items.reduce(sum, 0));
 }, [items]);</pre></div>
-    <div class="stack" data-step="1"><span class="label">ĐÚNG: TÍNH KHI RENDER</span>
+    <div class="stack" data-step="1"><span class="label">RIGHT: COMPUTE DURING RENDER</span>
 <pre class="code good">const [items, setItems] = useState([]);
 
 const total = items.reduce(sum, 0);
 
-<span class="c">// Chỉ khi tính thực sự nặng:</span>
+<span class="c">// Only if it is truly expensive:</span>
 <span class="c">// useMemo(() =&gt; ..., [items])</span></pre></div>
   </div>
   <ul class="points" data-step="2">
-    <li><b>Bên trái:</b> render thêm một lần, và có một khoảnh khắc <code>total</code> lệch với <code>items</code>.</li>
-    <li><b>Bên phải:</b> không thể lệch nhau, ít code hơn.</li>
-    <li><b>Dấu hiệu cần xem lại:</b> <code>useEffect</code> chỉ để <code>setState</code> từ state khác.</li>
+    <li><b>Left:</b> one extra render, and a moment when <code>total</code> disagrees with <code>items</code>.</li>
+    <li><b>Right:</b> they can never disagree, and there is less code.</li>
+    <li><b>Warning sign:</b> a <code>useEffect</code> that only calls <code>setState</code> from other state.</li>
   </ul>
-  <aside class="notes">Đây là lỗi review code gặp rất thường xuyên. Tài liệu React có hẳn một bài "You Might Not Need an Effect", có trong link cuối buổi.</aside>
+  <aside class="notes">This comes up constantly in code review. The React docs have a whole article, "You Might Not Need an Effect", linked at the end.</aside>
 </section>
 
 <section class="slide">
-  <h2>Global state: chọn theo dự án, không chọn theo trend</h2>
+  <h2>Global state: choose by project, not by trend</h2>
   <table>
-    <tr><th></th><th>Mô hình</th><th>Điểm mạnh</th><th>Cân nhắc</th></tr>
-    <tr><td class="n">Redux Toolkit</td><td>Một store, action, reducer</td><td>Luồng rõ ràng, DevTools mạnh, hệ sinh thái lớn</td><td>Nhiều khái niệm phải học; RTK đã giảm boilerplate nhiều</td></tr>
-    <tr><td class="n">Zustand</td><td>Store nhỏ gọn qua hook</td><td>API tối giản, không cần Provider</td><td>Ít quy ước, team tự thống nhất cấu trúc</td></tr>
-    <tr><td class="n">Jotai</td><td>Các atom nhỏ ghép lại</td><td>Re-render chi tiết theo từng atom</td><td>Nhiều atom rời rạc có thể khó theo dõi</td></tr>
+    <tr><th></th><th>Model</th><th>Strengths</th><th>Trade-offs</th></tr>
+    <tr><td class="n">Redux Toolkit</td><td>One store, actions, reducers</td><td>Clear flow, strong DevTools, large ecosystem</td><td>More concepts to learn; RTK cut boilerplate a lot</td></tr>
+    <tr><td class="n">Zustand</td><td>Small stores through a hook</td><td>Minimal API, no Provider needed</td><td>Few conventions, the team sets the structure</td></tr>
+    <tr><td class="n">Jotai</td><td>Small composable atoms</td><td>Fine-grained re-renders per atom</td><td>Many scattered atoms can be hard to follow</td></tr>
   </table>
-  <div class="callout">Redux chưa lỗi thời: nhiều dự án bạn sắp vào vẫn đang dùng. Hãy hiểu luồng dữ liệu của nó, rồi học công cụ nào cũng nhanh.</div>
-  <aside class="notes">Không cần đi sâu. Mục đích là để fresher biết các lựa chọn tồn tại và không phán xét codebase đang dùng Redux.</aside>
+  <div class="callout">Redux is not obsolete: many projects you will join still use it. Understand its data flow and other tools come quickly.</div>
+  <aside class="notes">No need to go deep. The point is that freshers know the options exist and do not judge a codebase for using Redux.</aside>
 </section>
 
 <!-- ================= 04 PERFORMANCE ================= -->
 <section class="slide divider" data-p="04" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Đo trước, tối ưu sau, và tránh vài lỗi phổ biến.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">15 phút, có hai demo: debounce/throttle và DevTools.</aside>
+  <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Measure first, optimize second, and avoid a few common mistakes.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">15 minutes, with two demos: debounce/throttle and DevTools.</aside>
 </section>
 
 <section class="slide">
-  <h2>Core Web Vitals: ba câu hỏi từ góc nhìn người dùng</h2>
+  <h2>Core Web Vitals: three questions from the user's point of view</h2>
   <div class="three grow">
-    <div class="card"><div class="k">LOADING</div><h1 style="font-size:58px">LCP</h1><h3>Largest Contentful Paint</h3><p>Bao lâu thì thấy phần nội dung chính, như ảnh banner, chữ lớn?</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 2.5 giây</span></div>
-    <div class="card" data-step="1"><div class="k">TƯƠNG TÁC</div><h1 style="font-size:58px">INP</h1><h3>Interaction to Next Paint</h3><p>Click xong, bao lâu giao diện mới phản hồi? Nhớ lại demo main thread.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 200 ms</span></div>
-    <div class="card" data-step="2"><div class="k">ỔN ĐỊNH</div><h1 style="font-size:58px">CLS</h1><h3>Cumulative Layout Shift</h3><p>Đang đọc thì ảnh load xong đẩy chữ tụt xuống? Điểm càng thấp càng tốt.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Tốt: ≤ 0.1</span></div>
+    <div class="card"><div class="k">LOADING</div><h1 style="font-size:58px">LCP</h1><h3>Largest Contentful Paint</h3><p>How long until the main content appears, like a banner or large text?</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 2.5 s</span></div>
+    <div class="card" data-step="1"><div class="k">INTERACTIVITY</div><h1 style="font-size:58px">INP</h1><h3>Interaction to Next Paint</h3><p>After a click, how long until the UI responds? Recall the main thread demo.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 200 ms</span></div>
+    <div class="card" data-step="2"><div class="k">STABILITY</div><h1 style="font-size:58px">CLS</h1><h3>Cumulative Layout Shift</h3><p>Reading along when an image loads and pushes the text down? Lower is better.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 0.1</span></div>
   </div>
-  <p class="small muted">Ngưỡng do Google công bố, đánh giá ở phân vị 75 của lượt truy cập thực tế (web.dev/vitals).</p>
-  <aside class="notes">Phân vị 75 nghĩa là 75% lượt truy cập phải đạt ngưỡng. Mở rộng: CLS thường do ảnh không khai báo kích thước, hoặc nội dung chèn thêm vào phía trên.</aside>
+  <p class="small muted">Thresholds published by Google, assessed at the 75th percentile of real visits (web.dev/vitals).</p>
+  <aside class="notes">75th percentile means 75% of visits should meet the threshold. Going further: CLS often comes from images without dimensions, or content inserted above what the user is reading.</aside>
 </section>
 
 <section class="slide">
-  <h2>Những Quick Wins bạn làm được ngay</h2>
+  <h2>Quick wins you can apply today</h2>
   <div class="two" style="flex:none">
-    <div class="card"><div class="k">LAZY LOADING</div><h3>Chỉ tải khi cần</h3>
+    <div class="card"><div class="k">LAZY LOADING</div><h3>Load only when needed</h3>
 <pre class="code" style="font-size:18px">&lt;img src="a.webp" loading="lazy"
      width="400" height="300" /&gt;
 
 const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
-    <div class="card bad" data-step="1"><div class="k" style="color:var(--bad)">CÁI BẪY</div><h3>Đừng lazy load ảnh đầu trang</h3><p>Ảnh banner thường chính là phần tử LCP. Lazy load khiến trình duyệt tải nó muộn hơn và LCP xấu đi.</p>
+    <div class="card bad" data-step="1"><div class="k" style="color:var(--bad)">THE TRAP</div><h3>Do not lazy load above-the-fold images</h3><p>The banner is often the LCP element. Lazy loading makes the browser fetch it later and hurts LCP.</p>
 <pre class="code" style="font-size:18px">&lt;img src="hero.webp" fetchpriority="high" /&gt;</pre></div>
   </div>
   <div class="two" style="flex:none">
-    <div class="card" data-step="2"><div class="k">HÌNH ẢNH</div><p>Dùng WebP, nén và chọn đúng kích thước. Khai báo <code>width</code>, <code>height</code> để tránh CLS.</p></div>
-    <div class="card" data-step="3"><div class="k">API</div><p>Tránh gọi lặp: cache với React Query, và giới hạn tần suất bằng debounce, throttle.</p></div>
+    <div class="card" data-step="2"><div class="k">IMAGES</div><p>Use WebP, compress, and pick the right size. Set <code>width</code> and <code>height</code> to avoid CLS.</p></div>
+    <div class="card" data-step="3"><div class="k">API</div><p>Avoid repeat calls: cache with React Query, and limit frequency with debounce and throttle.</p></div>
   </div>
-  <aside class="notes">Cái bẫy này là lý do không nên thêm loading="lazy" cho mọi ảnh một cách máy móc. Slide tiếp theo nối sang debounce và throttle.</aside>
+  <aside class="notes">This trap is why you should not add loading="lazy" to every image mechanically. The next slide continues with debounce and throttle.</aside>
 </section>
 
 <section class="slide">
-  <h2>Debounce và Throttle: cùng giảm số lần gọi, khác cách</h2>
+  <h2>Debounce and throttle: both reduce calls, in different ways</h2>
   <div class="body">
     <div class="row" style="flex-wrap:nowrap"><span class="live">LIVE</span>
-      <input class="field" id="db-input" style="flex:1;width:auto" placeholder="Gõ vào đây, hoặc bấm giả lập" aria-label="Ô gõ thử debounce" />
-      <button class="btn" id="db-type">Giả lập gõ</button><button class="btn" id="db-scroll">Giả lập scroll</button><button class="btn" id="db-clear">Xóa</button>
+      <input class="field" id="db-input" style="flex:1;width:auto" placeholder="Type here, or use a simulation" aria-label="Debounce typing test box" />
+      <button class="btn" id="db-type">Simulate typing</button><button class="btn" id="db-scroll">Simulate scroll</button><button class="btn" id="db-clear">Clear</button>
     </div>
     <div class="stack" style="gap:9px">
-      <div class="lane"><div class="ln">Sự kiện</div><div class="tk" id="tk-raw"></div><div class="ct" id="ct-raw">0</div></div>
+      <div class="lane"><div class="ln">Events</div><div class="tk" id="tk-raw"></div><div class="ct" id="ct-raw">0</div></div>
       <div class="lane d"><div class="ln">Debounce</div><div class="tk" id="tk-d"></div><div class="ct" id="ct-d">0</div></div>
       <div class="lane t"><div class="ln">Throttle</div><div class="tk" id="tk-t"></div><div class="ct" id="ct-t">0</div></div>
     </div>
-    <p class="small muted">Cả hai dùng mốc 300 ms. Mỗi vạch là một lần hàm được gọi.</p>
+    <p class="small muted">Both use 300 ms. Each mark is one function call.</p>
     <div class="two" style="flex:none">
-      <div class="card"><div class="k">DEBOUNCE</div><p><b>Chờ ngừng thao tác rồi mới chạy.</b> Như thang máy chờ đến khi không còn người bước vào. Dùng cho ô tìm kiếm, validate form, autosave.</p></div>
-      <div class="card"><div class="k">THROTTLE</div><p><b>Chạy tối đa một lần mỗi khoảng thời gian.</b> Như súng bắn theo nhịp, dù giữ cò liên tục. Dùng cho scroll, resize, kéo thả.</p></div>
+      <div class="card"><div class="k">DEBOUNCE</div><p><b>Wait until activity stops, then run.</b> Like an elevator waiting until nobody else steps in. For search boxes, form validation, autosave.</p></div>
+      <div class="card"><div class="k">THROTTLE</div><p><b>Run at most once per interval.</b> Like a gun firing at a set rate while you hold the trigger. For scroll, resize, drag.</p></div>
     </div>
   </div>
-  <aside class="notes">Bấm Giả lập gõ: debounce chỉ chạy sau mỗi quãng dừng. Bấm Giả lập scroll: debounce chỉ chạy một lần ở cuối, còn throttle chạy đều, nên throttle hợp với việc cần cập nhật liên tục trong lúc thao tác. Demo chạy ngay trên slide.</aside>
+  <aside class="notes">Click Simulate typing: debounce runs only after each pause. Click Simulate scroll: debounce runs once at the end while throttle runs steadily, so throttle suits work that must update during the action. The demo runs right on the slide.</aside>
 </section>
 
 <section class="slide">
-  <h2>Lỗi 1: tạo debounce trong thân component</h2>
+  <h2>Mistake 1: creating debounce in the component body</h2>
   <div class="two">
-    <div class="stack"><span class="label">SAI: MỖI LẦN RENDER MỘT TIMER MỚI</span>
+    <div class="stack"><span class="label">WRONG: A NEW TIMER EVERY RENDER</span>
 <pre class="code bad grow" style="font-size:18px">function Search() {
   const [q, setQ] = useState('');
   <span class="x">const search = debounce(callApi, 300);</span>
 
   return (
     &lt;input value={q} onChange={(e) =&gt; {
-      setQ(e.target.value); <span class="c">// gây re-render</span>
+      setQ(e.target.value); <span class="c">// re-renders</span>
       search(e.target.value);
     }} /&gt;
   );
 }
-<span class="c">// Gõ 5 ký tự: vẫn gọi API 5 lần, chỉ là trễ hơn</span></pre></div>
-    <div class="stack" data-step="1"><span class="label">ĐÚNG: GIỮ INSTANCE ỔN ĐỊNH, HỦY KHI UNMOUNT</span>
+<span class="c">// Type 5 chars: still 5 API calls, just later</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">RIGHT: STABLE INSTANCE, CLEARED ON UNMOUNT</span>
 <pre class="code good grow" style="font-size:18px">function useDebounced(fn, delay) {
   const timer = useRef();
   const latest = useRef(fn);
@@ -606,14 +606,14 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
   }, [delay]);
 }</pre></div>
   </div>
-  <aside class="notes">Liên hệ Chủ đề 2: state đổi thì function component chạy lại, nên biến khai báo trong thân component được tạo mới. Thực tế có thể dùng hook có sẵn như useDebouncedCallback của thư viện use-debounce.</aside>
+  <aside class="notes">Connect to Part 2: when state changes the function component runs again, so variables declared in its body are recreated. In practice you can use a ready-made hook such as useDebouncedCallback from the use-debounce library.</aside>
 </section>
 
 <section class="slide">
-  <h2>Lỗi 2 và 3: debounce không giải quyết mọi thứ</h2>
+  <h2>Mistakes 2 and 3: debounce does not solve everything</h2>
   <div class="two">
     <div class="stack">
-      <div class="card bad"><div class="k" style="color:var(--bad)">LỖI 2: RACE CONDITION</div><p>Response cũ có thể về sau response mới. Gõ <code>re</code> rồi <code>react</code>, kết quả của <code>re</code> về sau và ghi đè.</p></div>
+      <div class="card bad"><div class="k" style="color:var(--bad)">MISTAKE 2: RACE CONDITIONS</div><p>An old response can arrive after a new one. Type <code>re</code> then <code>react</code>, and the <code>re</code> result arrives last and overwrites.</p></div>
 <pre class="code good grow" style="font-size:18px">useEffect(() =&gt; {
   <span class="g">const c = new AbortController();</span>
   fetch(url(q), { signal: c.signal })
@@ -626,86 +626,86 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
 }, [q]);</pre>
     </div>
     <div class="stack" data-step="1">
-      <div class="card bad"><div class="k" style="color:var(--bad)">LỖI 3: DÙNG ĐỂ CHỮA UI CHẬM</div><p>Debounce chỉ giảm số lần gọi. Một lần render nặng vẫn nặng như cũ.</p></div>
-      <div class="card"><div class="k">THAY VÀO ĐÓ</div><ul class="points">
-        <li>Đo bằng React Profiler để tìm chỗ chậm.</li>
-        <li>Giảm phạm vi re-render, đặt state đúng chỗ.</li>
-        <li>Danh sách dài: dùng virtualization.</li>
-        <li>Việc tính toán nặng: chia nhỏ hoặc dùng Web Worker.</li>
+      <div class="card bad"><div class="k" style="color:var(--bad)">MISTAKE 3: USING IT TO FIX A SLOW UI</div><p>Debounce only reduces calls. One heavy render is still just as heavy.</p></div>
+      <div class="card"><div class="k">INSTEAD</div><ul class="points">
+        <li>Measure with React Profiler to find the slow part.</li>
+        <li>Reduce re-render scope, place state correctly.</li>
+        <li>Long lists: use virtualization.</li>
+        <li>Heavy computation: split it up or use a Web Worker.</li>
       </ul></div>
     </div>
   </div>
-  <aside class="notes">React Query tự xử lý race condition vì kết quả gắn với queryKey. Nhắc lại demo main thread: chia nhỏ task giúp UI còn phản hồi.</aside>
+  <aside class="notes">React Query handles this race for you because results are tied to the queryKey. Recall the main thread demo: splitting tasks keeps the UI responsive.</aside>
 </section>
 
 <section class="slide" data-demo>
-  <h2>Demo: đo trước khi tối ưu, ngay trong DevTools</h2>
+  <h2>Demo: measure before optimizing, right in DevTools</h2>
   <div class="three grow">
-    <div class="card"><div class="k">TAB NETWORK</div><h3>Có bao nhiêu request?</h3><ul class="points">
-      <li>Có request trùng không?</li><li>File nào lớn nhất?</li><li>Bật throttling Fast 4G để thử mạng chậm.</li></ul></div>
-    <div class="card"><div class="k">LIGHTHOUSE</div><h3>Đo khi tải trang</h3><ul class="points">
-      <li>Cho biết LCP, CLS.</li><li>Dùng TBT để ước lượng độ phản hồi, không đo INP.</li><li>Đọc phần gợi ý cải thiện.</li></ul></div>
-    <div class="card"><div class="k">TAB PERFORMANCE</div><h3>Đo khi tương tác</h3><ul class="points">
-      <li>Xem LCP, CLS, INP trực tiếp.</li><li>Click thử rồi xem INP đổi thế nào.</li><li>Quay profile để thấy task dài.</li></ul></div>
+    <div class="card"><div class="k">NETWORK TAB</div><h3>How many requests?</h3><ul class="points">
+      <li>Any duplicate requests?</li><li>Which file is largest?</li><li>Throttle to Fast 4G to try a slow network.</li></ul></div>
+    <div class="card"><div class="k">LIGHTHOUSE</div><h3>Measure page load</h3><ul class="points">
+      <li>Reports LCP and CLS.</li><li>Uses TBT to estimate responsiveness. It does not measure INP.</li><li>Read the suggestions.</li></ul></div>
+    <div class="card"><div class="k">PERFORMANCE TAB</div><h3>Measure interactions</h3><ul class="points">
+      <li>Shows live LCP, CLS, INP.</li><li>Click around and watch INP change.</li><li>Record a profile to see long tasks.</li></ul></div>
   </div>
-  <div class="callout">Lighthouse là số đo trong môi trường thử nghiệm. Số liệu người dùng thật có thể khác.</div>
-  <aside class="notes">Chuyển sang app demo. Chuẩn bị sẵn một trang có ảnh lớn và vài request trùng. Có video dự phòng nếu mạng hoặc máy gặp sự cố.</aside>
+  <div class="callout">Lighthouse measures in a lab environment. Real user numbers can differ.</div>
+  <aside class="notes">Switch to the demo app. Prepare a page with a large image and some duplicate requests. Keep a backup video in case the network or machine fails.</aside>
 </section>
 
 <!-- ================= 05 SECURITY ================= -->
 <section class="slide divider" data-p="05" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">05</div><h1 style="font-size:54px">Bảo mật cơ bản</h1><p class="lead">XSS, CSRF và lưu trữ token, thay vì mặc định dùng <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">12 phút. Hiểu hai kiểu tấn công trước, bảng so sánh nơi lưu token sẽ tự có ý nghĩa.</aside>
+  <div class="div-grid"><div class="stack"><div class="big">05</div><h1 style="font-size:54px">Security Basics</h1><p class="lead">XSS, CSRF and token storage, instead of defaulting to <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
+  <aside class="notes">12 minutes. Understand the two attacks first, and the token storage comparison will make sense on its own.</aside>
 </section>
 
 <section class="slide">
-  <h2>Vì sao cần hai loại token?</h2>
+  <h2>Why two kinds of token?</h2>
   <table style="flex:none">
     <tr><th></th><th>Access token</th><th>Refresh token</th></tr>
-    <tr><td class="n">Dùng để</td><td>Gọi API</td><td>Xin access token mới</td></tr>
-    <tr><td class="n">Thời hạn</td><td>Ngắn, thường 5–15 phút</td><td>Dài hơn, thường vài ngày đến vài tuần</td></tr>
-    <tr><td class="n">Gửi đến</td><td>Mọi API cần xác thực</td><td>Chỉ endpoint refresh</td></tr>
-    <tr><td class="n">Nếu bị lộ</td><td>Thiệt hại giới hạn trong thời gian ngắn</td><td>Nghiêm trọng hơn, nên phải bảo vệ kỹ và có thể thu hồi</td></tr>
+    <tr><td class="n">Used to</td><td>Call APIs</td><td>Get a new access token</td></tr>
+    <tr><td class="n">Lifetime</td><td>Short, often 5–15 minutes</td><td>Longer, often days to weeks</td></tr>
+    <tr><td class="n">Sent to</td><td>Every authenticated API</td><td>Only the refresh endpoint</td></tr>
+    <tr><td class="n">If leaked</td><td>Damage limited to a short window</td><td>More serious, so protect it and make it revocable</td></tr>
   </table>
-  <div class="callout">Câu hỏi còn lại: lưu hai token này ở đâu? Để trả lời, cần hiểu trước hai kiểu tấn công.</div>
-  <aside class="notes">Thời hạn cụ thể phụ thuộc yêu cầu bảo mật của từng hệ thống, các con số trên chỉ là mức thường gặp. Chỉ dành 1 phút cho slide này.</aside>
+  <div class="callout">The remaining question: where do we store them? To answer that, we need to understand two attacks.</div>
+  <aside class="notes">Exact lifetimes depend on each system's security requirements. These numbers are only common ranges. Spend just 1 minute here.</aside>
 </section>
 
 <section class="slide">
-  <h2>XSS: JS của kẻ tấn công chạy ngay trong trang của bạn</h2>
+  <h2>XSS: the attacker's JS runs inside your page</h2>
   <div class="body">
-    <div class="row"><span class="live">LIVE</span><span class="small">Một bình luận chứa payload. Token dưới đây là dữ liệu giả, chỉ dùng cho demo.</span></div>
-    <textarea class="field" id="xss-input" rows="2" aria-label="Nội dung bình luận"></textarea>
-    <div class="row"><button class="btn" id="xss-run">Hiển thị bình luận</button><span class="small muted" id="xss-note"></span></div>
+    <div class="row"><span class="live">LIVE</span><span class="small">A comment containing a payload. The token here is fake, for this demo only.</span></div>
+    <textarea class="field" id="xss-input" rows="2" aria-label="Comment content"></textarea>
+    <div class="row"><button class="btn" id="xss-run">Show comment</button><span class="small muted" id="xss-note"></span></div>
     <div class="two" style="flex:none">
       <div class="stack" style="gap:8px"><pre class="code bad" style="padding:8px 12px;font-size:16px">&lt;div dangerouslySetInnerHTML={{ __html: comment }} /&gt;</pre><div class="out" id="xss-bad"></div></div>
       <div class="stack" style="gap:8px"><pre class="code good" style="padding:8px 12px;font-size:16px">&lt;div&gt;{comment}&lt;/div&gt;</pre><div class="out" id="xss-good"></div></div>
     </div>
-    <div class="callout bad" id="xss-result">Chưa chạy payload.</div>
-    <p>React tự escape nội dung trong <code>{value}</code>. Rủi ro nằm ở những chỗ đi vòng qua cơ chế này.</p>
+    <div class="callout bad" id="xss-result">Payload has not run yet.</div>
+    <p>React escapes content in <code>{value}</code> automatically. The risk is in whatever bypasses that.</p>
   </div>
-  <aside class="notes">Bên trái payload chạy thật và đọc được token giả. Bên phải payload chỉ hiện dưới dạng chữ. Payload của demo không gửi gì ra ngoài. Nhấn mạnh: XSS làm được gần như mọi thứ code của bạn làm được.</aside>
+  <aside class="notes">On the left the payload really runs and reads the fake token. On the right it appears as plain text. The demo payload sends nothing out. Stress this: XSS can do almost anything your own code can do.</aside>
 </section>
 
 <section class="slide">
-  <h2>Chống XSS từ gốc, vì không có lớp bảo vệ nào tuyệt đối</h2>
+  <h2>Stop XSS at the source, because no single layer is absolute</h2>
   <table>
-    <tr><th>Điểm dễ bị tấn công</th><th>Cách phòng</th></tr>
-    <tr><td class="n"><code>dangerouslySetInnerHTML</code>, <code>innerHTML</code></td><td>Tránh dùng; nếu bắt buộc thì sanitize bằng DOMPurify</td></tr>
-    <tr><td class="n">URL người dùng nhập: <code>href="javascript:..."</code></td><td>Chỉ cho phép <code>http:</code> và <code>https:</code></td></tr>
-    <tr><td class="n">Script và package bên thứ ba</td><td>Hạn chế dùng, kiểm tra dependency bằng <code>npm audit</code></td></tr>
-    <tr><td class="n">Lỗi còn lọt qua</td><td>Dùng CSP để giới hạn script được phép chạy</td></tr>
+    <tr><th>Weak spot</th><th>Defense</th></tr>
+    <tr><td class="n"><code>dangerouslySetInnerHTML</code>, <code>innerHTML</code></td><td>Avoid them; if required, sanitize with DOMPurify</td></tr>
+    <tr><td class="n">User-supplied URLs: <code>href="javascript:..."</code></td><td>Allow only <code>http:</code> and <code>https:</code></td></tr>
+    <tr><td class="n">Third-party scripts and packages</td><td>Use fewer, check dependencies with <code>npm audit</code></td></tr>
+    <tr><td class="n">Whatever slips through</td><td>Use CSP to limit which scripts may run</td></tr>
   </table>
-<pre class="code" style="flex:none"><span class="c">// HTML từ người dùng, bắt buộc phải render: sanitize trước</span>
+<pre class="code" style="flex:none"><span class="c">// User HTML that must be rendered: sanitize first</span>
 &lt;div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment) }} /&gt;</pre>
-  <aside class="notes">Khi review code, thấy dangerouslySetInnerHTML là phải hỏi: dữ liệu này đến từ đâu? CSP cũng chính là thứ có thể chặn được demo vừa rồi trong môi trường cấu hình chặt.</aside>
+  <aside class="notes">In code review, when you see dangerouslySetInnerHTML, ask: where does this data come from? A strict CSP is also what could stop the demo you just saw.</aside>
 </section>
 
 <section class="slide">
-  <h2>CSRF: mượn trình duyệt của nạn nhân để gửi request</h2>
+  <h2>CSRF: borrowing the victim's browser to send a request</h2>
   <div class="two" style="grid-template-columns:8fr 5fr;align-items:center">
     <div id="csrf-seq"></div>
-<pre class="code" style="font-size:16px" data-step="3"><span class="c">&lt;!-- Trên evil.example --&gt;</span>
+<pre class="code" style="font-size:16px" data-step="3"><span class="c">&lt;!-- On evil.example --&gt;</span>
 &lt;form
   action="https://bank.example/transfer"
   method="POST"&gt;
@@ -718,84 +718,84 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
   document.forms[0].submit();
 &lt;/script&gt;</pre>
   </div>
-  <aside class="notes">Kẻ tấn công không đọc được cookie, cũng thường không đọc được response. Họ chỉ cần request được gửi đi với cookie hợp lệ. bank.example chỉ là ví dụ.</aside>
+  <aside class="notes">The attacker cannot read the cookie, and usually cannot read the response either. They only need the request sent with a valid cookie. bank.example is just an example.</aside>
 </section>
 
 <section class="slide">
-  <h2>Chống CSRF, và một hiểu lầm cần đính chính</h2>
+  <h2>Stopping CSRF, and a misconception to correct</h2>
   <div class="two" style="flex:none">
     <ul class="points">
-      <li><b>Cookie <code>SameSite</code>:</b> set rõ <code>Lax</code> hoặc <code>Strict</code>, đừng dựa vào mặc định của trình duyệt.</li>
-      <li><b>CSRF token:</b> server kiểm tra giá trị mà trang độc hại không biết.</li>
-      <li><b>Header <code>Origin</code>:</b> từ chối request đến từ nguồn lạ.</li>
-      <li><b>Không đổi dữ liệu bằng GET:</b> <code>Lax</code> vẫn gửi cookie khi người dùng bấm link sang site của bạn.</li>
+      <li><b>Cookie <code>SameSite</code>:</b> set <code>Lax</code> or <code>Strict</code> explicitly, do not rely on browser defaults.</li>
+      <li><b>CSRF token:</b> the server checks a value the malicious page cannot know.</li>
+      <li><b><code>Origin</code> header:</b> reject requests from unknown origins.</li>
+      <li><b>No data changes via GET:</b> <code>Lax</code> still sends cookies when a user follows a link to your site.</li>
     </ul>
     <div class="stack" data-step="1">
-      <div class="card bad"><div class="k" style="color:var(--bad)">HIỂU LẦM</div><h3>"Đã cấu hình CORS rồi nên an toàn"</h3><p>CORS không chống được CSRF. Nó chủ yếu kiểm soát việc JS có được đọc response hay không, còn form ở trên vẫn được gửi đi.</p></div>
-      <div class="card good" data-step="2"><div class="k" style="color:var(--good)">MIỄN NHIỄM TỰ NHIÊN</div><p>Token gửi qua header <code>Authorization</code> không bị CSRF, vì trình duyệt không tự đính kèm header này.</p></div>
+      <div class="card bad"><div class="k" style="color:var(--bad)">MISCONCEPTION</div><h3>"We configured CORS, so we are safe"</h3><p>CORS does not stop CSRF. It mainly controls whether JS can read the response, and the form above still gets sent.</p></div>
+      <div class="card good" data-step="2"><div class="k" style="color:var(--good)">NATURALLY IMMUNE</div><p>Tokens sent in the <code>Authorization</code> header are not exposed to CSRF, because browsers do not attach that header automatically.</p></div>
     </div>
   </div>
-  <aside class="notes">Hỏi trước: ai nghĩ CORS chống được CSRF? Điểm Authorization header sẽ là cầu nối sang slide so sánh nơi lưu token.</aside>
+  <aside class="notes">Ask first: who thinks CORS prevents CSRF? The Authorization header point bridges to the token storage comparison.</aside>
 </section>
 
 <section class="slide">
-  <h2>XSS và CSRF khác nhau ở đâu?</h2>
+  <h2>How do XSS and CSRF differ?</h2>
   <table>
     <tr><th></th><th>XSS</th><th>CSRF</th></tr>
-    <tr><td class="n">Code độc chạy ở đâu</td><td>Trong trang của bạn</td><td>Trên trang của kẻ tấn công</td></tr>
-    <tr><td class="n">Khai thác điều gì</td><td>Sự tin tưởng của người dùng vào trang</td><td>Sự tin tưởng của server vào cookie trong trình duyệt</td></tr>
-    <tr><td class="n">Đọc được dữ liệu không</td><td>Có</td><td>Thường không, chủ yếu ép thực hiện hành động</td></tr>
-    <tr><td class="n">Liên quan đến token</td><td>Đọc được token mà script tiếp cận được</td><td>Lợi dụng cookie tự động gửi kèm</td></tr>
+    <tr><td class="n">Where bad code runs</td><td>In your page</td><td>On the attacker's page</td></tr>
+    <tr><td class="n">What it exploits</td><td>The user's trust in the page</td><td>The server's trust in the browser's cookie</td></tr>
+    <tr><td class="n">Can it read data?</td><td>Yes</td><td>Usually not, it mainly forces actions</td></tr>
+    <tr><td class="n">Link to tokens</td><td>Reads any token scripts can reach</td><td>Abuses automatically sent cookies</td></tr>
   </table>
-  <div class="callout" data-step="1">Vậy <code>localStorage</code> tránh được CSRF nhưng sợ XSS, còn cookie <code>HttpOnly</code> chống XSS đọc token nhưng phải phòng CSRF.</div>
-  <aside class="notes">Câu cuối là cầu nối thẳng sang slide tiếp theo.</aside>
+  <div class="callout" data-step="1">So <code>localStorage</code> avoids CSRF but fears XSS, while an <code>HttpOnly</code> cookie stops XSS reading the token but needs CSRF protection.</div>
+  <aside class="notes">The last sentence leads straight into the next slide.</aside>
 </section>
 
 <section class="slide">
-  <h2>Lưu token ở đâu? Mỗi nơi đánh đổi một kiểu</h2>
+  <h2>Where to store tokens? Each option has a trade-off</h2>
   <table style="flex:none">
-    <tr><th>Nơi lưu</th><th>XSS đọc được token?</th><th>Rủi ro CSRF</th><th>Sau khi tải lại trang</th></tr>
-    <tr><td class="n"><code>localStorage</code></td><td class="w">Có</td><td class="y">Không</td><td>Còn</td></tr>
-    <tr><td class="n"><code>sessionStorage</code></td><td class="w">Có</td><td class="y">Không</td><td>Còn, nhưng mất khi đóng tab</td></tr>
-    <tr><td class="n">Biến trong memory</td><td>Khó hơn, không tuyệt đối</td><td class="y">Không</td><td>Mất</td></tr>
-    <tr><td class="n">Cookie <code>HttpOnly</code></td><td class="y">Không</td><td class="w">Có, cần phòng chống</td><td>Còn</td></tr>
+    <tr><th>Location</th><th>Can XSS read the token?</th><th>CSRF risk</th><th>After page reload</th></tr>
+    <tr><td class="n"><code>localStorage</code></td><td class="w">Yes</td><td class="y">No</td><td>Kept</td></tr>
+    <tr><td class="n"><code>sessionStorage</code></td><td class="w">Yes</td><td class="y">No</td><td>Kept, but lost when the tab closes</td></tr>
+    <tr><td class="n">In-memory variable</td><td>Harder, not impossible</td><td class="y">No</td><td>Lost</td></tr>
+    <tr><td class="n"><code>HttpOnly</code> cookie</td><td class="y">No</td><td class="w">Yes, needs protection</td><td>Kept</td></tr>
   </table>
   <div class="two" style="flex:none" data-step="1">
-    <div class="card"><div class="k">THỬ TRONG CONSOLE</div>
-<pre class="code" style="font-size:18px;border:0;padding:0;background:none">localStorage.getItem('token') <span class="c">// lộ ngay</span>
-document.cookie <span class="c">// không thấy cookie HttpOnly</span></pre></div>
-    <div class="callout bad" style="display:flex;align-items:center"><span>Không có nơi lưu nào an toàn tuyệt đối. Bị XSS thì kẻ tấn công vẫn có thể gửi request ngay trong phiên của người dùng.</span></div>
+    <div class="card"><div class="k">TRY IT IN THE CONSOLE</div>
+<pre class="code" style="font-size:18px;border:0;padding:0;background:none">localStorage.getItem('token') <span class="c">// exposed</span>
+document.cookie <span class="c">// no HttpOnly cookie here</span></pre></div>
+    <div class="callout bad" style="display:flex;align-items:center"><span>No storage is absolutely safe. With XSS, an attacker can still send requests inside the user's session.</span></div>
   </div>
-  <aside class="notes">Demo trên app local có cookie HttpOnly do server set: mở Console và tab Application. Cookie vẫn thấy trong tab Application nhưng không xuất hiện trong document.cookie.</aside>
+  <aside class="notes">Demo on a local app with an HttpOnly cookie set by the server: open the Console and the Application tab. The cookie shows in the Application tab but not in document.cookie.</aside>
 </section>
 
 <section class="slide">
-  <h2>Cách nên dùng cho SPA: tách riêng hai token</h2>
+  <h2>A recommended SPA setup: keep the two tokens apart</h2>
   <div class="two" style="flex:none">
-    <div class="card hot"><div class="k">ACCESS TOKEN</div><h3>Lưu trong memory</h3>
-<pre class="code" style="font-size:18px">Authorization: Bearer eyJhbGci...</pre><p>Không tự gửi kèm nên không bị CSRF. Tải lại trang thì gọi <code>/refresh</code> để lấy token mới.</p></div>
-    <div class="card hot"><div class="k">REFRESH TOKEN</div><h3>Lưu trong cookie <code>HttpOnly</code></h3>
+    <div class="card hot"><div class="k">ACCESS TOKEN</div><h3>Store in memory</h3>
+<pre class="code" style="font-size:18px">Authorization: Bearer eyJhbGci...</pre><p>Not sent automatically, so not exposed to CSRF. On reload, call <code>/refresh</code> for a new one.</p></div>
+    <div class="card hot"><div class="k">REFRESH TOKEN</div><h3>Store in an <code>HttpOnly</code> cookie</h3>
 <pre class="code" style="font-size:18px">Set-Cookie: rt=...; HttpOnly; Secure;
-  SameSite=Strict; Path=/auth/refresh</pre><p>JS không đọc được. Bật rotation: mỗi lần refresh cấp token mới và vô hiệu token cũ.</p></div>
+  SameSite=Strict; Path=/auth/refresh</pre><p>JS cannot read it. Enable rotation: each refresh issues a new token and invalidates the old one.</p></div>
   </div>
   <div class="two" style="flex:none" data-step="1">
-    <div class="card"><div class="k">BACKEND PHẢI PHỐI HỢP</div><p>Cookie do server set. Nếu FE và API khác site, cần <code>SameSite=None</code> và phải chống CSRF kỹ hơn.</p></div>
-    <div class="card"><div class="k">BFF: BACKEND FOR FRONTEND</div><p>Token nằm hẳn ở server, trình duyệt chỉ giữ session cookie. An toàn hơn nhưng phức tạp hơn.</p></div>
+    <div class="card"><div class="k">THE BACKEND MUST COOPERATE</div><p>The server sets the cookie. If FE and API are cross-site, you need <code>SameSite=None</code> and stronger CSRF protection.</p></div>
+    <div class="card"><div class="k">BFF: BACKEND FOR FRONTEND</div><p>Tokens stay on the server and the browser holds only a session cookie. Safer but more complex.</p></div>
   </div>
-  <aside class="notes">Đây là một cách phổ biến, không phải đáp án duy nhất. Khi đi làm, hãy hỏi team đang dùng cách nào và vì sao. Với BFF chỉ cần nhớ tên.</aside>
+  <aside class="notes">This is a common approach, not the only answer. When you start work, ask which approach your team uses and why. For BFF, just remember the name.</aside>
 </section>
 
 <section class="slide">
-  <h2>Luồng khi access token hết hạn</h2>
+  <h2>What happens when the access token expires</h2>
   <div class="grow" id="refresh-seq"></div>
-  <aside class="notes">Đi từng bước. Bước cuối là nhánh thất bại: nếu refresh token cũng hết hạn thì chuyển về trang login.</aside>
+  <aside class="notes">Walk through step by step. The last step is the failure branch: if the refresh token has also expired, go to the login page.</aside>
 </section>
 
 <section class="slide">
-  <h2>Bốn lỗi hay gặp với luồng refresh</h2>
+  <h2>Four common mistakes in the refresh flow</h2>
   <div class="two">
     <div class="stack">
-      <div class="card"><div class="k">NHIỀU REQUEST CÙNG NHẬN 401</div><p>Chỉ refresh một lần, các request còn lại chờ kết quả. Nếu không, rotation có thể làm người dùng bị đăng xuất.</p></div>
+      <div class="card"><div class="k">MANY REQUESTS GET 401 AT ONCE</div><p>Refresh only once and make the others wait. Otherwise rotation can log the user out.</p></div>
 <pre class="code good grow" style="font-size:18px">let refreshing = null;
 
 function refreshOnce() {
@@ -805,60 +805,58 @@ function refreshOnce() {
 }</pre>
     </div>
     <div class="stack">
-      <div class="card"><div class="k">VÒNG LẶP VÔ HẠN</div><p>Nếu chính <code>/refresh</code> trả về 401 thì không được refresh tiếp.</p></div>
-      <div class="card"><div class="k">LOGOUT CHỈ Ở PHÍA CLIENT</div><p>Cần gọi server để thu hồi refresh token, không chỉ xóa state.</p></div>
-      <div class="card"><div class="k">LỘ TOKEN</div><p>Không ghi token vào log hoặc đưa lên URL.</p></div>
+      <div class="card"><div class="k">INFINITE LOOP</div><p>If <code>/refresh</code> itself returns 401, do not refresh again.</p></div>
+      <div class="card"><div class="k">CLIENT-ONLY LOGOUT</div><p>Call the server to revoke the refresh token, not just clear state.</p></div>
+      <div class="card"><div class="k">LEAKED TOKENS</div><p>Never write tokens to logs or put them in URLs.</p></div>
     </div>
   </div>
-  <aside class="notes">Lỗi đầu tiên hay chỉ lộ ra khi trang gọi nhiều API cùng lúc ngay lúc token hết hạn, nên rất khó tái hiện. Nếu thiếu giờ, chuyển slide này vào tài liệu tự học.</aside>
+  <aside class="notes">The first mistake often appears only when a page calls many APIs just as the token expires, so it is hard to reproduce. If short on time, move this slide to the self-study material.</aside>
 </section>
 
-<!-- ================= TỔNG KẾT ================= -->
-<section class="slide" data-p="00" data-section="Tổng kết">
-  <h2>Tư duy kiến trúc và chọn đúng công cụ quan trọng hơn thuộc lòng cú pháp</h2>
+<!-- ================= WRAP-UP ================= -->
+<section class="slide" data-p="00" data-section="Wrap-up">
+  <h2>Architectural thinking and choosing the right tool beat memorizing syntax</h2>
   <div class="grow five" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
-    <div class="card" style="--accent:var(--blue)"><div class="k">01</div><h3>Kiến trúc</h3><p>Chọn nơi render theo từng loại trang.</p></div>
-    <div class="card" style="--accent:var(--teal)"><div class="k">02</div><h3>Render</h3><p>State đặt ở đâu, phạm vi render ở đó. Đừng chặn main thread.</p></div>
-    <div class="card" style="--accent:var(--purple)"><div class="k">03</div><h3>State</h3><p>Phân loại trước, chọn công cụ sau. Tính được thì không lưu.</p></div>
-    <div class="card" style="--accent:var(--yellow)"><div class="k">04</div><h3>Hiệu suất</h3><p>Đo trước khi tối ưu. Hiểu rõ debounce và throttle.</p></div>
-    <div class="card" style="--accent:var(--orange)"><div class="k">05</div><h3>Bảo mật</h3><p>Chống XSS từ gốc. Không có nơi lưu token tuyệt đối an toàn.</p></div>
+    <div class="card" style="--accent:var(--blue)"><div class="k">01</div><h3>Architecture</h3><p>Choose where to render by page type.</p></div>
+    <div class="card" style="--accent:var(--teal)"><div class="k">02</div><h3>Render</h3><p>Where state lives sets the render scope. Do not block the main thread.</p></div>
+    <div class="card" style="--accent:var(--purple)"><div class="k">03</div><h3>State</h3><p>Classify first, pick tools later. If you can compute it, do not store it.</p></div>
+    <div class="card" style="--accent:var(--yellow)"><div class="k">04</div><h3>Performance</h3><p>Measure before optimizing. Know debounce from throttle.</p></div>
+    <div class="card" style="--accent:var(--orange)"><div class="k">05</div><h3>Security</h3><p>Stop XSS at the source. No token storage is absolutely safe.</p></div>
   </div>
-  <div class="callout">Tuần này, thử mở tab Network trên dự án của bạn và đếm xem có bao nhiêu request trùng lặp.</div>
-  <aside class="notes">1 phút. Kết thúc bằng một hành động nhỏ làm được ngay.</aside>
+  <div class="callout">This week, open the Network tab on your project and count the duplicate requests.</div>
+  <aside class="notes">1 minute. End with one small action people can take right away.</aside>
 </section>
 
-<section class="slide" data-section="Tài liệu">
-  <h2>Tài liệu tự học sâu hơn</h2>
+<section class="slide" data-section="Resources">
+  <h2>Resources for going deeper</h2>
   <div class="two" style="flex:none">
     <ul class="points">
       <li><b>React:</b> <a href="https://react.dev/learn/you-might-not-need-an-effect">You Might Not Need an Effect</a></li>
       <li><b>React:</b> <a href="https://react.dev/learn/render-and-commit">Render and Commit</a></li>
       <li><b>State:</b> <a href="https://tanstack.com/query/latest/docs/framework/react/overview">TanStack Query</a></li>
-      <li><b>Sách:</b> Morten Barklund, <i>React in Depth</i> (Manning, 2024)</li>
+      <li><b>Book:</b> Morten Barklund, <i>React in Depth</i> (Manning, 2024)</li>
     </ul>
     <ul class="points">
-      <li><b>Hiệu suất:</b> <a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
+      <li><b>Performance:</b> <a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
       <li><b>Event loop:</b> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop">MDN: Event loop</a></li>
       <li><b>XSS:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP: XSS Prevention</a></li>
       <li><b>CSRF:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP: CSRF Prevention</a></li>
     </ul>
   </div>
-  <div class="card" style="flex:none"><div class="k">SLIDE VÀ TÀI LIỆU</div><p>[Chèn QR code hoặc link Notion/Slide tại đây]</p></div>
-  <aside class="notes">Để slide này lại trong lúc Q&amp;A cũng được, mọi người có thời gian chụp ảnh.</aside>
+  <aside class="notes">You can leave this slide up during Q&amp;A so people have time to take a photo.</aside>
 </section>
 
 <section class="slide cover" data-section="Q&amp;A" data-plain>
-  <div class="eyebrow">10 PHÚT CUỐI</div>
-  <h1>Hỏi đáp</h1>
-  <p class="lead">Câu hỏi nào cũng được, nhất là vấn đề bạn đang gặp trong dự án thực tế.</p>
-  <p class="small muted">[Tên diễn giả] · [Email hoặc Slack]</p>
-  <aside class="notes">Nếu chưa ai hỏi, gợi ý: Nên học Next.js ngay hay chắc React trước? Dự án đang lưu token trong localStorage thì nên làm gì?</aside>
+  <div class="eyebrow">THE LAST 10 MINUTES</div>
+  <h1>Q&amp;A</h1>
+  <p class="lead">Ask anything, especially problems you are facing on a real project.</p>
+  <aside class="notes">If nobody asks, suggest: Should I learn Next.js now or get solid in React first? My project stores tokens in localStorage, what should I do?</aside>
 </section>
 
 </main>
 
 <div class="progress"><i id="bar"></i></div>
-<div class="pager"><button id="prev" aria-label="Slide trước">←</button><button id="next" aria-label="Slide sau">→</button></div>
+<div class="pager"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
 <div id="notes" role="note"></div>
 
 <script>
@@ -866,12 +864,12 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 const PARTS = [
-  ['01', 'Hệ sinh thái & Kiến trúc', 'Tiến hóa, CSR/SSR/SSG, build tool', 13],
-  ['02', 'Render & Main Thread', 'Re-render, event loop', 7],
-  ['03', 'Quản lý State', 'Prop drilling, phân loại state, global store', 15],
+  ['01', 'Ecosystem & Architecture', 'Evolution, CSR/SSR/SSG, build tools', 13],
+  ['02', 'Render & Main Thread', 'Re-rendering, event loop', 7],
+  ['03', 'State Management', 'Prop drilling, classifying state, global stores', 15],
   ['04', 'Web Performance 101', 'Core Web Vitals, debounce, throttle', 15],
-  ['05', 'Bảo mật cơ bản', 'XSS, CSRF, lưu trữ token', 12],
-  ['06', 'Q&A và Tổng kết', 'Ý chính, tài liệu, hỏi đáp', 10],
+  ['05', 'Security Basics', 'XSS, CSRF, token storage', 12],
+  ['06', 'Q&A and Wrap-up', 'Key points, resources, questions', 10],
 ];
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -905,22 +903,22 @@ function seq(el, actors, msgs, opts = {}) {
   });
   el.innerHTML = s + '</svg>';
 }
-seq($('#csrf-seq'), ['evil.example', 'Trình duyệt', 'bank.example'], [
-  { from: 1, to: 2, label: 'Đăng nhập, nhận cookie', step: 1 },
-  { from: 1, to: 0, label: 'Mở trang độc hại', step: 2 },
-  { from: 0, to: 1, label: 'Form tự submit', step: 3 },
+seq($('#csrf-seq'), ['evil.example', 'Browser', 'bank.example'], [
+  { from: 1, to: 2, label: 'Log in, receive cookie', step: 1 },
+  { from: 1, to: 0, label: 'Open malicious page', step: 2 },
+  { from: 0, to: 1, label: 'Auto-submitting form', step: 3 },
   { from: 1, to: 2, label: 'POST /transfer + cookie', step: 4, kind: 'bad' },
-  { from: 2, to: 2, label: 'Cookie hợp lệ: chuyển tiền', step: 5, kind: 'bad' },
-], { label: 'Luồng tấn công CSRF', w: 660, rowH: 62 });
-seq($('#refresh-seq'), ['SPA', 'API', 'Endpoint refresh'], [
-  { from: 0, to: 1, label: 'GET /orders + access token đã hết hạn', step: 1 },
+  { from: 2, to: 2, label: 'Valid cookie: money sent', step: 5, kind: 'bad' },
+], { label: 'CSRF attack flow', w: 660, rowH: 62 });
+seq($('#refresh-seq'), ['SPA', 'API', 'Refresh endpoint'], [
+  { from: 0, to: 1, label: 'GET /orders + expired access token', step: 1 },
   { from: 1, to: 0, label: '401 Unauthorized', step: 2, kind: 'bad' },
-  { from: 0, to: 2, label: 'POST /auth/refresh, cookie HttpOnly tự gửi kèm', step: 3 },
-  { from: 2, to: 0, label: 'Access token mới + cookie refresh mới (rotation)', step: 4, kind: 'good' },
-  { from: 0, to: 1, label: 'Gọi lại GET /orders với token mới', step: 5 },
+  { from: 0, to: 2, label: 'POST /auth/refresh, HttpOnly cookie sent automatically', step: 3 },
+  { from: 2, to: 0, label: 'New access token + new refresh cookie (rotation)', step: 4, kind: 'good' },
+  { from: 0, to: 1, label: 'Retry GET /orders with the new token', step: 5 },
   { from: 1, to: 0, label: '200 OK', step: 6, kind: 'good' },
-  { from: 0, to: 0, label: 'Nếu refresh thất bại: về trang login, không refresh tiếp', step: 7, kind: 'bad' },
-], { w: 1168, rowH: 70, label: 'Luồng làm mới access token' });
+  { from: 0, to: 0, label: 'If refresh fails: go to login, do not refresh again', step: 7, kind: 'bad' },
+], { w: 1168, rowH: 70, label: 'Access token refresh flow' });
 
 /* Deck engine */
 const slides = $$('.slide');
@@ -960,7 +958,7 @@ function show() {
   $('#bar').style.width = `${(cur + 1) / slides.length * 100}%`;
   $('#bar').style.background = getComputedStyle(s).getPropertyValue('--accent');
   const n = $('aside.notes', s);
-  $('#notes').innerHTML = `<b>GHI CHÚ · SLIDE ${cur + 1}, BƯỚC ${step} / ${maxStep(s)}</b>` + (n ? n.innerHTML : '');
+  $('#notes').innerHTML = `<b>NOTES · SLIDE ${cur + 1}, STEP ${step} / ${maxStep(s)}</b>` + (n ? n.innerHTML : '');
   const h = `#s${cur + 1}-${step}`;
   if (location.hash !== h) { try { history.replaceState(null, '', h); } catch (e) { /* sandboxed viewer */ } }
 }
@@ -1053,24 +1051,24 @@ addEventListener('hashchange', () => { fromHash(); show(); });
   requestAnimationFrame(frame);
   const spin = (ms) => { const end = performance.now() + ms; while (performance.now() < end); };
   const finish = (label) => setTimeout(() => {
-    out.innerHTML = `<b>${label}:</b> frame dài nhất ${Math.round(worst)} ms (ở 60 fps, mỗi frame khoảng 16.7 ms).`;
+    out.innerHTML = `<b>${label}:</b> longest frame ${Math.round(worst)} ms (at 60 fps, each frame is about 16.7 ms).`;
     busy = false;
   }, 120);
   $('#mt-block').onclick = () => {
     if (busy) return;
     busy = true;
-    out.textContent = 'Đang chạy...';
-    setTimeout(() => { worst = 0; spin(2000); finish('Một task 2 giây'); }, 50);
+    out.textContent = 'Running...';
+    setTimeout(() => { worst = 0; spin(2000); finish('One 2-second task'); }, 50);
   };
   $('#mt-split').onclick = () => {
     if (busy) return;
     busy = true;
-    out.textContent = 'Đang chạy...';
+    out.textContent = 'Running...';
     worst = 0;
     let left = 80;
     const tick = () => {
       spin(25);
-      if (--left > 0) setTimeout(tick); else finish('80 phần việc, mỗi phần 25 ms');
+      if (--left > 0) setTimeout(tick); else finish('80 chunks of 25 ms each');
     };
     setTimeout(tick);
   };
@@ -1079,14 +1077,14 @@ addEventListener('hashchange', () => { fromHash(); show(); });
 /* Demo: event loop stepper */
 hooks['el-slide'] = (() => {
   const S = [
-    { line: -1, stack: '', micro: '', task: '', out: '', say: 'Đoán thứ tự in ra trước khi bấm tiếp.' },
-    { line: 0, stack: "log('A')", micro: '', task: '', out: 'A', say: 'Code đồng bộ chạy ngay.' },
-    { line: 1, stack: 'setTimeout', micro: '', task: "log('B')", out: 'A', say: 'Callback vào task queue, dù delay bằng 0.' },
-    { line: 3, stack: 'Promise.then', micro: "log('C')", task: "log('B')", out: 'A', say: 'Callback vào microtask queue.' },
-    { line: 4, stack: "log('D')", micro: "log('C')", task: "log('B')", out: 'A D', say: 'Vẫn là code đồng bộ, nên chạy trước hai callback.' },
-    { line: -1, stack: '(trống)', micro: "log('C')", task: "log('B')", out: 'A D', say: 'Call stack trống. Event loop xử lý microtask trước.' },
-    { line: -1, stack: "log('C')", micro: '', task: "log('B')", out: 'A D C', say: 'Microtask queue đã hết.' },
-    { line: -1, stack: "log('B')", micro: '', task: '', out: 'A D C B', say: 'Cuối cùng mới đến task. Đáp án: A D C B.' },
+    { line: -1, stack: '', micro: '', task: '', out: '', say: 'Guess the print order before advancing.' },
+    { line: 0, stack: "log('A')", micro: '', task: '', out: 'A', say: 'Synchronous code runs right away.' },
+    { line: 1, stack: 'setTimeout', micro: '', task: "log('B')", out: 'A', say: 'The callback goes to the task queue, even with a delay of 0.' },
+    { line: 3, stack: 'Promise.then', micro: "log('C')", task: "log('B')", out: 'A', say: 'The callback goes to the microtask queue.' },
+    { line: 4, stack: "log('D')", micro: "log('C')", task: "log('B')", out: 'A D', say: 'Still synchronous, so it runs before both callbacks.' },
+    { line: -1, stack: '(empty)', micro: "log('C')", task: "log('B')", out: 'A D', say: 'The call stack is empty. The event loop handles microtasks first.' },
+    { line: -1, stack: "log('C')", micro: '', task: "log('B')", out: 'A D C', say: 'The microtask queue is now empty.' },
+    { line: -1, stack: "log('B')", micro: '', task: '', out: 'A D C B', say: 'The task runs last. Answer: A D C B.' },
   ];
   return (i) => {
     const c = S[i];
@@ -1149,21 +1147,21 @@ hooks['el-slide'] = (() => {
   let store;
   try { localStorage.setItem('demo_token', FAKE); store = "localStorage.getItem('demo_token')"; }
   catch (e) { window.demoStore = FAKE; store = 'window.demoStore'; }
-  $('#xss-input').value = `Sản phẩm rất tốt! <img src="x" onerror="xssReport(${store})">`;
+  $('#xss-input').value = `Great product! <img src="x" onerror="xssReport(${store})">`;
   const res = $('#xss-result');
   let fired = false;
   window.xssReport = (t) => {
     fired = true;
-    res.innerHTML = `<b>Payload đã chạy và đọc được token:</b> <code>${esc(String(t))}</code>. Kẻ tấn công thật sẽ gửi nó ra ngoài.`;
+    res.innerHTML = `<b>The payload ran and read the token:</b> <code>${esc(String(t))}</code>. A real attacker would send it out.`;
   };
   $('#xss-run').onclick = () => {
     fired = false;
     const v = $('#xss-input').value;
-    res.textContent = 'Đang hiển thị...';
+    res.textContent = 'Rendering...';
     $('#xss-bad').innerHTML = v;
     $('#xss-good').textContent = v;
     setTimeout(() => {
-      if (!fired) res.innerHTML = '<b>Payload không chạy.</b> Có thể CSP của trang đã chặn inline handler, đúng vai trò của lớp phòng thủ này.';
+      if (!fired) res.innerHTML = '<b>The payload did not run.</b> The page CSP may have blocked the inline handler, which is exactly what this defense is for.';
     }, 900);
   };
 })();
