@@ -767,7 +767,7 @@ document.cookie <span class="c">// no HttpOnly cookie here</span></pre></div>
   <aside class="notes">Demo on a local app with an HttpOnly cookie set by the server: open the Console and the Application tab. The cookie shows in the Application tab but not in document.cookie.</aside>
 </section>
 
-<section class="slide">
+<section class="slide" data-hidden>
   <h2>A recommended SPA setup: keep the two tokens apart</h2>
   <div class="two" style="flex:none">
     <div class="card hot"><div class="k">ACCESS TOKEN</div><h3>Store in memory</h3>
@@ -916,7 +916,7 @@ seq($('#refresh-seq'), ['SPA', 'API', 'Refresh endpoint'], [
 ], { w: 1168, rowH: 70, label: 'Access token refresh flow' });
 
 /* Deck engine */
-const slides = $$('.slide');
+const slides = $$('.slide').filter((s) => !s.hasAttribute('data-hidden'));
 const fit = () => {
   const k = Math.min(innerWidth / 1280, innerHeight / 720);
   $('#deck').style.transform = `scale(${k}) translate(-50%, -50%)`;
