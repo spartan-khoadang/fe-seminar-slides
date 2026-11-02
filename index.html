@@ -490,7 +490,7 @@ const total = items.reduce(sum, 0);
 <!-- ================= 03 PERFORMANCE ================= -->
 <section class="slide divider" data-p="03" data-plain>
   <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Measure first, optimize second, and avoid a few common mistakes.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">15 minutes, with two demos: debounce/throttle and DevTools.</aside>
+  <aside class="notes">15 minutes, with one demo: debounce and throttle.</aside>
 </section>
 
 <section class="slide">
@@ -528,8 +528,10 @@ const total = items.reduce(sum, 0);
 <section class="slide">
   <h2>Mistake 1: creating debounce in the component body</h2>
   <div class="two">
-    <div class="stack"><span class="label">WRONG: A NEW TIMER EVERY RENDER</span>
-<pre class="code bad grow" style="font-size:18px">function Search() {
+    <div class="stack"><span class="label">WRONG: A NEW DEBOUNCE EVERY RENDER</span>
+<pre class="code bad grow" style="font-size:18px">import debounce from 'lodash/debounce';
+
+function Search() {
   const [q, setQ] = useState('');
   <span class="x">const search = debounce(callApi, 300);</span>
 
@@ -540,25 +542,25 @@ const total = items.reduce(sum, 0);
     }} /&gt;
   );
 }
-<span class="c">// Type 5 chars: still 5 API calls, just later</span></pre></div>
-    <div class="stack" data-step="1"><span class="label">RIGHT: STABLE INSTANCE, CLEARED ON UNMOUNT</span>
-<pre class="code good grow" style="font-size:18px">function useDebounced(fn, delay) {
-  const timer = useRef();
-  const latest = useRef(fn);
-  useEffect(() =&gt; { latest.current = fn; });
-  <span class="g">useEffect(() =&gt; () =&gt; {
-    clearTimeout(timer.current);
-  }, []);</span>
+<span class="c">// Type "react": 5 API calls, just later</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">RIGHT: ONE INSTANCE ACROSS RENDERS</span>
+<pre class="code good grow" style="font-size:18px">function Search() {
+  const [q, setQ] = useState('');
+  <span class="g">const search = useMemo(</span>
+    <span class="g">() =&gt; debounce(callApi, 300), []</span>
+  <span class="g">);</span>
+  <span class="g">useEffect(() =&gt; () =&gt; search.cancel(), [search]);</span>
 
-  return useCallback((...args) =&gt; {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(
-      () =&gt; latest.current(...args), delay
-    );
-  }, [delay]);
-}</pre></div>
+  return (
+    &lt;input value={q} onChange={(e) =&gt; {
+      setQ(e.target.value);
+      search(e.target.value);
+    }} /&gt;
+  );
+}
+<span class="c">// Type "react": 1 API call</span></pre></div>
   </div>
-  <aside class="notes">When state changes the function component runs again, so variables declared in its body are recreated. In practice you can use a ready-made hook such as useDebouncedCallback from the use-debounce library.</aside>
+  <aside class="notes">Each render calls Search() again, so the left version creates a new debounce with its own timer per keystroke, and none can cancel the others. useMemo with [] keeps one instance, and cancel() clears a pending call on unmount. React treats useMemo as a performance hint, so for a hard guarantee keep it in useRef, or use useDebouncedCallback from the use-debounce library.</aside>
 </section>
 
 <section class="slide">
@@ -590,21 +592,46 @@ const total = items.reduce(sum, 0);
   <aside class="notes">React Query handles this race for you because results are tied to the queryKey.</aside>
 </section>
 
-<section class="slide" data-demo>
-  <h2>Demo: measure before optimizing, right in DevTools</h2>
-  <div class="three grow">
-    <div class="card"><div class="k">NETWORK TAB</div><h3>How many requests?</h3><ul class="points">
-      <li>Any duplicate requests?</li><li>Which file is largest?</li><li>Throttle to Fast 4G to try a slow network.</li></ul></div>
-    <div class="card"><div class="k">LIGHTHOUSE</div><h3>Measure page load</h3><ul class="points">
-      <li>Reports LCP and CLS.</li><li>Uses TBT to estimate responsiveness. It does not measure INP.</li><li>Read the suggestions.</li></ul></div>
-    <div class="card"><div class="k">PERFORMANCE TAB</div><h3>Measure interactions</h3><ul class="points">
-      <li>Shows live LCP, CLS, INP.</li><li>Click around and watch INP change.</li><li>Record a profile to see long tasks.</li></ul></div>
+<section class="slide">
+  <h2>Mistake 4: a throttle that drops the last event</h2>
+  <div class="two">
+    <div class="stack"><span class="label">WRONG: CALLS DURING THE WAIT ARE LOST</span>
+<pre class="code bad grow" style="font-size:16px">function throttle(fn, ms) {
+  let last = 0;
+  return (...args) =&gt; {
+    const now = Date.now();
+    <span class="x">if (now - last &lt; ms) return;</span>
+    last = now;
+    fn(...args);
+  };
+}
+
+window.addEventListener('scroll',
+  throttle(updateProgressBar, 200));
+<span class="c">// Scroll fast to the bottom and stop:</span>
+<span class="c">// the bar can stay at 92%</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">RIGHT: ALWAYS RUN THE LAST CALL</span>
+<pre class="code good grow" style="font-size:16px">function throttle(fn, ms) {
+  let last = 0, timer;
+  return (...args) =&gt; {
+    const wait = ms - (Date.now() - last);
+    clearTimeout(timer);
+    if (wait &lt;= 0) {
+      last = Date.now();
+      fn(...args);
+    } else {
+      <span class="g">timer = setTimeout(() =&gt; {</span>
+        <span class="g">last = Date.now();</span>
+        <span class="g">fn(...args);</span>
+      <span class="g">}, wait);</span>
+    }
+  };
+}</pre></div>
   </div>
-  <div class="callout">Lighthouse measures in a lab environment. Real user numbers can differ.</div>
-  <aside class="notes">Switch to the demo app. Prepare a page with a large image and some duplicate requests. Keep a backup video in case the network or machine fails.</aside>
+  <div class="callout" data-step="2">lodash <code>throttle</code> runs the trailing call by default. Like debounce, keep one instance across renders.</div>
+  <aside class="notes">The wrong version handles the first event, then ignores everything until the wait passes. If the user stops scrolling during the wait, the final position is never handled. The fix schedules a trailing call with the latest arguments.</aside>
 </section>
 
-<!-- ================= 04 SECURITY ================= -->
 <section class="slide divider" data-p="04" data-plain>
   <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Security Basics</h1><p class="lead">XSS, CSRF and token storage, instead of defaulting to <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
   <aside class="notes">12 minutes. Understand the two attacks first, and the token storage comparison will make sense on its own.</aside>
