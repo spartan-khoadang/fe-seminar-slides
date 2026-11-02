@@ -696,13 +696,27 @@ window.addEventListener('scroll',
 </section>
 
 <section class="slide">
+  <h2>SameSite: when does the browser attach the cookie?</h2>
+  <p class="lead">Without SameSite, the browser attaches the <code>bank.example</code> cookie to every request going there, no matter which site created it.</p>
+  <table>
+    <tr><th>Request to bank.example comes from</th><th>Strict</th><th>Lax</th><th>None</th></tr>
+    <tr><td class="n">A button inside bank.example</td><td><span class="chip good">Sent</span></td><td><span class="chip good">Sent</span></td><td><span class="chip good">Sent</span></td></tr>
+    <tr><td class="n">Clicking a link from Google to bank.example</td><td><span class="chip bad">Not sent</span></td><td><span class="chip good">Sent</span></td><td><span class="chip good">Sent</span></td></tr>
+    <tr><td class="n">A hidden POST form on evil.example</td><td><span class="chip bad">Not sent</span></td><td><span class="chip bad">Not sent</span></td><td><span class="chip good">Sent</span></td></tr>
+    <tr><td class="n"><code>fetch</code> or an image on evil.example</td><td><span class="chip bad">Not sent</span></td><td><span class="chip bad">Not sent</span></td><td><span class="chip good">Sent</span></td></tr>
+  </table>
+  <div class="callout" data-step="1">Set it explicitly: <code>Set-Cookie: session=abc123; SameSite=Lax; Secure; HttpOnly</code>. Browser defaults differ.</div>
+  <aside class="notes">Analogy: the cookie is a building access card the browser swipes for you. No SameSite: it swipes for anyone who asks. Lax: only when you walk in through the front door yourself. Strict: only when you are already inside. None requires Secure.</aside>
+</section>
+
+<section class="slide">
   <h2>Stopping CSRF, and a misconception to correct</h2>
   <div class="two" style="flex:none">
     <ul class="points">
-      <li><b>Cookie <code>SameSite</code>:</b> set <code>Lax</code> or <code>Strict</code> explicitly, do not rely on browser defaults.</li>
-      <li><b>CSRF token:</b> the server checks a value the malicious page cannot know.</li>
-      <li><b><code>Origin</code> header:</b> reject requests from unknown origins.</li>
-      <li><b>No data changes via GET:</b> <code>Lax</code> still sends cookies when a user follows a link to your site.</li>
+      <li><b>Cookie <code>SameSite</code>:</b> set <code>Lax</code> explicitly, so the hidden form arrives without the cookie.</li>
+      <li><b>CSRF token:</b> a random value in a hidden input, like <code>csrf_token=x9F2kQ7pLm</code>. The malicious page cannot read it.</li>
+      <li><b><code>Origin</code> header:</b> the browser sets it. <code>Origin: https://evil.example</code> → 403.</li>
+      <li><b>No data changes via GET:</b> <code>Lax</code> still sends cookies on a link click, so <code>GET /transfer?to=hacker</code> would work. Use POST.</li>
     </ul>
     <div class="stack" data-step="1">
       <div class="card bad"><div class="k" style="color:var(--bad)">MISCONCEPTION</div><h3>"We configured CORS, so we are safe"</h3><p>CORS does not stop CSRF. It mainly controls whether JS can read the response, and the form above still gets sent.</p></div>
