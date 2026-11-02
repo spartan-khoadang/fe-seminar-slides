@@ -239,33 +239,42 @@ aside.notes { display: none; }
 <section class="slide">
   <h2>From updating the DOM by hand to describing the UI from state</h2>
   <div class="two">
-    <div class="stack"><span class="label">THEN: VANILLA JS / JQUERY</span>
-<pre class="code grow">let count = 0;
+    <div class="stack"><span class="label">THEN: JQUERY, EVERY ACTION UPDATES EVERY PLACE</span>
+<pre class="code bad grow" style="font-size:17px">let count = 0;
 
 $('#plus').on('click', () =&gt; {
   count++;
-  <span class="c">// You track every place to update</span>
   $('#count').text(count);
   $('#badge').text(count);
   $('#total').text(count * price);
+});
+
+$('#reset').on('click', () =&gt; {
+  count = 0;
+  $('#count').text(count);
+  $('#badge').text(count);
+  <span class="x">// Forgot #total: the screen is now wrong</span>
 });</pre>
-      <div class="callout bad">The bigger the project, the easier it is to miss a spot.</div>
+      <div class="callout bad">Every new action repeats every update. Miss one and the screen is wrong, with no error.</div>
     </div>
-    <div class="stack" data-step="1"><span class="label">NOW: COMPONENT-BASED</span>
-<pre class="code grow">function Cart({ price }) {
+    <div class="stack" data-step="1"><span class="label">NOW: REACT, EVERY ACTION ONLY CHANGES STATE</span>
+<pre class="code good grow" style="font-size:17px">function Cart({ price }) {
   const [count, setCount] = useState(0);
 
-  <span class="c">// Describe the UI, React handles the DOM</span>
   return (
-    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-      {count} items, total {count * price}
-    &lt;/button&gt;
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;Badge value={count} /&gt;
+      &lt;p&gt;{count * price}&lt;/p&gt;
+      <span class="g">&lt;Plus onClick={() =&gt; setCount(count + 1)} /&gt;</span>
+      <span class="g">&lt;Reset onClick={() =&gt; setCount(0)} /&gt;</span>
+    &lt;/&gt;
   );
 }</pre>
-      <div class="callout">Change the state and the UI follows.</div>
+      <div class="callout">Change the state once. Every place on screen follows, so there is nothing to forget.</div>
     </div>
   </div>
-  <aside class="notes">This is the shift from imperative to declarative. React, Vue and Angular differ in syntax but share this idea.</aside>
+  <aside class="notes">Use a shopping cart as the mental picture: count, cart badge, total. The Reset handler on the left forgot one line, and nothing reports an error. On the right, each handler only changes state. Short version: with jQuery you remember to fix the screen, with React you only change the data.</aside>
 </section>
 
 <section class="slide">
