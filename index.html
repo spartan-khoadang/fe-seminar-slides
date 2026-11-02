@@ -564,36 +564,32 @@ function Search() {
 </section>
 
 <section class="slide">
-  <h2>Mistakes 2 and 3: debounce does not solve everything</h2>
+  <h2>Mistake 2: thinking debounce prevents race conditions</h2>
   <div class="two">
-    <div class="stack">
-      <div class="card bad"><div class="k" style="color:var(--bad)">MISTAKE 2: RACE CONDITIONS</div><p>An old response can arrive after a new one. Type <code>re</code> then <code>react</code>, and the <code>re</code> result arrives last and overwrites.</p></div>
-<pre class="code good grow" style="font-size:18px">useEffect(() =&gt; {
-  <span class="g">const c = new AbortController();</span>
-  fetch(url(q), { signal: c.signal })
-    .then((r) =&gt; r.json())
-    .then(setData)
-    .catch((e) =&gt; {
-      if (e.name !== 'AbortError') setError(e);
-    });
-  <span class="g">return () =&gt; c.abort();</span>
-}, [q]);</pre>
-    </div>
-    <div class="stack" data-step="1">
-      <div class="card bad"><div class="k" style="color:var(--bad)">MISTAKE 3: USING IT TO FIX A SLOW UI</div><p>Debounce only reduces calls. One heavy render is still just as heavy.</p></div>
-      <div class="card"><div class="k">INSTEAD</div><ul class="points">
-        <li>Measure with React Profiler to find the slow part.</li>
-        <li>Reduce re-render scope, place state correctly.</li>
-        <li>Long lists: use virtualization.</li>
-        <li>Heavy computation: split it up or use a Web Worker.</li>
-      </ul></div>
-    </div>
+    <div class="stack"><span class="label">WRONG: AN OLD RESPONSE OVERWRITES A NEW ONE</span>
+<pre class="code bad grow" style="font-size:18px">Type "re"      → request A
+Type "react"   → request B
+
+B returns      → shows results for "react"
+<span class="x">A returns late → overwrites with "re"</span>
+
+<span class="c">// Debounce reduces calls,</span>
+<span class="c">// but cannot control response order</span></pre></div>
+    <div class="stack" data-step="1"><span class="label">RIGHT: RESULTS TIED TO THE QUERY KEY</span>
+<pre class="code good grow" style="font-size:18px">const { data } = useQuery({
+  <span class="g">queryKey: ['search', q],</span>
+  queryFn: () =&gt; searchApi(q),
+});
+
+<span class="c">// Each q has its own result.</span>
+<span class="c">// A late "re" response cannot</span>
+<span class="c">// overwrite what "react" shows.</span></pre></div>
   </div>
-  <aside class="notes">React Query handles this race for you because results are tied to the queryKey.</aside>
+  <aside class="notes">Debounce only reduces how many requests go out. Once two requests are in flight, the network decides which returns first.</aside>
 </section>
 
 <section class="slide">
-  <h2>Mistake 4: a throttle that drops the last event</h2>
+  <h2>Mistake 3: a throttle that drops the last event</h2>
   <div class="two">
     <div class="stack"><span class="label">WRONG: CALLS DURING THE WAIT ARE LOST</span>
 <pre class="code bad grow" style="font-size:16px">function throttle(fn, ms) {
@@ -628,7 +624,6 @@ window.addEventListener('scroll',
   };
 }</pre></div>
   </div>
-  <div class="callout" data-step="2">lodash <code>throttle</code> runs the trailing call by default. Like debounce, keep one instance across renders.</div>
   <aside class="notes">The wrong version handles the first event, then ignores everything until the wait passes. If the user stops scrolling during the wait, the final position is never handled. The fix schedules a trailing call with the latest arguments.</aside>
 </section>
 
