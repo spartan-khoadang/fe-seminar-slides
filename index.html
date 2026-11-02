@@ -710,20 +710,40 @@ window.addEventListener('scroll',
 </section>
 
 <section class="slide">
-  <h2>Stopping CSRF, and a misconception to correct</h2>
-  <div class="two" style="flex:none">
-    <ul class="points">
-      <li><b>Cookie <code>SameSite</code>:</b> set <code>Lax</code> explicitly, so the hidden form arrives without the cookie.</li>
-      <li><b>CSRF token:</b> a random value in a hidden input, like <code>csrf_token=x9F2kQ7pLm</code>. The malicious page cannot read it.</li>
-      <li><b><code>Origin</code> header:</b> the browser sets it. <code>Origin: https://evil.example</code> → 403.</li>
-      <li><b>No data changes via GET:</b> <code>Lax</code> still sends cookies on a link click, so <code>GET /transfer?to=hacker</code> would work. Use POST.</li>
-    </ul>
-    <div class="stack" data-step="1">
-      <div class="card bad"><div class="k" style="color:var(--bad)">MISCONCEPTION</div><h3>"We configured CORS, so we are safe"</h3><p>CORS does not stop CSRF. It mainly controls whether JS can read the response, and the form above still gets sent.</p></div>
-      <div class="card good" data-step="2"><div class="k" style="color:var(--good)">NATURALLY IMMUNE</div><p>Tokens sent in the <code>Authorization</code> header are not exposed to CSRF, because browsers do not attach that header automatically.</p></div>
-    </div>
+  <h2>Three more defenses on the server side</h2>
+  <div class="three grow">
+    <div class="card"><div class="k">CSRF TOKEN</div><h3>A value only the real page knows</h3>
+<pre class="code" style="font-size:15px">&lt;input type="hidden"
+  name="csrf_token"
+  value="x9F2kQ7pLm" /&gt;
+
+<span class="c">// Server</span>
+if (body.csrf_token !==
+    session.csrfToken)
+  return 403;</pre>
+      <p class="small" style="margin-top:auto">The fake form on evil.example has no token, so it gets 403.</p></div>
+    <div class="card" data-step="1"><div class="k">ORIGIN HEADER</div><h3>Where did the request come from?</h3>
+<pre class="code" style="font-size:15px">POST /transfer
+<span class="x">Origin: https://evil.example</span>
+Cookie: session=abc123
+
+<span class="c">// Server</span>
+if (req.headers.origin !==
+    'https://bank.example')
+  return 403;</pre>
+      <p class="small" style="margin-top:auto">The browser sets <code>Origin</code>. JavaScript cannot fake it.</p></div>
+    <div class="card" data-step="2"><div class="k">NO CHANGES VIA GET</div><h3>GET only reads</h3>
+<pre class="code" style="font-size:15px"><span class="x">GET /transfer?to=hacker</span>
+<span class="x">    &amp;amount=1000</span>
+<span class="c">// a link is enough, and</span>
+<span class="c">// Lax still sends the cookie</span>
+
+<span class="g">GET  /transfer  → show form</span>
+<span class="g">POST /transfer  → move money</span></pre>
+      <p class="small" style="margin-top:auto">Create, update, delete: POST, PUT, DELETE.</p></div>
   </div>
-  <aside class="notes">Ask first: who thinks CORS prevents CSRF? The Authorization header point bridges to the token storage comparison.</aside>
+  <div class="callout" data-step="2">Combine them: SameSite as the base, a CSRF token or an Origin check on the server.</div>
+  <aside class="notes">Every defense here works on the bank example from the CSRF slide.</aside>
 </section>
 
 <section class="slide">
