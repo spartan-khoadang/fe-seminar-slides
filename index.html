@@ -31,7 +31,6 @@
 [data-part="02"] { --accent: var(--teal); }
 [data-part="03"] { --accent: var(--purple); }
 [data-part="04"] { --accent: var(--yellow); }
-[data-part="05"] { --accent: var(--orange); }
 [data-part] { --wash: color-mix(in srgb, var(--accent) 20%, var(--surface)); --edge: color-mix(in srgb, var(--accent) 50%, transparent); }
 
 * { box-sizing: border-box; }
@@ -55,7 +54,7 @@ code { font-family: var(--mono); font-size: .9em; color: var(--accent); }
 a { color: var(--accent); }
 
 .two { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-content: center; }
-.three.grow, .four.grow, .five { align-content: center; }
+.three.grow, .four.grow { align-content: center; }
 .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
@@ -120,28 +119,9 @@ td.w { color: var(--bad); font-weight: 600; }
 /* Live demo controls */
 button.btn { font-family: var(--sans); font-size: 17px; font-weight: 600; color: var(--ink); background: var(--wash); border: 1px solid var(--accent); border-radius: 8px; padding: 8px 14px; cursor: pointer; }
 button.btn:hover { filter: brightness(1.25); }
-button.btn:focus-visible, .rn button:focus-visible, .pager button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+button.btn:focus-visible, .pager button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 input.field, textarea.field { width: 100%; font-family: var(--mono); font-size: 16px; color: var(--ink); background: var(--surface2); border: 1px solid var(--hair); border-radius: 8px; padding: 9px 12px; resize: none; }
 .live { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--paper); background: var(--accent); border-radius: 4px; padding: 2px 8px; }
-
-/* Re-render demo */
-.rn { border: 1.5px solid var(--hair); border-radius: 10px; padding: 7px 10px; display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; background: var(--surface); transition: background .5s, border-color .5s; }
-.rn.flash { background: var(--wash); border-color: var(--accent); transition: none; }
-.rn > .rh { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-.rn button { font-family: var(--mono); font-size: 15.5px; font-weight: 600; color: var(--ink); background: var(--surface2); border: 1px solid var(--hair); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
-.rn .cnt { font-family: var(--mono); font-size: 15px; color: var(--muted); white-space: nowrap; }
-.rk { display: flex; gap: 8px; }
-
-/* Main thread demo */
-.track { position: relative; height: 54px; background: var(--surface2); border-radius: 10px; }
-.track i { position: absolute; top: 9px; left: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); }
-
-/* Event loop */
-.el { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.el .card { min-height: 112px; padding: 12px 14px; }
-.el .v { font-family: var(--mono); font-size: 18px; color: var(--ink); line-height: 1.35; white-space: pre-wrap; }
-pre.code span.line { display: block; border-radius: 4px; }
-pre.code span.line.now { background: var(--wash); color: var(--ink); }
 
 /* Debounce lanes */
 .lane { display: grid; grid-template-columns: 112px 1fr 44px; align-items: center; gap: 12px; }
@@ -220,12 +200,12 @@ aside.notes { display: none; }
   <div class="eyebrow">SEMINAR · FOR FRESHER SOFTWARE ENGINEERS</div>
   <h1>Front-End:<br>The Big Picture</h1>
   <p class="lead">A mental map of architecture, data flow, performance and security basics.</p>
-  <p class="small muted">75 minutes</p>
+  <p class="small muted">About 70 minutes</p>
   <aside class="notes">Introduce yourself briefly. Shortcuts: arrow keys or Space to advance, N for notes, T for light/dark theme, F for fullscreen.</aside>
 </section>
 
 <section class="slide" data-section="Agenda">
-  <h2>Six parts, from the big picture to the mistakes you will meet in week one</h2>
+  <h2>Five parts, from the big picture to the mistakes you will meet in week one</h2>
   <div class="outl" id="outline"></div>
   <aside class="notes">The goal is not to memorize every tool, but to know where each problem belongs when you meet it. There are many live demos. Ask right away if something is unclear, and we keep 10 minutes for Q&amp;A at the end.</aside>
 </section>
@@ -295,7 +275,7 @@ $('#reset').on('click', () =&gt; {
       <li><b>Independent:</b> each piece owns its UI and logic.</li>
       <li><b>Reusable:</b> one <code>ProductCard</code>, used in many places.</li>
       <li><b>One-way data:</b> parents pass props down to children.</li>
-      <li><b>New challenge:</b> where should state live? Part 3 answers that.</li>
+      <li><b>New challenge:</b> where should state live? Part 2 answers that.</li>
     </ul>
   </div>
   <aside class="notes">You can open an e-commerce page and ask the room: which components would you split this page into?</aside>
@@ -321,7 +301,6 @@ $('#reset').on('click', () =&gt; {
     <tr><td class="n">SSR</td><td>Early content, good SEO, fresh data per request</td><td>Costs server resources, harder to operate</td><td>Product pages, personalized content</td></tr>
     <tr><td class="n">SSG</td><td>Very fast, cheap, easy to cache on a CDN</td><td>Data changes require a rebuild</td><td>Blogs, docs, landing pages</td></tr>
   </table>
-  <div class="callout">Frameworks like Next.js and Nuxt let you choose per page, so one app can mix these models.</div>
   <aside class="notes">Ask the room: what would you pick for a news homepage, an order admin page, and API docs? Several answers are reasonable. What matters is explaining why.</aside>
 </section>
 
@@ -346,63 +325,9 @@ jsx(Button, { size: "lg", children: "Buy" })</pre>
   <aside class="notes">Separate the two jobs freshers tend to merge into one. Hashed file names enable long-term caching: when the content changes, the name changes.</aside>
 </section>
 
-<!-- ================= 02 RENDER & MAIN THREAD ================= -->
+<!-- ================= 02 STATE ================= -->
 <section class="slide divider" data-p="02" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">02</div><h1 style="font-size:54px">Render &amp; Main Thread</h1><p class="lead">The foundation for why state needs sorting and why UIs get slow.</p></div><ol class="rail"></ol></div>
-  <aside class="notes">7 minutes. These two mental models come back in both Part 3 and Part 4.</aside>
-</section>
-
-<section class="slide">
-  <h2>When state changes, the component re-renders, and so do its children</h2>
-  <div class="two" style="grid-template-columns:1fr">
-    <div class="stack">
-      <div class="row"><span class="live">LIVE</span><span class="small">Click a component name to call <code>setState</code> there</span></div>
-      <div id="rr" class="stack"></div>
-    </div>
-    <div class="three">
-      <div class="card"><div class="k">RENDER</div><p>React calls the function component again to compute the new UI.</p></div>
-      <div class="card"><div class="k">COMMIT</div><p>Only the DOM that actually changed is updated. A re-render does not mean the DOM changes.</p></div>
-      <div class="card hot"><div class="k">CONSEQUENCE</div><p>The higher state lives, the more has to re-render.</p></div>
-    </div>
-  </div>
-  <aside class="notes">Click App: everything lights up and the counts go up. Click List: only List and its Items. Conclusion: where state lives directly affects the render scope. React.memo can skip some renders, but place state correctly first.</aside>
-</section>
-
-<section class="slide">
-  <h2>JavaScript runs on the main thread, alongside painting and input</h2>
-  <div class="body">
-    <div class="row"><span class="live">LIVE</span><span class="small">JS moves the ball every frame. Try typing in the box below while it runs.</span></div>
-    <div class="track" id="mt-track"><i></i></div>
-    <div class="row">
-      <button class="btn" id="mt-block">Block main thread for 2 seconds</button>
-      <button class="btn" id="mt-split">Same work, split up</button>
-      <input class="field" id="mt-input" style="flex:1;width:auto" placeholder="Type here" aria-label="Typing test box" />
-    </div>
-    <div class="callout" id="mt-out">Click a button to measure the longest frame.</div>
-    <p>A long task blocks the main thread, so the browser cannot paint new frames or handle clicks. This is exactly what hurts <b>INP</b> in Part 4.</p>
-  </div>
-  <aside class="notes">First button: the ball freezes and typing shows nothing. Second button: the total work is the same but the ball keeps moving, because the browser can paint between chunks. 60 fps means about 16.7 ms per frame.</aside>
-</section>
-
-<section class="slide" id="el-slide" data-steps="7">
-  <h2>Event loop: what order does this code print?</h2>
-  <div class="two" style="grid-template-columns:5fr 7fr;flex:none">
-<pre class="code" id="el-code"><span class="line">console.log('A');</span><span class="line">setTimeout(() =&gt; console.log('B'), 0);</span><span class="line">Promise.resolve()</span><span class="line">  .then(() =&gt; console.log('C'));</span><span class="line">console.log('D');</span></pre>
-    <div class="callout" id="el-say" style="display:flex;align-items:center"></div>
-  </div>
-  <div class="el">
-    <div class="card"><div class="k">CALL STACK</div><div class="v" id="el-stack"></div></div>
-    <div class="card"><div class="k">MICROTASK QUEUE</div><div class="v" id="el-micro"></div></div>
-    <div class="card"><div class="k">TASK QUEUE</div><div class="v" id="el-task"></div></div>
-    <div class="card hot"><div class="k">OUTPUT</div><div class="v" id="el-out"></div></div>
-  </div>
-  <p>The rule: run all synchronous code, then <b>every microtask</b> (Promise), and only then <b>one task</b> (setTimeout).</p>
-  <aside class="notes">Let the room guess before you advance. Answer: A D C B. setTimeout 0 does not mean run now, only as soon as possible after the call stack is empty and microtasks are done.</aside>
-</section>
-
-<!-- ================= 03 STATE ================= -->
-<section class="slide divider" data-p="03" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">State Management</h1><p class="lead">The biggest headache, and why Redux is not the answer to everything.</p></div><ol class="rail"></ol></div>
+  <div class="div-grid"><div class="stack"><div class="big">02</div><h1 style="font-size:54px">State Management</h1><p class="lead">The biggest headache, and why Redux is not the answer to everything.</p></div><ol class="rail"></ol></div>
   <aside class="notes">15 minutes. If you remember one thing from this part: classify state before choosing a tool.</aside>
 </section>
 
@@ -526,9 +451,9 @@ const total = items.reduce(sum, 0);
   <aside class="notes">No need to go deep. The point is that freshers know the options exist and do not judge a codebase for using Redux.</aside>
 </section>
 
-<!-- ================= 04 PERFORMANCE ================= -->
-<section class="slide divider" data-p="04" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Measure first, optimize second, and avoid a few common mistakes.</p></div><ol class="rail"></ol></div>
+<!-- ================= 03 PERFORMANCE ================= -->
+<section class="slide divider" data-p="03" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">03</div><h1 style="font-size:54px">Web Performance 101</h1><p class="lead">Measure first, optimize second, and avoid a few common mistakes.</p></div><ol class="rail"></ol></div>
   <aside class="notes">15 minutes, with two demos: debounce/throttle and DevTools.</aside>
 </section>
 
@@ -536,7 +461,7 @@ const total = items.reduce(sum, 0);
   <h2>Core Web Vitals: three questions from the user's point of view</h2>
   <div class="three grow">
     <div class="card"><div class="k">LOADING</div><h1 style="font-size:58px">LCP</h1><h3>Largest Contentful Paint</h3><p>How long until the main content appears, like a banner or large text?</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 2.5 s</span></div>
-    <div class="card" data-step="1"><div class="k">INTERACTIVITY</div><h1 style="font-size:58px">INP</h1><h3>Interaction to Next Paint</h3><p>After a click, how long until the UI responds? Recall the main thread demo.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 200 ms</span></div>
+    <div class="card" data-step="1"><div class="k">INTERACTIVITY</div><h1 style="font-size:58px">INP</h1><h3>Interaction to Next Paint</h3><p>After a click, how long until the UI responds?</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 200 ms</span></div>
     <div class="card" data-step="2"><div class="k">STABILITY</div><h1 style="font-size:58px">CLS</h1><h3>Cumulative Layout Shift</h3><p>Reading along when an image loads and pushes the text down? Lower is better.</p><span class="chip good" style="margin-top:auto;align-self:flex-start">Good: ≤ 0.1</span></div>
   </div>
   <p class="small muted">Thresholds published by Google, assessed at the 75th percentile of real visits (web.dev/vitals).</p>
@@ -615,7 +540,7 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
   }, [delay]);
 }</pre></div>
   </div>
-  <aside class="notes">Connect to Part 2: when state changes the function component runs again, so variables declared in its body are recreated. In practice you can use a ready-made hook such as useDebouncedCallback from the use-debounce library.</aside>
+  <aside class="notes">When state changes the function component runs again, so variables declared in its body are recreated. In practice you can use a ready-made hook such as useDebouncedCallback from the use-debounce library.</aside>
 </section>
 
 <section class="slide">
@@ -644,7 +569,7 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
       </ul></div>
     </div>
   </div>
-  <aside class="notes">React Query handles this race for you because results are tied to the queryKey. Recall the main thread demo: splitting tasks keeps the UI responsive.</aside>
+  <aside class="notes">React Query handles this race for you because results are tied to the queryKey.</aside>
 </section>
 
 <section class="slide" data-demo>
@@ -661,9 +586,9 @@ const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
   <aside class="notes">Switch to the demo app. Prepare a page with a large image and some duplicate requests. Keep a backup video in case the network or machine fails.</aside>
 </section>
 
-<!-- ================= 05 SECURITY ================= -->
-<section class="slide divider" data-p="05" data-plain>
-  <div class="div-grid"><div class="stack"><div class="big">05</div><h1 style="font-size:54px">Security Basics</h1><p class="lead">XSS, CSRF and token storage, instead of defaulting to <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
+<!-- ================= 04 SECURITY ================= -->
+<section class="slide divider" data-p="04" data-plain>
+  <div class="div-grid"><div class="stack"><div class="big">04</div><h1 style="font-size:54px">Security Basics</h1><p class="lead">XSS, CSRF and token storage, instead of defaulting to <code>localStorage</code>.</p></div><ol class="rail"></ol></div>
   <aside class="notes">12 minutes. Understand the two attacks first, and the token storage comparison will make sense on its own.</aside>
 </section>
 
@@ -825,12 +750,11 @@ function refreshOnce() {
 <!-- ================= WRAP-UP ================= -->
 <section class="slide" data-p="00" data-section="Wrap-up">
   <h2>Architectural thinking and choosing the right tool beat memorizing syntax</h2>
-  <div class="grow five" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+  <div class="four grow">
     <div class="card" style="--accent:var(--blue)"><div class="k">01</div><h3>Architecture</h3><p>Choose where to render by page type.</p></div>
-    <div class="card" style="--accent:var(--teal)"><div class="k">02</div><h3>Render</h3><p>Where state lives sets the render scope. Do not block the main thread.</p></div>
-    <div class="card" style="--accent:var(--purple)"><div class="k">03</div><h3>State</h3><p>Classify first, pick tools later. If you can compute it, do not store it.</p></div>
-    <div class="card" style="--accent:var(--yellow)"><div class="k">04</div><h3>Performance</h3><p>Measure before optimizing. Know debounce from throttle.</p></div>
-    <div class="card" style="--accent:var(--orange)"><div class="k">05</div><h3>Security</h3><p>Stop XSS at the source. No token storage is absolutely safe.</p></div>
+    <div class="card" style="--accent:var(--teal)"><div class="k">02</div><h3>State</h3><p>Classify first, pick tools later. If you can compute it, do not store it.</p></div>
+    <div class="card" style="--accent:var(--purple)"><div class="k">03</div><h3>Performance</h3><p>Measure before optimizing. Know debounce from throttle.</p></div>
+    <div class="card" style="--accent:var(--yellow)"><div class="k">04</div><h3>Security</h3><p>Stop XSS at the source. No token storage is absolutely safe.</p></div>
   </div>
   <div class="callout">This week, open the Network tab on your project and count the duplicate requests.</div>
   <aside class="notes">1 minute. End with one small action people can take right away.</aside>
@@ -847,7 +771,6 @@ function refreshOnce() {
     </ul>
     <ul class="points">
       <li><b>Performance:</b> <a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
-      <li><b>Event loop:</b> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop">MDN: Event loop</a></li>
       <li><b>XSS:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP: XSS Prevention</a></li>
       <li><b>CSRF:</b> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP: CSRF Prevention</a></li>
     </ul>
@@ -874,16 +797,15 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 const PARTS = [
   ['01', 'Ecosystem & Architecture', 'Evolution, CSR/SSR/SSG, build tools', 13],
-  ['02', 'Render & Main Thread', 'Re-rendering, event loop', 7],
-  ['03', 'State Management', 'Prop drilling, classifying state, global stores', 15],
-  ['04', 'Web Performance 101', 'Core Web Vitals, debounce, throttle', 15],
-  ['05', 'Security Basics', 'XSS, CSRF, token storage', 12],
-  ['06', 'Q&A and Wrap-up', 'Key points, resources, questions', 10],
+  ['02', 'State Management', 'Prop drilling, classifying state, global stores', 15],
+  ['03', 'Web Performance 101', 'Core Web Vitals, debounce, throttle', 15],
+  ['04', 'Security Basics', 'XSS, CSRF, token storage', 12],
+  ['05', 'Q&A and Wrap-up', 'Key points, resources, questions', 10],
 ];
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 $('#outline').innerHTML = PARTS.map(([n, t, d, m]) =>
-  `<div><span class="n" style="color:var(--${['blue', 'teal', 'purple', 'yellow', 'orange', 'cyan'][+n - 1]})">${n}</span>` +
+  `<div><span class="n" style="color:var(--${['blue', 'teal', 'purple', 'yellow', 'cyan'][+n - 1]})">${n}</span>` +
   `<span class="t">${esc(t)}</span><span class="d">${esc(d)}</span><span class="m">${m}'</span></div>`).join('');
 
 /* Sequence diagrams: generated before the engine counts steps */
@@ -936,7 +858,7 @@ const fit = () => {
   $('#deck').style.transform = `scale(${k}) translate(-50%, -50%)`;
 };
 let part = '00', sectionName = '';
-const partName = { '00': '', '01': PARTS[0][1], '02': PARTS[1][1], '03': PARTS[2][1], '04': PARTS[3][1], '05': PARTS[4][1] };
+const partName = { '00': '', '01': PARTS[0][1], '02': PARTS[1][1], '03': PARTS[2][1], '04': PARTS[3][1] };
 slides.forEach((s, i) => {
   if (s.dataset.p) part = s.dataset.p;
   s.dataset.part = part;
@@ -957,13 +879,11 @@ slides.forEach((s, i) => {
 });
 
 const maxStep = (s) => Math.max(+s.dataset.steps || 0, ...$$('[data-step]', s).map((e) => +e.dataset.step));
-const hooks = {};
 let cur = 0, step = 0;
 function show() {
   slides.forEach((s, i) => s.classList.toggle('active', i === cur));
   const s = slides[cur];
   $$('[data-step]', s).forEach((e) => e.classList.toggle('hide', +e.dataset.step > step));
-  if (hooks[s.id]) hooks[s.id](step);
   $('#bar').style.width = `${(cur + 1) / slides.length * 100}%`;
   $('#bar').style.background = getComputedStyle(s).getPropertyValue('--accent');
   const n = $('aside.notes', s);
@@ -1012,99 +932,6 @@ $('#prev').onclick = () => go(-1);
 $('#next').onclick = () => go(1);
 addEventListener('resize', fit);
 addEventListener('hashchange', () => { fromHash(); show(); });
-
-/* Demo: re-render tree */
-(() => {
-  const tree = ['App', [['Header', []], ['Page', [['Sidebar', []], ['List', [['Item', []], ['Item', []]]]]]]];
-  const build = ([name, kids]) => {
-    const el = document.createElement('div');
-    el.className = 'rn';
-    el.innerHTML = `<div class="rh"><button>${name}</button><span class="cnt">×0</span></div>`;
-    const node = { el, count: 0, kids: [] };
-    if (kids.length) {
-      const wrap = document.createElement('div');
-      wrap.className = 'rk';
-      kids.forEach((k) => { const c = build(k); node.kids.push(c); wrap.append(c.el); });
-      el.append(wrap);
-    }
-    const render = (n) => {
-      n.count++;
-      $('.cnt', n.el).textContent = `×${n.count}`;
-      n.el.classList.add('flash');
-      requestAnimationFrame(() => requestAnimationFrame(() => n.el.classList.remove('flash')));
-      n.kids.forEach(render);
-    };
-    $('button', el).onclick = () => render(node);
-    return node;
-  };
-  $('#rr').append(build(tree).el);
-})();
-
-/* Demo: main thread */
-(() => {
-  const dot = $('#mt-track i'), track = $('#mt-track'), out = $('#mt-out');
-  let last = performance.now(), x = 0, dir = 1, worst = 0, busy = false;
-  const frame = (t) => {
-    const dt = t - last;
-    last = t;
-    if (dt > worst) worst = dt;
-    if (track.offsetParent) {
-      x += dir * dt * .35;
-      const max = track.clientWidth - 36;
-      if (x > max) { x = max; dir = -1; }
-      if (x < 0) { x = 0; dir = 1; }
-      dot.style.transform = `translateX(${x}px)`;
-    }
-    requestAnimationFrame(frame);
-  };
-  requestAnimationFrame(frame);
-  const spin = (ms) => { const end = performance.now() + ms; while (performance.now() < end); };
-  const finish = (label) => setTimeout(() => {
-    out.innerHTML = `<b>${label}:</b> longest frame ${Math.round(worst)} ms (at 60 fps, each frame is about 16.7 ms).`;
-    busy = false;
-  }, 120);
-  $('#mt-block').onclick = () => {
-    if (busy) return;
-    busy = true;
-    out.textContent = 'Running...';
-    setTimeout(() => { worst = 0; spin(2000); finish('One 2-second task'); }, 50);
-  };
-  $('#mt-split').onclick = () => {
-    if (busy) return;
-    busy = true;
-    out.textContent = 'Running...';
-    worst = 0;
-    let left = 80;
-    const tick = () => {
-      spin(25);
-      if (--left > 0) setTimeout(tick); else finish('80 chunks of 25 ms each');
-    };
-    setTimeout(tick);
-  };
-})();
-
-/* Demo: event loop stepper */
-hooks['el-slide'] = (() => {
-  const S = [
-    { line: -1, stack: '', micro: '', task: '', out: '', say: 'Guess the print order before advancing.' },
-    { line: 0, stack: "log('A')", micro: '', task: '', out: 'A', say: 'Synchronous code runs right away.' },
-    { line: 1, stack: 'setTimeout', micro: '', task: "log('B')", out: 'A', say: 'The callback goes to the task queue, even with a delay of 0.' },
-    { line: 3, stack: 'Promise.then', micro: "log('C')", task: "log('B')", out: 'A', say: 'The callback goes to the microtask queue.' },
-    { line: 4, stack: "log('D')", micro: "log('C')", task: "log('B')", out: 'A D', say: 'Still synchronous, so it runs before both callbacks.' },
-    { line: -1, stack: '(empty)', micro: "log('C')", task: "log('B')", out: 'A D', say: 'The call stack is empty. The event loop handles microtasks first.' },
-    { line: -1, stack: "log('C')", micro: '', task: "log('B')", out: 'A D C', say: 'The microtask queue is now empty.' },
-    { line: -1, stack: "log('B')", micro: '', task: '', out: 'A D C B', say: 'The task runs last. Answer: A D C B.' },
-  ];
-  return (i) => {
-    const c = S[i];
-    $$('#el-code .line').forEach((l, j) => l.classList.toggle('now', j === c.line || (c.line === 3 && j === 2)));
-    $('#el-stack').textContent = c.stack;
-    $('#el-micro').textContent = c.micro;
-    $('#el-task').textContent = c.task;
-    $('#el-out').textContent = c.out;
-    $('#el-say').textContent = c.say;
-  };
-})();
 
 /* Demo: debounce and throttle lanes */
 (() => {
