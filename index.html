@@ -505,24 +505,6 @@ const total = items.reduce(sum, 0);
 </section>
 
 <section class="slide">
-  <h2>Quick wins you can apply today</h2>
-  <div class="two" style="flex:none">
-    <div class="card"><div class="k">LAZY LOADING</div><h3>Load only when needed</h3>
-<pre class="code" style="font-size:18px">&lt;img src="a.webp" loading="lazy"
-     width="400" height="300" /&gt;
-
-const Chart = lazy(() =&gt; import('./Chart'));</pre></div>
-    <div class="card bad" data-step="1"><div class="k" style="color:var(--bad)">THE TRAP</div><h3>Do not lazy load above-the-fold images</h3><p>The banner is often the LCP element. Lazy loading makes the browser fetch it later and hurts LCP.</p>
-<pre class="code" style="font-size:18px">&lt;img src="hero.webp" fetchpriority="high" /&gt;</pre></div>
-  </div>
-  <div class="two" style="flex:none">
-    <div class="card" data-step="2"><div class="k">IMAGES</div><p>Use WebP, compress, and pick the right size. Set <code>width</code> and <code>height</code> to avoid CLS.</p></div>
-    <div class="card" data-step="3"><div class="k">API</div><p>Avoid repeat calls: cache with React Query, and limit frequency with debounce and throttle.</p></div>
-  </div>
-  <aside class="notes">This trap is why you should not add loading="lazy" to every image mechanically. The next slide continues with debounce and throttle.</aside>
-</section>
-
-<section class="slide">
   <h2>Debounce and throttle: both reduce calls, in different ways</h2>
   <div class="body">
     <div class="row" style="flex-wrap:nowrap"><span class="live">LIVE</span>
