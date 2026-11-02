@@ -370,6 +370,42 @@ jsx(Button, { size: "lg", children: "Buy" })</pre>
 </section>
 
 <section class="slide">
+  <h2>Composition: put the child in place instead of passing data through</h2>
+  <div class="two grow" style="grid-template-columns:1fr 1fr">
+    <div class="stack">
+      <div class="k">BEFORE: EVERY LAYER PASSES <code>user</code></div>
+<pre class="code" style="font-size:17px">&lt;Layout user={user} /&gt;
+
+function Layout({ user }) {
+  return &lt;Sidebar user={user} /&gt;;
+}
+function Sidebar({ user }) {
+  return &lt;UserMenu user={user} /&gt;;
+}
+function UserMenu({ user }) {
+  return &lt;Avatar user={user} /&gt;;
+}</pre>
+    </div>
+    <div class="stack" data-step="1">
+      <div class="k">AFTER: APP PLACES <code>Avatar</code> DIRECTLY</div>
+<pre class="code" style="font-size:17px">&lt;Layout&gt;
+  &lt;Sidebar&gt;
+    &lt;UserMenu&gt;
+      &lt;Avatar user={user} /&gt;
+    &lt;/UserMenu&gt;
+  &lt;/Sidebar&gt;
+&lt;/Layout&gt;
+
+function Layout({ children }) {
+  return &lt;main&gt;{children}&lt;/main&gt;;
+}</pre>
+    </div>
+  </div>
+  <div class="callout" data-step="2">Middle components only leave a slot. If many distant places need the same data, use Context.</div>
+  <aside class="notes">Sidebar and UserMenu are written like Layout: they take children. Analogy: instead of handing a gift from person to person, put it straight into the right box. The outer boxes only hold it.</aside>
+</section>
+
+<section class="slide">
   <h2>Classify state before choosing a tool</h2>
   <div class="four grow">
     <div class="card"><div class="k">UI / LOCAL</div><h3>Needed by one component</h3><p>Which modal is open, text in an input.</p><span class="chip hot" style="margin-top:auto;align-self:flex-start">useState</span></div>
