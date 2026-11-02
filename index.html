@@ -710,8 +710,8 @@ window.addEventListener('scroll',
 </section>
 
 <section class="slide">
-  <h2>Three more defenses on the server side</h2>
-  <div class="three grow">
+  <h2>Two more defenses on the server side</h2>
+  <div class="two grow">
     <div class="card"><div class="k">CSRF TOKEN</div><h3>A value only the real page knows</h3>
 <pre class="code" style="font-size:15px">&lt;input type="hidden"
   name="csrf_token"
@@ -732,17 +732,7 @@ if (req.headers.origin !==
     'https://bank.example')
   return 403;</pre>
       <p class="small" style="margin-top:auto">The browser sets <code>Origin</code>. JavaScript cannot fake it.</p></div>
-    <div class="card" data-step="2"><div class="k">NO CHANGES VIA GET</div><h3>GET only reads</h3>
-<pre class="code" style="font-size:15px"><span class="x">GET /transfer?to=hacker</span>
-<span class="x">    &amp;amount=1000</span>
-<span class="c">// a link is enough, and</span>
-<span class="c">// Lax still sends the cookie</span>
-
-<span class="g">GET  /transfer  → show form</span>
-<span class="g">POST /transfer  → move money</span></pre>
-      <p class="small" style="margin-top:auto">Create, update, delete: POST, PUT, DELETE.</p></div>
   </div>
-  <div class="callout" data-step="2">Combine them: SameSite as the base, a CSRF token or an Origin check on the server.</div>
   <aside class="notes">Every defense here works on the bank example from the CSRF slide.</aside>
 </section>
 
