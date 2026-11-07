@@ -532,32 +532,7 @@ function Search() {
 </section>
 
 <section class="slide">
-  <h2>Mistake 2: thinking debounce prevents race conditions</h2>
-  <div class="two">
-    <div class="stack"><span class="label">WRONG: AN OLD RESPONSE OVERWRITES A NEW ONE</span>
-<pre class="code bad grow" style="font-size:18px">Type "re"      → request A
-Type "react"   → request B
-
-B returns      → shows results for "react"
-<span class="x">A returns late → overwrites with "re"</span>
-
-<span class="c">// Debounce reduces calls,</span>
-<span class="c">// but cannot control response order</span></pre></div>
-    <div class="stack" data-step="1"><span class="label">RIGHT: RESULTS TIED TO THE QUERY KEY</span>
-<pre class="code good grow" style="font-size:18px">const { data } = useQuery({
-  <span class="g">queryKey: ['search', q],</span>
-  queryFn: () =&gt; searchApi(q),
-});
-
-<span class="c">// Each q has its own result.</span>
-<span class="c">// A late "re" response cannot</span>
-<span class="c">// overwrite what "react" shows.</span></pre></div>
-  </div>
-  <aside class="notes">Debounce only reduces how many requests go out. Once two requests are in flight, the network decides which returns first.</aside>
-</section>
-
-<section class="slide">
-  <h2>Mistake 3: a throttle that drops the last event</h2>
+  <h2>Mistake 2: a throttle that drops the last event</h2>
   <div class="two">
     <div class="stack"><span class="label">WRONG: CALLS DURING THE WAIT ARE LOST</span>
 <pre class="code bad grow" style="font-size:16px">function throttle(fn, ms) {
