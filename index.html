@@ -418,38 +418,6 @@ function Layout({ children }) {
 </section>
 
 <section class="slide">
-  <h2>Server state: do not rebuild a cache with <code style="font-size:.9em">useEffect</code></h2>
-  <div class="two">
-    <div class="stack"><span class="label">BY HAND, AND THIS IS ONLY THE START</span>
-<pre class="code bad grow" style="font-size:18px">const [users, setUsers] = useState([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
-
-useEffect(() =&gt; {
-  fetch('/api/users')
-    .then((r) =&gt; r.json())
-    .then(setUsers)
-    .catch(setError)
-    .finally(() =&gt; setLoading(false));
-}, []);
-<span class="c">// Missing: cache, retry, refetch, dedupe</span></pre></div>
-    <div class="stack" data-step="1"><span class="label">REACT QUERY</span>
-<pre class="code good" style="font-size:18px">const { data, isPending, error } = useQuery({
-  queryKey: ['users'],
-  queryFn: fetchUsers,
-});</pre>
-      <ul class="points">
-        <li><b>Cache:</b> many components share the same data.</li>
-        <li><b>Dedupe:</b> identical requests are merged.</li>
-        <li><b>Auto refresh:</b> configurable, when data is stale.</li>
-        <li>Alternatives: SWR, RTK Query.</li>
-      </ul>
-    </div>
-  </div>
-  <aside class="notes">Note the code on the left does not check r.ok either. A library is not mandatory, but know what it is doing for you before writing your own.</aside>
-</section>
-
-<section class="slide">
   <h2>Derived state: if you can compute it, do not store it</h2>
   <div class="two" style="flex:none">
     <div class="stack"><span class="label">WRONG: TWO SOURCES OF TRUTH</span>
